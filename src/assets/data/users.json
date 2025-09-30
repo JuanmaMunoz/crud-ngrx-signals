@@ -1,0 +1,802 @@
+[
+  {
+    "name": "María",
+    "lastName": "Fernández",
+    "date": 1709215263287,
+    "position": "Developer",
+    "salary": 62894,
+    "email": "maria.fernandez1@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "Jiménez",
+    "date": 1685215263287,
+    "position": "Designer",
+    "salary": 55784,
+    "email": "pedro.jimenez2@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Pérez",
+    "date": 1692215263287,
+    "position": "QA Engineer",
+    "salary": 51822,
+    "email": "lucia.perez3@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Ramírez",
+    "date": 1759215263287,
+    "position": "DevOps",
+    "salary": 67612,
+    "email": "carlos.ramirez4@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "García",
+    "date": 1711215263287,
+    "position": "Manager",
+    "salary": 70015,
+    "email": "sofia.garcia5@example.com"
+  },
+  {
+    "name": "Andrés",
+    "lastName": "Sánchez",
+    "date": 1609215263287,
+    "position": "Developer",
+    "salary": 59874,
+    "email": "andres.sanchez6@example.com"
+  },
+  {
+    "name": "Laura",
+    "lastName": "Jiménez",
+    "date": 1624215263287,
+    "position": "Data Analyst",
+    "salary": 44128,
+    "email": "laura.jimenez7@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Martínez",
+    "date": 1779215263287,
+    "position": "Designer",
+    "salary": 55145,
+    "email": "diego.martinez8@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "Torres",
+    "date": 1659215263287,
+    "position": "QA Engineer",
+    "salary": 48790,
+    "email": "elena.torres9@example.com"
+  },
+  {
+    "name": "Juan",
+    "lastName": "Morales",
+    "date": 1743215263287,
+    "position": "DevOps",
+    "salary": 61982,
+    "email": "juan.morales10@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "López",
+    "date": 1732215263287,
+    "position": "Developer",
+    "salary": 58561,
+    "email": "pedro.lopez11@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "Fernández",
+    "date": 1641215263287,
+    "position": "Manager",
+    "salary": 66812,
+    "email": "sofia.fernandez12@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Pérez",
+    "date": 1691215263287,
+    "position": "Designer",
+    "salary": 47895,
+    "email": "carlos.perez13@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Ramírez",
+    "date": 1704215263287,
+    "position": "DevOps",
+    "salary": 65311,
+    "email": "lucia.ramirez14@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "García",
+    "date": 1729215263287,
+    "position": "Data Analyst",
+    "salary": 42155,
+    "email": "elena.garcia15@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Sánchez",
+    "date": 1663215263287,
+    "position": "QA Engineer",
+    "salary": 50988,
+    "email": "diego.sanchez16@example.com"
+  },
+  {
+    "name": "María",
+    "lastName": "Jiménez",
+    "date": 1609215263287,
+    "position": "Developer",
+    "salary": 56472,
+    "email": "maria.jimenez17@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "Martínez",
+    "date": 1778215263287,
+    "position": "Designer",
+    "salary": 53142,
+    "email": "pedro.martinez18@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Torres",
+    "date": 1681215263287,
+    "position": "DevOps",
+    "salary": 67455,
+    "email": "lucia.torres19@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Morales",
+    "date": 1719215263287,
+    "position": "Manager",
+    "salary": 69987,
+    "email": "carlos.morales20@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "López",
+    "date": 1723215263287,
+    "position": "Data Analyst",
+    "salary": 46233,
+    "email": "sofia.lopez21@example.com"
+  },
+  {
+    "name": "Andrés",
+    "lastName": "Fernández",
+    "date": 1708215263287,
+    "position": "QA Engineer",
+    "salary": 51945,
+    "email": "andres.fernandez22@example.com"
+  },
+  {
+    "name": "Laura",
+    "lastName": "Pérez",
+    "date": 1668215263287,
+    "position": "Developer",
+    "salary": 58290,
+    "email": "laura.perez23@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Ramírez",
+    "date": 1684215263287,
+    "position": "Designer",
+    "salary": 56314,
+    "email": "diego.ramirez24@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "García",
+    "date": 1693215263287,
+    "position": "DevOps",
+    "salary": 60112,
+    "email": "elena.garcia25@example.com"
+  },
+  {
+    "name": "Juan",
+    "lastName": "Sánchez",
+    "date": 1711215263287,
+    "position": "Manager",
+    "salary": 68722,
+    "email": "juan.sanchez26@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "Jiménez",
+    "date": 1705215263287,
+    "position": "Data Analyst",
+    "salary": 45288,
+    "email": "pedro.jimenez27@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "Martínez",
+    "date": 1642215263287,
+    "position": "QA Engineer",
+    "salary": 51541,
+    "email": "sofia.martinez28@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Torres",
+    "date": 1651215263287,
+    "position": "Developer",
+    "salary": 58319,
+    "email": "carlos.torres29@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Morales",
+    "date": 1699215263287,
+    "position": "Designer",
+    "salary": 56134,
+    "email": "lucia.morales30@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "López",
+    "date": 1758215263287,
+    "position": "DevOps",
+    "salary": 64577,
+    "email": "elena.lopez31@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Fernández",
+    "date": 1672215263287,
+    "position": "Manager",
+    "salary": 67288,
+    "email": "diego.fernandez32@example.com"
+  },
+  {
+    "name": "María",
+    "lastName": "Pérez",
+    "date": 1609215263287,
+    "position": "Data Analyst",
+    "salary": 45912,
+    "email": "maria.perez33@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "Ramírez",
+    "date": 1748215263287,
+    "position": "QA Engineer",
+    "salary": 51042,
+    "email": "pedro.ramirez34@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "García",
+    "date": 1622215263287,
+    "position": "Developer",
+    "salary": 59388,
+    "email": "lucia.garcia35@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Sánchez",
+    "date": 1697215263287,
+    "position": "Designer",
+    "salary": 55114,
+    "email": "carlos.sanchez36@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "Jiménez",
+    "date": 1764215263287,
+    "position": "DevOps",
+    "salary": 61245,
+    "email": "sofia.jimenez37@example.com"
+  },
+  {
+    "name": "Andrés",
+    "lastName": "Martínez",
+    "date": 1657215263287,
+    "position": "Manager",
+    "salary": 68012,
+    "email": "andres.martinez38@example.com"
+  },
+  {
+    "name": "Laura",
+    "lastName": "Torres",
+    "date": 1716215263287,
+    "position": "Data Analyst",
+    "salary": 46977,
+    "email": "laura.torres39@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Morales",
+    "date": 1693215263287,
+    "position": "QA Engineer",
+    "salary": 52766,
+    "email": "diego.morales40@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "López",
+    "date": 1679215263287,
+    "position": "Developer",
+    "salary": 58217,
+    "email": "elena.lopez41@example.com"
+  },
+  {
+    "name": "Juan",
+    "lastName": "Fernández",
+    "date": 1708215263287,
+    "position": "Designer",
+    "salary": 55321,
+    "email": "juan.fernandez42@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "Pérez",
+    "date": 1649215263287,
+    "position": "DevOps",
+    "salary": 64234,
+    "email": "pedro.perez43@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "Ramírez",
+    "date": 1609215263287,
+    "position": "Manager",
+    "salary": 67692,
+    "email": "sofia.ramirez44@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "García",
+    "date": 1712215263287,
+    "position": "Data Analyst",
+    "salary": 45299,
+    "email": "carlos.garcia45@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Sánchez",
+    "date": 1626215263287,
+    "position": "QA Engineer",
+    "salary": 52014,
+    "email": "lucia.sanchez46@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "Jiménez",
+    "date": 1689215263287,
+    "position": "Developer",
+    "salary": 57881,
+    "email": "elena.jimenez47@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Martínez",
+    "date": 1779215263287,
+    "position": "Designer",
+    "salary": 56155,
+    "email": "diego.martinez48@example.com"
+  },
+  {
+    "name": "María",
+    "lastName": "Torres",
+    "date": 1744215263287,
+    "position": "DevOps",
+    "salary": 63418,
+    "email": "maria.torres49@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "Morales",
+    "date": 1695215263287,
+    "position": "Manager",
+    "salary": 68590,
+    "email": "pedro.morales50@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "López",
+    "date": 1732215263287,
+    "position": "Data Analyst",
+    "salary": 47120,
+    "email": "lucia.lopez51@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Fernández",
+    "date": 1717215263287,
+    "position": "QA Engineer",
+    "salary": 51988,
+    "email": "carlos.fernandez52@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "Pérez",
+    "date": 1676215263287,
+    "position": "Developer",
+    "salary": 58012,
+    "email": "sofia.perez53@example.com"
+  },
+  {
+    "name": "Andrés",
+    "lastName": "Ramírez",
+    "date": 1643215263287,
+    "position": "Designer",
+    "salary": 54791,
+    "email": "andres.ramirez54@example.com"
+  },
+  {
+    "name": "Laura",
+    "lastName": "García",
+    "date": 1688215263287,
+    "position": "DevOps",
+    "salary": 62233,
+    "email": "laura.garcia55@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Sánchez",
+    "date": 1697215263287,
+    "position": "Manager",
+    "salary": 67155,
+    "email": "diego.sanchez56@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "Jiménez",
+    "date": 1712215263287,
+    "position": "Data Analyst",
+    "salary": 46620,
+    "email": "elena.jimenez57@example.com"
+  },
+  {
+    "name": "Juan",
+    "lastName": "Martínez",
+    "date": 1698215263287,
+    "position": "QA Engineer",
+    "salary": 52177,
+    "email": "juan.martinez58@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "Torres",
+    "date": 1663215263287,
+    "position": "Developer",
+    "salary": 59044,
+    "email": "pedro.torres59@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "Morales",
+    "date": 1652215263287,
+    "position": "Designer",
+    "salary": 56310,
+    "email": "sofia.morales60@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "López",
+    "date": 1738215263287,
+    "position": "DevOps",
+    "salary": 63912,
+    "email": "carlos.lopez61@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Fernández",
+    "date": 1714215263287,
+    "position": "Manager",
+    "salary": 69451,
+    "email": "lucia.fernandez62@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "Pérez",
+    "date": 1685215263287,
+    "position": "Data Analyst",
+    "salary": 47301,
+    "email": "elena.perez63@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Ramírez",
+    "date": 1609215263287,
+    "position": "QA Engineer",
+    "salary": 51124,
+    "email": "diego.ramirez64@example.com"
+  },
+  {
+    "name": "María",
+    "lastName": "García",
+    "date": 1648215263287,
+    "position": "Developer",
+    "salary": 58612,
+    "email": "maria.garcia65@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "Sánchez",
+    "date": 1773215263287,
+    "position": "Designer",
+    "salary": 55992,
+    "email": "pedro.sanchez66@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Jiménez",
+    "date": 1706215263287,
+    "position": "DevOps",
+    "salary": 64851,
+    "email": "lucia.jimenez67@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Martínez",
+    "date": 1657215263287,
+    "position": "Manager",
+    "salary": 68914,
+    "email": "carlos.martinez68@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "Torres",
+    "date": 1694215263287,
+    "position": "Data Analyst",
+    "salary": 46109,
+    "email": "sofia.torres69@example.com"
+  },
+  {
+    "name": "Andrés",
+    "lastName": "Morales",
+    "date": 1688215263287,
+    "position": "QA Engineer",
+    "salary": 52622,
+    "email": "andres.morales70@example.com"
+  },
+  {
+    "name": "Laura",
+    "lastName": "López",
+    "date": 1716215263287,
+    "position": "Developer",
+    "salary": 58455,
+    "email": "laura.lopez71@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Fernández",
+    "date": 1641215263287,
+    "position": "Designer",
+    "salary": 55814,
+    "email": "diego.fernandez72@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "Pérez",
+    "date": 1734215263287,
+    "position": "DevOps",
+    "salary": 63124,
+    "email": "elena.perez73@example.com"
+  },
+  {
+    "name": "Juan",
+    "lastName": "Ramírez",
+    "date": 1717215263287,
+    "position": "Manager",
+    "salary": 67977,
+    "email": "juan.ramirez74@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "García",
+    "date": 1659215263287,
+    "position": "Data Analyst",
+    "salary": 45572,
+    "email": "pedro.garcia75@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "Sánchez",
+    "date": 1697215263287,
+    "position": "QA Engineer",
+    "salary": 51488,
+    "email": "sofia.sanchez76@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Jiménez",
+    "date": 1682215263287,
+    "position": "Developer",
+    "salary": 59114,
+    "email": "carlos.jimenez77@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Martínez",
+    "date": 1776215263287,
+    "position": "Designer",
+    "salary": 54011,
+    "email": "lucia.martinez78@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "Torres",
+    "date": 1609215263287,
+    "position": "DevOps",
+    "salary": 63819,
+    "email": "elena.torres79@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Morales",
+    "date": 1732215263287,
+    "position": "Manager",
+    "salary": 67233,
+    "email": "diego.morales80@example.com"
+  },
+  {
+    "name": "María",
+    "lastName": "López",
+    "date": 1697215263287,
+    "position": "Data Analyst",
+    "salary": 47901,
+    "email": "maria.lopez81@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "Fernández",
+    "date": 1746215263287,
+    "position": "QA Engineer",
+    "salary": 51742,
+    "email": "pedro.fernandez82@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Pérez",
+    "date": 1609215263287,
+    "position": "Developer",
+    "salary": 58232,
+    "email": "lucia.perez83@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Ramírez",
+    "date": 1723215263287,
+    "position": "Designer",
+    "salary": 54512,
+    "email": "carlos.ramirez84@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "García",
+    "date": 1701215263287,
+    "position": "DevOps",
+    "salary": 62387,
+    "email": "sofia.garcia85@example.com"
+  },
+  {
+    "name": "Andrés",
+    "lastName": "Sánchez",
+    "date": 1759215263287,
+    "position": "Manager",
+    "salary": 69318,
+    "email": "andres.sanchez86@example.com"
+  },
+  {
+    "name": "Laura",
+    "lastName": "Jiménez",
+    "date": 1654215263287,
+    "position": "Data Analyst",
+    "salary": 46091,
+    "email": "laura.jimenez87@example.com"
+  },
+  {
+    "name": "Diego",
+    "lastName": "Martínez",
+    "date": 1743215263287,
+    "position": "QA Engineer",
+    "salary": 51499,
+    "email": "diego.martinez88@example.com"
+  },
+  {
+    "name": "Elena",
+    "lastName": "Torres",
+    "date": 1729215263287,
+    "position": "Developer",
+    "salary": 58888,
+    "email": "elena.torres89@example.com"
+  },
+  {
+    "name": "Juan",
+    "lastName": "Morales",
+    "date": 1692215263287,
+    "position": "Designer",
+    "salary": 55242,
+    "email": "juan.morales90@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "López",
+    "date": 1763215263287,
+    "position": "DevOps",
+    "salary": 63641,
+    "email": "pedro.lopez91@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "Fernández",
+    "date": 1719215263287,
+    "position": "Manager",
+    "salary": 67025,
+    "email": "sofia.fernandez92@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Pérez",
+    "date": 1651215263287,
+    "position": "Data Analyst",
+    "salary": 47514,
+    "email": "carlos.perez93@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Ramírez",
+    "date": 1734215263287,
+    "position": "QA Engineer",
+    "salary": 52288,
+    "email": "lucia.ramirez94@example.com"
+  },
+  {
+    "name": "María",
+    "lastName": "García",
+    "date": 1625215263287,
+    "position": "Developer",
+    "salary": 58412,
+    "email": "maria.garcia95@example.com"
+  },
+  {
+    "name": "Pedro",
+    "lastName": "Sánchez",
+    "date": 1769215263287,
+    "position": "Designer",
+    "salary": 55614,
+    "email": "pedro.sanchez96@example.com"
+  },
+  {
+    "name": "Lucía",
+    "lastName": "Jiménez",
+    "date": 1708215263287,
+    "position": "DevOps",
+    "salary": 64988,
+    "email": "lucia.jimenez97@example.com"
+  },
+  {
+    "name": "Carlos",
+    "lastName": "Martínez",
+    "date": 1659215263287,
+    "position": "Manager",
+    "salary": 69021,
+    "email": "carlos.martinez98@example.com"
+  },
+  {
+    "name": "Sofía",
+    "lastName": "Torres",
+    "date": 1695215263287,
+    "position": "Data Analyst",
+    "salary": 46288,
+    "email": "sofia.torres99@example.com"
+  },
+  {
+    "name": "Andrés",
+    "lastName": "Morales",
+    "date": 1687215263287,
+    "position": "QA Engineer",
+    "salary": 52588,
+    "email": "andres.morales100@example.com"
+  }
+]
