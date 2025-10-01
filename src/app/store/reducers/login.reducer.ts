@@ -10,6 +10,7 @@ import {
 export const initialState: ILoginState = {
   loading: false,
   error: null,
+  success: false,
 };
 
 export const loginReducer = createReducer(
@@ -18,6 +19,7 @@ export const loginReducer = createReducer(
   on(loginSuccess, (state) => ({
     ...state,
     loading: false,
+    success: true,
   })),
   on(loginFailure, (state, { error }) => ({
     ...state,

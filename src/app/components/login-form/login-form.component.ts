@@ -1,0 +1,105 @@
+import { Component, effect, Signal, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { TypeInput } from '../../models/enums';
+import { startLogin } from '../../store/actions/login.action';
+import { InputPassComponent } from '../input-pass/input-pass.component';
+import { InputTextComponent } from '../input-text/input-text.component';
+import { IInput, ILoginState } from './../../models/interfaces';
+
+@Component({
+  selector: 'app-login-form',
+  imports: [InputTextComponent, InputPassComponent, ReactiveFormsModule],
+  templateUrl: './login-form.component.html',
+  styleUrl: './login-form.component.scss',
+})
+export class LoginFormComponent {
+  public loginForm = new FormGroup({
+    email: new FormControl('user@test', [
+      Validators.required,
+      Validators.email,
+    ]),
+    pass: new FormControl('1234', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(8),
+    ]),
+  });
+  public emailControl: FormControl = this.loginForm.get('email') as FormControl;
+  public passControl: FormControl = this.loginForm.get('pass') as FormControl;
+
+  public validationErrors: Record<string, string> = {
+    email: 'The email is not valid',
+    minlength: 'The minimum password length is 4',
+    maxlength: 'The maximum password length is 8',
+    required: 'The field is required',
+  };
+
+  public emailInput = signal<IInput>({
+    type: TypeInput.TEXT,
+    control: this.emailControl,
+    placeholder: 'Insert email',
+    label: 'Email',
+    focus: true,
+    validationErrors: this.validationErrors,
+  });
+
+  public passInput = signal<IInput>({
+    type: TypeInput.PASS,
+    control: this.passControl,
+    placeholder: 'Insert password',
+    label: 'Password',
+    focus: true,
+    validationErrors: this.validationErrors,
+  });
+  public loading!: Signal<boolean>;
+  public loginSuccess!: Signal<boolean>;
+  public loginError!: Signal<boolean>;
+
+  constructor(
+    private store: Store<{ login: ILoginState }>,
+    private router: Router,
+  ) {
+    this.loading = toSignal(
+      this.store.select((state) => state.login.loading),
+      { initialValue: false },
+    );
+
+    this.loginSuccess = toSignal(
+      this.store.select((state) => state.login.success),
+      { initialValue: false },
+    );
+
+    effect(() => {
+      if (this.loading()) {
+        this.emailControl.disable();
+        this.passControl.disable();
+      } else {
+        this.emailControl.enable();
+        this.passControl.enable();
+      }
+    });
+
+    effect(() => {
+      if (this.loginSuccess()) {
+        this.router.navigate(['/users']);
+      }
+    });
+  }
+
+  public login(): void {
+    this.store.dispatch(
+      startLogin({
+        email: this.emailControl.getRawValue(),
+        pass: this.passControl.getRawValue(),
+      }),
+    );
+  }
+}

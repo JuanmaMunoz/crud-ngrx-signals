@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { delay, Observable, of, throwError } from 'rxjs';
 import { ITokenState } from '../models/interfaces';
 import { SessionService } from './session.service';
 
@@ -12,14 +12,14 @@ export class LoginService {
 
   public startLogin(email: string, pass: string): Observable<ITokenState> {
     if (email === 'user@test' && pass === '1234') {
-      return of(this.sessionService.createFakeToken(email));
+      return of(this.sessionService.createFakeToken(email)).pipe(delay(500));
     } else {
       return throwError(
         () =>
           ({
             error: { code: '401', error: 'The credentials are incorrect' },
           }) as HttpErrorResponse,
-      );
+      ).pipe(delay(500));
     }
   }
 }

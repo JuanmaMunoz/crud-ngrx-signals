@@ -1,0 +1,20 @@
+<div class="input-text mb-3">
+  <label [for]="input().label" class="form-label">{{ input().label }}</label>
+  <input
+    #element
+    [type]="input().type"
+    class="form-control"
+    [id]="input().label"
+    [placeholder]="input().placeholder"
+    [formControl]="input().control"
+    [ngClass]="{
+      'is-invalid':
+        (input().control.value && input().control.errors) ||
+        (input().control.errors && input().control.dirty),
+      'is-valid': input().control.value && input().control.valid
+    }"
+  />
+  <div class="invalid-feedback">
+    {{ input().control.errors | validationErrors: input().validationErrors }}
+  </div>
+</div>
