@@ -8,11 +8,12 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { TypeInput } from '../../models/enums';
+import { InputPassComponent } from '../../../common/components/input-pass/input-pass.component';
+import { InputTextComponent } from '../../../common/components/input-text/input-text.component';
+import { TypeInput } from '../../../common/models/enum';
+import { IInput } from '../../../common/models/interfaces';
+import { ILoginState } from '../../models/interfaces';
 import { startLogin } from '../../store/actions/login.action';
-import { InputPassComponent } from '../input-pass/input-pass.component';
-import { InputTextComponent } from '../input-text/input-text.component';
-import { IInput, ILoginState } from './../../models/interfaces';
 
 @Component({
   selector: 'app-login-form',
@@ -26,7 +27,7 @@ export class LoginFormComponent {
       Validators.required,
       Validators.email,
     ]),
-    pass: new FormControl('1234', [
+    pass: new FormControl('ajk38jkÑ', [
       Validators.required,
       Validators.minLength(4),
       Validators.maxLength(8),

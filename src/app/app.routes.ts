@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
-import { CreateComponent } from './pages/create/create.component';
-import { DetailComponent } from './pages/detail/detail.component';
-import { ListComponent } from './pages/list/list.component';
-import { LoginComponent } from './pages/login/login.component';
+import { AuthGuard } from './common/utils/guards/auth.guard';
+import { LoginGuard } from './login/utils/guards/login.guard';
 
 export const routes: Routes = [
   {
@@ -12,19 +10,15 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
+    canLoad: [LoginGuard],
+    loadChildren: () =>
+      import('./login/login.routes').then((m) => m.LOGIN_ROUTES),
   },
   {
     path: 'users',
-    component: ListComponent,
-  },
-  {
-    path: 'users/:id',
-    component: DetailComponent,
-  },
-  {
-    path: 'users/create',
-    component: CreateComponent,
+    canLoad: [AuthGuard],
+    loadChildren: () =>
+      import('./users/users.routes').then((m) => m.USERS_ROUTES),
   },
   {
     path: '**',

@@ -1,16 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
-import { TypeInput } from './enums';
-
-export interface ILoginState {
-  loading: boolean;
-  error: HttpErrorResponse | null;
-  success: boolean;
-}
+import { TypeInput } from './enum';
 
 export interface ITokenState {
   token: string;
-  jwt: IToken;
+  jwt: IToken | null;
 }
 
 export interface IToken {

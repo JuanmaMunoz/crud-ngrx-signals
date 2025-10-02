@@ -6,11 +6,10 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { routes } from './app.routes';
-
-import { LoginEffects } from './store/effects/login.effect';
-import { loginReducer } from './store/reducers/login.reducer';
-import { tokenReducer } from './store/reducers/token.reducer';
-import { authInterceptor } from './utils/authInterceptor';
+import { tokenReducer } from './common/store/reducers/token.reducer';
+import { authInterceptor } from './common/utils/authInterceptor';
+import { LoginEffects } from './login/store/effects/login.effect';
+import { loginReducer } from './login/store/reducers/login.reducer';
 
 const store = {
   login: loginReducer,

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TypeInput } from '../../models/enums';
+import { TypeInput } from '../../models/enum';
 import { IInput } from '../../models/interfaces';
 import { ValidationErrors } from '../../utils/pipes/validation-errors.pipe';
 

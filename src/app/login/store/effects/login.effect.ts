@@ -3,13 +3,13 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
+import { createToken } from '../../../common/store/actions/token.action';
 import { LoginService } from '../../services/login.service';
 import {
   loginFailure,
   loginSuccess,
   startLogin,
 } from '../actions/login.action';
-import { createToken } from '../actions/token.action';
 
 @Injectable()
 export class LoginEffects {

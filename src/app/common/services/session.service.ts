@@ -14,7 +14,8 @@ export class SessionService {
   public checkSession(): Observable<boolean> {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token') as string;
-      this.jwt = JSON.parse(this.token);
+      this.jwt = JSON.parse(atob(this.token));
+      console.log('-->', this.jwt!.expiration >= new Date().getTime());
       return this.jwt!.expiration >= new Date().getTime()
         ? of(true)
         : of(false);
@@ -31,7 +32,7 @@ export class SessionService {
       email,
       expiration: new Date().getTime() + this.tokenDuration,
     };
-    this.token = btoa(JSON.stringify(this.token));
+    this.token = btoa(JSON.stringify(this.jwt));
     localStorage.setItem('token', this.token);
     return { token: this.token, jwt: this.jwt };
   }
