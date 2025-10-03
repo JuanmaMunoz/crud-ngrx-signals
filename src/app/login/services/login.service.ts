@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { delay, Observable, of, throwError } from 'rxjs';
 import { ITokenState } from '../../common/models/interfaces';
 import { SessionService } from '../../common/services/session.service';
@@ -8,8 +8,7 @@ import { SessionService } from '../../common/services/session.service';
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(private sessionService: SessionService) {}
-
+  private sessionService = inject(SessionService);
   public startLogin(email: string, pass: string): Observable<ITokenState> {
     if (email === 'user@test' && pass === 'ajk38jkÑ') {
       return of(this.sessionService.createFakeToken(email)).pipe(delay(500));

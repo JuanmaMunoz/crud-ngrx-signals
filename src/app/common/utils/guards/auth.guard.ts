@@ -1,21 +1,17 @@
-import { inject, Injectable } from '@angular/core';
-import { CanLoad, Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { inject } from '@angular/core';
+import { CanLoadFn, Router } from '@angular/router';
+import { tap } from 'rxjs';
 import { SessionService } from '../../services/session.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthGuard implements CanLoad {
-  private sessionService = inject(SessionService);
-  private router = inject(Router);
-  canLoad(): Observable<boolean> {
-    return this.sessionService.checkSession().pipe(
-      tap((ok: boolean) => {
-        if (!ok) {
-          this.router.navigate(['/login/403/']);
-        }
-      }),
-    );
-  }
-}
+export const authGuard: CanLoadFn = () => {
+  const sessionService = inject(SessionService);
+  const router = inject(Router);
+
+  return sessionService.checkSession().pipe(
+    tap((ok) => {
+      if (!ok) {
+        router.navigate(['/login/403']);
+      }
+    }),
+  );
+};

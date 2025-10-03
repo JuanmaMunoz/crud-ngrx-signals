@@ -1,8 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
+import { ITokenState } from '../../../common/models/interfaces';
 import { createToken } from '../../../common/store/actions/token.action';
 import { LoginService } from '../../services/login.service';
 import {
@@ -11,23 +12,23 @@ import {
   startLogin,
 } from '../actions/login.action';
 
-@Injectable()
-export class LoginEffects {
-  private actions$ = inject(Actions);
-  private loginService = inject(LoginService);
+export const loginEffect = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const loginService = inject(LoginService);
 
-  startLogin$ = createEffect(() =>
-    this.actions$.pipe(
+    return actions$.pipe(
       ofType(startLogin),
-      mergeMap((data) =>
-        this.loginService.startLogin(data.email, data.pass).pipe(
-          mergeMap((data) => [
+      mergeMap(({ email, pass }) =>
+        loginService.startLogin(email, pass).pipe(
+          mergeMap((data: ITokenState) => [
             loginSuccess(),
             createToken({ token: data.token, jwt: data.jwt }),
           ]),
           catchError((error) => of(loginFailure({ error: error.error }))),
         ),
       ),
-    ),
-  );
-}
+    );
+  },
+  { functional: true },
+);

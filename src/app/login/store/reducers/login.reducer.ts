@@ -21,6 +21,7 @@ export const loginReducer = createReducer(
     ...state,
     loading: false,
     success: true,
+    error: null,
   })),
   on(loginFailure, (state, { error }) => ({
     ...state,

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './common/utils/guards/auth.guard';
-import { LoginGuard } from './login/utils/guards/login.guard';
+import { authGuard } from './common/utils/guards/auth.guard';
+import { loginGuard } from './login/utils/guards/login.guard';
 
 export const routes: Routes = [
   {
@@ -10,13 +10,13 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    canLoad: [LoginGuard],
+    canLoad: [loginGuard],
     loadChildren: () =>
       import('./login/login.routes').then((m) => m.LOGIN_ROUTES),
   },
   {
     path: 'users',
-    canLoad: [AuthGuard],
+    canLoad: [authGuard],
     loadChildren: () =>
       import('./users/users.routes').then((m) => m.USERS_ROUTES),
   },

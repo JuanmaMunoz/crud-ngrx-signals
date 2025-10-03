@@ -1,0 +1,33 @@
+<div class="app-table text-start">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Birth Date</th>
+        <th>Position</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of users(); track $index) {
+        <tr>
+          <td>{{ user.name }}</td>
+
+          <td>
+            {{ user.lastName }}
+          </td>
+          <td>
+            {{ user.email }}
+          </td>
+          <td>
+            {{ user.date | date: "dd/MM/yyyy" }}
+          </td>
+          <td>
+            {{ user.position }}
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
