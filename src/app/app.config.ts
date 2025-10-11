@@ -10,13 +10,20 @@ import { tokenReducer } from './common/store/reducers/token.reducer';
 import { authInterceptor } from './common/utils/authInterceptor';
 import { loginEffect } from './login/store/effects/login.effect';
 import { loginReducer } from './login/store/reducers/login.reducer';
-import { usersEffect } from './users/store/effects/users.effect';
-import { usersReducer } from './users/store/reducers/users.reducer';
+import {
+  userDeleteEffect,
+  usersEffect,
+} from './users/store/effects/users.effect';
+import {
+  userDeleteReducer,
+  usersReducer,
+} from './users/store/reducers/users.reducer';
 
 const store = {
   login: loginReducer,
   token: tokenReducer,
   users: usersReducer,
+  userDelete: userDeleteReducer,
 };
 
 export const appConfig: ApplicationConfig = {
@@ -24,7 +31,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideStore(store),
-    provideEffects([{ loginEffect, usersEffect }]),
+    provideEffects([{ loginEffect, usersEffect, userDeleteEffect }]),
 
     provideStoreDevtools({ maxAge: 25, logOnly: false }),
   ],

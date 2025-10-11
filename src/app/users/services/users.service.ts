@@ -1,8 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { delay, map, Observable, of } from 'rxjs';
+import { statistics } from '../../../assets/data/statistics';
+import { users } from '../../../assets/data/users';
 import { SessionService } from '../../common/services/session.service';
-import { IGetUsers, IUser } from '../models/interfaces';
+import {
+  IGetUsers,
+  IUser,
+  IUserDetail,
+  IUserStatistics,
+} from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +17,12 @@ import { IGetUsers, IUser } from '../models/interfaces';
 export class UsersService {
   private sessionService = inject(SessionService);
   private http = inject(HttpClient);
+  private allUsers: IUser[] = users;
+  private usersStatistics: IUserStatistics[] = statistics;
 
   public getUsers(params: IGetUsers): Observable<IUser[]> {
-    const url = 'assets/data/users.json';
-    return this.http.get<IUser[]>(url).pipe(
+    //return this.http.get<IUser[]>(url) // REAL API
+    return of(this.allUsers).pipe(
       map((users) =>
         users.filter(
           (user) =>
@@ -32,6 +41,21 @@ export class UsersService {
           params.page * params.number + params.number,
         ),
       ),
+      delay(200),
     );
+  }
+
+  public deleteUser(user: IUser): Observable<null> {
+    //return this.http.delete<null>(url) // REAL API
+    this.allUsers = this.allUsers.filter((u: IUser) => u.email !== user.email);
+    return of(null).pipe(delay(200));
+  }
+
+  public getDetailUser(email: string): Observable<IUserDetail> {
+    const info: IUser = this.allUsers.find((u: IUser) => email === email)!;
+    const statistics: IUserStatistics = this.usersStatistics.find(
+      (u: IUserStatistics) => u.email === email,
+    )!;
+    return of({ info, statistics });
   }
 }

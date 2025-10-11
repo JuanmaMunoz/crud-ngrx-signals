@@ -1,28 +1,84 @@
 import { DatePipe } from '@angular/common';
-import { Component, effect, Signal } from '@angular/core';
+import { Component, effect, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { IGetUsers, IUsersState } from '../../models/interfaces';
-import { getUsers } from '../../store/actions/users.action';
+import { ModalComponent } from '../../../common/components/modal/modal.component';
+import {
+  IGetUsers,
+  IUserDeleteState,
+  IUsersState,
+} from '../../models/interfaces';
+import {
+  deleteUserConfirm,
+  getUsers,
+  setInitialState,
+  setInitialStateDelete,
+  startDeleteUser,
+} from '../../store/actions/users.action';
 import { IUser } from './../../models/interfaces';
 
 @Component({
   selector: 'app-table',
-  imports: [DatePipe],
+  imports: [DatePipe, ModalComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
 export class TableComponent {
-  public users!: Signal<IUser[]>;
-  constructor(private store: Store<{ users: IUsersState }>) {
-    this.users = toSignal(
+  public usersFromStore!: Signal<IUser[]>;
+  public users = signal<IUser[]>([]);
+  public loading!: Signal<boolean>;
+  public loadingDelete!: Signal<boolean>;
+  public startDelete!: Signal<boolean>;
+  public userDeleting!: Signal<IUser | null>;
+  public successDelete!: Signal<boolean>;
+  public openModal = signal<boolean>(false);
+
+  constructor(
+    private store: Store<{ users: IUsersState; userDelete: IUserDeleteState }>,
+    private router: Router,
+  ) {
+    this.usersFromStore = toSignal(
       this.store.select((state) => state.users.users),
       { initialValue: [] },
     );
 
+    this.loading = toSignal(
+      this.store.select((state) => state.users.loading),
+      { initialValue: false },
+    );
+
+    this.userDeleting = toSignal(
+      this.store.select((state) => state.userDelete.user),
+      { initialValue: null },
+    );
+
+    this.loadingDelete = toSignal(
+      this.store.select((state) => state.userDelete.loading),
+      { initialValue: false },
+    );
+
+    this.successDelete = toSignal(
+      this.store.select((state) => state.userDelete.success),
+      { initialValue: false },
+    );
+
     effect(() => {
-      if (this.users().length) {
-        console.log('-->', this.users());
+      this.users.set(this.usersFromStore());
+    });
+
+    effect(() => {
+      this.userDeleting()
+        ? this.openModal.set(true)
+        : this.openModal.set(false);
+    });
+
+    effect(() => {
+      if (this.successDelete()) {
+        this.users.update((users) =>
+          users.filter((u) => u.email !== this.userDeleting()?.email),
+        );
+        this.store.dispatch(setInitialStateDelete());
       }
     });
   }
@@ -33,6 +89,24 @@ export class TableComponent {
       number: 10,
       search: '',
     };
+    this.store.dispatch(setInitialState());
     this.store.dispatch(getUsers(data));
+  }
+
+  public userDetail(email: string): void {
+    this.router.navigate([`users/detail/`, email]);
+  }
+
+  public openModalDelete(user: IUser, event: MouseEvent): void {
+    event.stopPropagation();
+    this.store.dispatch(startDeleteUser({ user }));
+  }
+
+  public cancelDeleting(): void {
+    this.store.dispatch(setInitialStateDelete());
+  }
+
+  public confirmDeleting(): void {
+    this.store.dispatch(deleteUserConfirm());
   }
 }

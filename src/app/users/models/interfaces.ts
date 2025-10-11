@@ -20,3 +20,24 @@ export interface IUsersState {
   error: HttpErrorResponse | null;
   users: IUser[];
 }
+
+export interface IUserDeleteState {
+  loading: boolean;
+  error: HttpErrorResponse | null;
+  success: boolean;
+  user: IUser | null;
+}
+
+export interface IUserStatistics {
+  email: string;
+  productivity: number;
+  hardworking: number;
+  coworker: number;
+  knowledge: number;
+  proactivity: number;
+}
+
+export interface IUserDetail {
+  info: IUser;
+  statistics: IUserStatistics;
+}

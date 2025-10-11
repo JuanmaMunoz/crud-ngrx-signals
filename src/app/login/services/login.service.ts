@@ -18,7 +18,7 @@ export class LoginService {
           ({
             error: { code: '401', error: 'The credentials are incorrect' },
           }) as HttpErrorResponse,
-      ).pipe(delay(500));
+      ).pipe(delay(200));
     }
   }
 }

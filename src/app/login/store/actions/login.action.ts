@@ -1,5 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
+
+//LOGIN
 export const startLogin = createAction(
   '[Login] Start Login',
   props<{ email: string; pass: string }>(),
@@ -9,4 +11,4 @@ export const loginFailure = createAction(
   '[Login] Login Failure',
   props<{ error: HttpErrorResponse }>(),
 );
-export const setInitialState = createAction('[Login] Set initial state');
+export const setInitialState = createAction('[Login] Set Initial State');
