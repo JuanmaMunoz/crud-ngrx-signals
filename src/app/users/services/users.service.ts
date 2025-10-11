@@ -4,12 +4,7 @@ import { delay, map, Observable, of } from 'rxjs';
 import { statistics } from '../../../assets/data/statistics';
 import { users } from '../../../assets/data/users';
 import { SessionService } from '../../common/services/session.service';
-import {
-  IGetUsers,
-  IUser,
-  IUserDetail,
-  IUserStatistics,
-} from '../models/interfaces';
+import { IGetUsers, IReqGetUsers, IUser, IUserDetail, IUserStatistics } from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -20,33 +15,31 @@ export class UsersService {
   private allUsers: IUser[] = users;
   private usersStatistics: IUserStatistics[] = statistics;
 
-  public getUsers(params: IGetUsers): Observable<IUser[]> {
-    //return this.http.get<IUser[]>(url) // REAL API
+  public getUsers(params: IGetUsers): Observable<IReqGetUsers> {
     return of(this.allUsers).pipe(
       map((users) =>
         users.filter(
           (user) =>
             user.name.toLowerCase().includes(params.search.toLowerCase()) ||
             user.lastName.toLowerCase().includes(params.search.toLowerCase()) ||
-            user.salary
-              .toString()
-              .toLowerCase()
-              .includes(params.search.toLowerCase()) ||
+            user.email.toLowerCase().includes(params.search.toLowerCase()) ||
+            user.salary.toString().toLowerCase().includes(params.search.toLowerCase()) ||
             user.position.toLowerCase().includes(params.search.toLowerCase()),
         ),
       ),
-      map((users) =>
-        users.slice(
+      map((users) => ({
+        users: users.slice(
           params.page * params.number,
           params.page * params.number + params.number,
         ),
-      ),
+        totalPages:
+          users.length <= 0 ? 0 : users.length < 10 ? 1 : Math.floor(users.length / params.number),
+      })),
       delay(200),
     );
   }
 
   public deleteUser(user: IUser): Observable<null> {
-    //return this.http.delete<null>(url) // REAL API
     this.allUsers = this.allUsers.filter((u: IUser) => u.email !== user.email);
     return of(null).pipe(delay(200));
   }

@@ -1,8 +1,21 @@
-<div class="app-table text-start table-responsive">
-  <table class="table table-hover">
+<div class="app-table text-start table-responsive placeholder-glow">
+  <div class="app-table__search">
+    <div class="input-group mb-1">
+      <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+      <input
+        type="text"
+        class="form-control"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+        placeholder="Search users"
+      />
+    </div>
+  </div>
+
+  <table class="table table-hover" [class.opacity-25]="loading()">
     <thead>
       <tr>
-        <th class="text-nowrap">Full Name</th>
+        <th>Full Name</th>
         <th>Email</th>
         <th>Incorporation</th>
         <th>Position</th>
@@ -12,32 +25,56 @@
     <tbody>
       @for (user of users(); track $index) {
         <tr (click)="userDetail(user.email)">
-          <td class="text-nowrap">{{ user.name }} {{ user.lastName }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.date | date: "dd/MM/yyyy" }}</td>
-          <td>{{ user.position }}</td>
+          <td>{{ user.name }} {{ user.lastName }}</td>
+          <td>
+            {{ user.email }}
+          </td>
+          <td>
+            {{ user.date | date: "dd/MM/yyyy" }}
+          </td>
+          <td>
+            {{ user.position }}
+          </td>
           <td>
             <i (click)="openModalDelete(user, $event)" class="text-danger bi bi-x-circle fs-5"></i>
           </td>
         </tr>
       }
       @if (loading()) {
-        <tr>
+        <!--<tr>
           <td colspan="5" style="text-align: center">
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
           </td>
-        </tr>
+        </tr>-->
       }
     </tbody>
   </table>
 </div>
 <div class="pagination d-flex justify-content-center mt-1">
   <div class="input-group pagination__content">
-    <button type="button" class="btn btn-outline-secondary">
+    <button
+      (click)="previousPage()"
+      [disabled]="currentPage() === 1"
+      type="button"
+      class="btn btn-outline-secondary"
+    >
       <i class="bi bi-chevron-left"></i>
     </button>
-    <input type="number" class="form-control" />
-    <button type="button" class="btn btn-outline-secondary">
+    <input
+      type="number"
+      class="form-control"
+      [min]="1"
+      [max]="totalPages()"
+      [ngModel]="currentPage()"
+      (ngModelChange)="currentPage.set($event)"
+    />
+    <span class="input-group-text" id="basic-addon2">/ {{ totalPages() }}</span>
+    <button
+      (click)="nextPage()"
+      [disabled]="currentPage() === totalPages()"
+      type="button"
+      class="btn btn-outline-secondary"
+    >
       <i class="bi bi-chevron-right"></i>
     </button>
   </div>

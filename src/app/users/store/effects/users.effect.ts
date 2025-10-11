@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { IGetUsers, IUser, IUserDetail } from './../../models/interfaces';
+import { IGetUsers, IReqGetUsers, IUserDetail } from './../../models/interfaces';
 import {
   getUserDetail,
   getUserDetailFailure,
@@ -30,7 +30,9 @@ export const usersEffect = createEffect(
       ofType(getUsers),
       mergeMap((data: IGetUsers) =>
         usersService.getUsers(data).pipe(
-          map((data: IUser[]) => getUsersSuccess({ users: data })),
+          map((data: IReqGetUsers) =>
+            getUsersSuccess({ users: data.users, totalPages: data.totalPages }),
+          ),
           catchError((error) => of(getUsersFailure({ error: error.error }))),
         ),
       ),
@@ -70,12 +72,8 @@ export const userGetDetailEffect = createEffect(
       ofType(getUserDetail),
       mergeMap((data: { email: string }) =>
         usersService.getUserDetail(data.email).pipe(
-          map((data: IUserDetail) =>
-            getUserDetailSuccess({ userDetail: data }),
-          ),
-          catchError((error) =>
-            of(getUserDetailFailure({ error: error.error })),
-          ),
+          map((data: IUserDetail) => getUserDetailSuccess({ userDetail: data })),
+          catchError((error) => of(getUserDetailFailure({ error: error.error }))),
         ),
       ),
     );

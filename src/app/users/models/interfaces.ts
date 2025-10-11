@@ -24,6 +24,7 @@ export interface IUsersState {
   loading: boolean;
   error: HttpErrorResponse | null;
   users: IUser[];
+  totalPages: number;
 }
 
 export interface IUserDeleteState {

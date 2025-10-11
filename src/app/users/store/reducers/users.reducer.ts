@@ -1,9 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import {
-  IUserDeleteState,
-  IUserGetDetailState,
-  IUsersState,
-} from '../../models/interfaces';
+import { IUserDeleteState, IUserGetDetailState, IUsersState } from '../../models/interfaces';
 import {
   deleteUser,
   deleteUserConfirm,
@@ -23,15 +19,17 @@ export const initialState: IUsersState = {
   loading: false,
   error: null,
   users: [],
+  totalPages: 0,
 };
 
 export const usersReducer = createReducer(
   initialState,
   on(getUsers, (state) => ({ ...state, loading: true })),
-  on(getUsersSuccess, (state, { users }) => ({
+  on(getUsersSuccess, (state, { users, totalPages }) => ({
     ...state,
     loading: false,
-    users: users,
+    users,
+    totalPages,
   })),
   on(getUsersFailure, (state, { error }) => ({
     ...state,
