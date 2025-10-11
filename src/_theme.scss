@@ -1,0 +1,27 @@
+@use "sass:map";
+$primary: #99e6ff;
+$secondary: #007acc;
+$success: #08875d;
+$info: #0dcaf0;
+$warning: #ffc008;
+$danger: #ff4c4c;
+$light: #f5f5f5;
+$dark: #1e1e1e;
+
+$custom-colors: (
+  "dark2": #3e3e42,
+);
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+);
+
+//Merge the maps
+$theme-colors: map.merge($theme-colors, $custom-colors);

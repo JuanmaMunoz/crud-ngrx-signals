@@ -13,7 +13,7 @@ import { InputTextComponent } from '../../../common/components/input-text/input-
 import { TypeInput } from '../../../common/models/enum';
 import { IInput } from '../../../common/models/interfaces';
 import { ILoginState } from '../../models/interfaces';
-import { startLogin } from '../../store/actions/login.action';
+import { login } from '../../store/actions/login.action';
 
 @Component({
   selector: 'app-login-form',
@@ -97,7 +97,7 @@ export class LoginFormComponent {
 
   public login(): void {
     this.store.dispatch(
-      startLogin({
+      login({
         email: this.emailControl.getRawValue(),
         pass: this.passControl.getRawValue(),
       }),

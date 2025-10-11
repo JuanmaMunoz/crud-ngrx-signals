@@ -1,6 +1,11 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { IGetUsers, IUser } from './../../models/interfaces';
+import { IGetUsers, IUser, IUserDetail } from './../../models/interfaces';
+import {
+  getUserDetail,
+  getUserDetailFailure,
+  getUserDetailSuccess,
+} from './../actions/users.action';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
@@ -49,6 +54,28 @@ export const userDeleteEffect = createEffect(
         usersService.deleteUser(userDeleting()).pipe(
           map((data: null) => deleteUserSuccess()),
           catchError((error) => of(deleteUserFailure({ error: error.error }))),
+        ),
+      ),
+    );
+  },
+  { functional: true },
+);
+
+export const userGetDetailEffect = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const usersService = inject(UsersService);
+
+    return actions$.pipe(
+      ofType(getUserDetail),
+      mergeMap((data: { email: string }) =>
+        usersService.getUserDetail(data.email).pipe(
+          map((data: IUserDetail) =>
+            getUserDetailSuccess({ userDetail: data }),
+          ),
+          catchError((error) =>
+            of(getUserDetailFailure({ error: error.error })),
+          ),
         ),
       ),
     );

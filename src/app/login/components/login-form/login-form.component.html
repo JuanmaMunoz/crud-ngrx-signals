@@ -1,22 +1,19 @@
-<div class="login-form card text-start">
-  <h5 class="card-header">Login</h5>
-  <div class="card-body">
-    <form [formGroup]="loginForm" (submit)="login()">
-      <app-input-text [input]="emailInput" />
-      <app-input-pass [input]="passInput" />
-      <button
-        [disabled]="loading()"
-        type="submit"
-        class="btn btn-primary form-control mt-3"
-      >
-        Login
-        @if (loading()) {
-          <span
-            class="spinner-border spinner-border-sm"
-            aria-hidden="true"
-          ></span>
-        }
-      </button>
-    </form>
-  </div>
+<div class="login-form text-start">
+  <form [formGroup]="loginForm" (submit)="login()">
+    <app-input-text [input]="emailInput" />
+    <app-input-pass [input]="passInput" />
+    <button
+      [disabled]="loading()"
+      type="submit"
+      class="btn btn-primary form-control mt-3"
+    >
+      Login
+      @if (loading()) {
+        <span
+          class="spinner-border spinner-border-sm"
+          aria-hidden="true"
+        ></span>
+      }
+    </button>
+  </form>
 </div>

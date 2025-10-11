@@ -3,24 +3,20 @@ import { Component, effect, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { ModalComponent } from '../../../common/components/modal/modal.component';
+import { IGetUsers, IUserDeleteState, IUsersState } from '../../models/interfaces';
 import {
-  IGetUsers,
-  IUserDeleteState,
-  IUsersState,
-} from '../../models/interfaces';
-import {
+  deleteUser,
   deleteUserConfirm,
   getUsers,
   setInitialState,
   setInitialStateDelete,
-  startDeleteUser,
 } from '../../store/actions/users.action';
+import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 import { IUser } from './../../models/interfaces';
 
 @Component({
   selector: 'app-table',
-  imports: [DatePipe, ModalComponent],
+  imports: [DatePipe, ModalDeleteComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
@@ -68,16 +64,12 @@ export class TableComponent {
     });
 
     effect(() => {
-      this.userDeleting()
-        ? this.openModal.set(true)
-        : this.openModal.set(false);
+      this.userDeleting() ? this.openModal.set(true) : this.openModal.set(false);
     });
 
     effect(() => {
       if (this.successDelete()) {
-        this.users.update((users) =>
-          users.filter((u) => u.email !== this.userDeleting()?.email),
-        );
+        this.users.update((users) => users.filter((u) => u.email !== this.userDeleting()?.email));
         this.store.dispatch(setInitialStateDelete());
       }
     });
@@ -85,7 +77,7 @@ export class TableComponent {
 
   ngOnInit(): void {
     const data: IGetUsers = {
-      page: 1,
+      page: 0,
       number: 10,
       search: '',
     };
@@ -99,14 +91,10 @@ export class TableComponent {
 
   public openModalDelete(user: IUser, event: MouseEvent): void {
     event.stopPropagation();
-    this.store.dispatch(startDeleteUser({ user }));
+    this.store.dispatch(deleteUser({ user }));
   }
 
-  public cancelDeleting(): void {
-    this.store.dispatch(setInitialStateDelete());
-  }
-
-  public confirmDeleting(): void {
-    this.store.dispatch(deleteUserConfirm());
+  public actionModalDelete(del: boolean): void {
+    del ? this.store.dispatch(deleteUserConfirm()) : this.store.dispatch(setInitialStateDelete());
   }
 }

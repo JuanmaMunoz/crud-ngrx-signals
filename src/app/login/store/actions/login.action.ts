@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 
 //LOGIN
-export const startLogin = createAction(
+export const login = createAction(
   '[Login] Start Login',
   props<{ email: string; pass: string }>(),
 );

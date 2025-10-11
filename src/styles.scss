@@ -1,3 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
-@use "bootstrap/scss/bootstrap.scss";
+@use "./theme" as *;
+@use "bootstrap/scss/bootstrap" with (
+  $theme-colors: $theme-colors
+);
 @use "bootstrap-icons/font/bootstrap-icons.scss";
+
+body {
+  background-color: var(--bs-dark);
+}
+
+.container {
+  border: 1px solid var(--bs-dark2);
+  border-radius: 2rem;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.table {
+  --bs-table-bg: none;
+  tr > th {
+    color: var(--bs-secondary);
+  }
+  tr > td {
+    color: var(--bs-primary);
+  }
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--bs-dark2);
+  > td {
+    color: var(--bs-light);
+  }
+}

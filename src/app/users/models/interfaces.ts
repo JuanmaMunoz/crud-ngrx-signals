@@ -6,6 +6,11 @@ export interface IGetUsers {
   search: string;
 }
 
+export interface IReqGetUsers {
+  users: IUser[];
+  totalPages: number;
+}
+
 export interface IUser {
   email: string;
   name: string;
@@ -40,4 +45,10 @@ export interface IUserStatistics {
 export interface IUserDetail {
   info: IUser;
   statistics: IUserStatistics;
+}
+
+export interface IUserGetDetailState {
+  loading: boolean;
+  error: HttpErrorResponse | null;
+  userDetail: IUserDetail | null;
 }

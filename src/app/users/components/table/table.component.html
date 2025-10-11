@@ -1,11 +1,10 @@
-<div class="app-table text-start">
-  <table class="table">
+<div class="app-table text-start table-responsive">
+  <table class="table table-hover">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Last Name</th>
+        <th class="text-nowrap">Full Name</th>
         <th>Email</th>
-        <th>Birth Date</th>
+        <th>Incorporation</th>
         <th>Position</th>
         <th></th>
       </tr>
@@ -13,76 +12,39 @@
     <tbody>
       @for (user of users(); track $index) {
         <tr (click)="userDetail(user.email)">
-          <td>{{ user.name }}</td>
-
+          <td class="text-nowrap">{{ user.name }} {{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.date | date: "dd/MM/yyyy" }}</td>
+          <td>{{ user.position }}</td>
           <td>
-            {{ user.lastName }}
-          </td>
-          <td>
-            {{ user.email }}
-          </td>
-          <td>
-            {{ user.date | date: "dd/MM/yyyy" }}
-          </td>
-          <td>
-            {{ user.position }}
-          </td>
-          <td>
-            <i (click)="openModalDelete(user, $event)" class="bi bi-trash3"></i>
+            <i (click)="openModalDelete(user, $event)" class="text-danger bi bi-x-circle fs-5"></i>
           </td>
         </tr>
       }
       @if (loading()) {
         <tr>
           <td colspan="5" style="text-align: center">
-            <span
-              class="spinner-border spinner-border-sm"
-              aria-hidden="true"
-            ></span>
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
           </td>
         </tr>
       }
     </tbody>
   </table>
 </div>
-<app-modal [visible]="openModal">
-  <h3 header>Delete user</h3>
-  <div body>
-    <p>Do you want to delete this user ?</p>
-    <div>
-      <span class="text-primary fw-bold me-2">User:</span
-      ><span class="text-secondary"
-        >{{ userDeleting()?.name }} {{ userDeleting()?.lastName }}</span
-      >
-    </div>
-
-    <div>
-      <span class="text-primary fw-bold me-2">email:</span
-      ><span class="text-secondary">{{ userDeleting()?.email }}</span>
-    </div>
-  </div>
-  <div footer>
-    <button
-      (click)="cancelDeleting()"
-      [disabled]="loadingDelete()"
-      type="button"
-      class="btn btn-secondary me-4"
-    >
-      Close
+<div class="pagination d-flex justify-content-center mt-1">
+  <div class="input-group pagination__content">
+    <button type="button" class="btn btn-outline-secondary">
+      <i class="bi bi-chevron-left"></i>
     </button>
-    <button
-      (click)="confirmDeleting()"
-      [disabled]="loadingDelete()"
-      type="button"
-      class="btn btn-primary"
-    >
-      Delete
-      @if (loadingDelete()) {
-        <span
-          class="spinner-border spinner-border-sm"
-          aria-hidden="true"
-        ></span>
-      }
+    <input type="number" class="form-control" />
+    <button type="button" class="btn btn-outline-secondary">
+      <i class="bi bi-chevron-right"></i>
     </button>
   </div>
-</app-modal>
+</div>
+<app-modal-delete
+  [openModal]="openModal"
+  [loadingDelete]="loadingDelete"
+  [userDeleting]="userDeleting"
+  (actionDelete)="actionModalDelete($event)"
+/>

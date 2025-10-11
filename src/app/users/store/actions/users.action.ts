@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import { IGetUsers, IUser } from '../../models/interfaces';
+import { IUserDetail } from './../../models/interfaces';
 
 //GET USERS
 export const getUsers = createAction('[Users] Get Users', props<IGetUsers>());
@@ -15,7 +16,7 @@ export const getUsersFailure = createAction(
 export const setInitialState = createAction('[Users] Set Initial State Users');
 
 //DELETE USER
-export const startDeleteUser = createAction(
+export const deleteUser = createAction(
   '[User] Delete User',
   props<{ user: IUser }>(),
 );
@@ -36,6 +37,7 @@ export const getUserDetail = createAction(
 );
 export const getUserDetailSuccess = createAction(
   '[User] Get User Detail Success',
+  props<{ userDetail: IUserDetail }>(),
 );
 export const getUserDetailFailure = createAction(
   '[User] Get User Detail Failure',

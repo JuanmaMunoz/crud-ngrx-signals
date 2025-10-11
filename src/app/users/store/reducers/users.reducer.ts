@@ -1,14 +1,20 @@
 import { createReducer, on } from '@ngrx/store';
-import { IUserDeleteState, IUsersState } from '../../models/interfaces';
 import {
+  IUserDeleteState,
+  IUserGetDetailState,
+  IUsersState,
+} from '../../models/interfaces';
+import {
+  deleteUser,
   deleteUserConfirm,
   deleteUserSuccess,
+  getUserDetail,
+  getUserDetailSuccess,
   getUsers,
   getUsersFailure,
   getUsersSuccess,
   setInitialState,
   setInitialStateDelete,
-  startDeleteUser,
 } from '../actions/users.action';
 
 //GET USERS
@@ -46,7 +52,7 @@ export const initialStateDelete: IUserDeleteState = {
 
 export const userDeleteReducer = createReducer(
   initialStateDelete,
-  on(startDeleteUser, (state, { user }) => ({ ...state, user })),
+  on(deleteUser, (state, { user }) => ({ ...state, user })),
   on(deleteUserConfirm, (state) => ({ ...state, loading: true })),
   on(deleteUserSuccess, (state) => ({
     ...state,
@@ -59,4 +65,28 @@ export const userDeleteReducer = createReducer(
     error,
   })),
   on(setInitialStateDelete, () => initialStateDelete),
+);
+
+//GET DETAIL USER
+
+export const initialStateGetDetail: IUserGetDetailState = {
+  loading: false,
+  error: null,
+  userDetail: null,
+};
+
+export const userGetDetailReducer = createReducer(
+  initialStateGetDetail,
+  on(getUserDetail, (state) => ({ ...state, loading: true })),
+  on(getUserDetailSuccess, (state, { userDetail }) => ({
+    ...state,
+    loading: false,
+    userDetail,
+  })),
+  on(getUsersFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+  on(setInitialStateDelete, () => initialStateGetDetail),
 );

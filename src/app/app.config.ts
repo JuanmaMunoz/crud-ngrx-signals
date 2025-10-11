@@ -12,10 +12,12 @@ import { loginEffect } from './login/store/effects/login.effect';
 import { loginReducer } from './login/store/reducers/login.reducer';
 import {
   userDeleteEffect,
+  userGetDetailEffect,
   usersEffect,
 } from './users/store/effects/users.effect';
 import {
   userDeleteReducer,
+  userGetDetailReducer,
   usersReducer,
 } from './users/store/reducers/users.reducer';
 
@@ -24,6 +26,7 @@ const store = {
   token: tokenReducer,
   users: usersReducer,
   userDelete: userDeleteReducer,
+  userDetail: userGetDetailReducer,
 };
 
 export const appConfig: ApplicationConfig = {
@@ -31,7 +34,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withHashLocation()),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideStore(store),
-    provideEffects([{ loginEffect, usersEffect, userDeleteEffect }]),
+    provideEffects([
+      { loginEffect, usersEffect, userDeleteEffect, userGetDetailEffect },
+    ]),
 
     provideStoreDevtools({ maxAge: 25, logOnly: false }),
   ],

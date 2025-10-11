@@ -6,11 +6,7 @@ import { catchError, mergeMap } from 'rxjs/operators';
 import { ITokenState } from '../../../common/models/interfaces';
 import { createToken } from '../../../common/store/actions/token.action';
 import { LoginService } from '../../services/login.service';
-import {
-  loginFailure,
-  loginSuccess,
-  startLogin,
-} from '../actions/login.action';
+import { login, loginFailure, loginSuccess } from '../actions/login.action';
 
 export const loginEffect = createEffect(
   () => {
@@ -18,7 +14,7 @@ export const loginEffect = createEffect(
     const loginService = inject(LoginService);
 
     return actions$.pipe(
-      ofType(startLogin),
+      ofType(login),
       mergeMap(({ email, pass }) =>
         loginService.startLogin(email, pass).pipe(
           mergeMap((data: ITokenState) => [

@@ -1,0 +1,9 @@
+.table {
+  cursor: pointer;
+}
+
+.pagination {
+  &__content {
+    max-width: 9rem;
+  }
+}

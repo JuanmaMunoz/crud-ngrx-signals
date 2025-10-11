@@ -51,8 +51,8 @@ export class UsersService {
     return of(null).pipe(delay(200));
   }
 
-  public getDetailUser(email: string): Observable<IUserDetail> {
-    const info: IUser = this.allUsers.find((u: IUser) => email === email)!;
+  public getUserDetail(email: string): Observable<IUserDetail> {
+    const info: IUser = this.allUsers.find((u: IUser) => u.email === email)!;
     const statistics: IUserStatistics = this.usersStatistics.find(
       (u: IUserStatistics) => u.email === email,
     )!;
