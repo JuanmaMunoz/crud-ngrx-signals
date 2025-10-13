@@ -9,8 +9,6 @@ export interface IGetUsers {
 export interface IReqGetUsers {
   users: IUser[];
   totalPages: number;
-  currentPage: number;
-  search: string;
 }
 
 export interface IUser {
@@ -27,8 +25,9 @@ export interface IUsersState {
   error: HttpErrorResponse | null;
   users: IUser[];
   totalPages: number;
-  currentPage: number;
+  page: number;
   search: string;
+  firstLoad: boolean;
 }
 
 export interface IUserDeleteState {

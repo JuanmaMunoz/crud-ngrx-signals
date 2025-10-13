@@ -16,17 +16,26 @@ export class UsersService {
   private usersStatistics: IUserStatistics[] = statistics;
 
   public getUsers(params: IGetUsers): Observable<IReqGetUsers> {
-    console.log('params->', params);
+    const search = this.normalizeText(params.search);
+
     return of(this.allUsers).pipe(
       map((users) =>
-        users.filter(
-          (user) =>
-            user.name.toLowerCase().includes(params.search.toLowerCase()) ||
-            user.lastName.toLowerCase().includes(params.search.toLowerCase()) ||
-            user.email.toLowerCase().includes(params.search.toLowerCase()) ||
-            user.salary.toString().toLowerCase().includes(params.search.toLowerCase()) ||
-            user.position.toLowerCase().includes(params.search.toLowerCase()),
-        ),
+        users.filter((user) => {
+          const name = this.normalizeText(user.name);
+          const lastName = this.normalizeText(user.lastName);
+          const email = this.normalizeText(user.email);
+          const salary = this.normalizeText(user.salary.toString());
+          const position = this.normalizeText(user.position);
+          const fullName = `${name} ${lastName}`;
+          const date = new Date(user.date).toLocaleDateString();
+          return (
+            date.includes(search) ||
+            fullName.includes(search) ||
+            email.includes(search) ||
+            salary.includes(search) ||
+            position.includes(search)
+          );
+        }),
       ),
       map((users) => ({
         users: users.slice(
@@ -34,12 +43,17 @@ export class UsersService {
           (params.page - 1) * params.number + params.number,
         ),
         totalPages:
-          users.length <= 0 ? 0 : users.length < 10 ? 1 : Math.floor(users.length / params.number),
-        currentPage: params.page,
-        search: params.search,
+          users.length <= 0 ? 0 : users.length < 10 ? 1 : Math.ceil(users.length / params.number),
       })),
       delay(200),
     );
+  }
+
+  private normalizeText(text: string): string {
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 
   public deleteUser(user: IUser): Observable<null> {

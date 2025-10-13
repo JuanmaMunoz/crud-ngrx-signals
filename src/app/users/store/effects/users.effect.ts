@@ -34,8 +34,6 @@ export const usersEffect = createEffect(
             getUsersSuccess({
               users: data.users,
               totalPages: data.totalPages,
-              search: data.search,
-              currentPage: data.currentPage,
             }),
           ),
           catchError((error) => of(getUsersFailure({ error: error.error }))),

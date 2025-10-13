@@ -5,6 +5,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideNgxMask } from 'ngx-mask';
 import { routes } from './app.routes';
 import { tokenReducer } from './common/store/reducers/token.reducer';
 import { authInterceptor } from './common/utils/authInterceptor';
@@ -32,11 +33,10 @@ const store = {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withHashLocation()),
+    provideNgxMask(),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideStore(store),
-    provideEffects([
-      { loginEffect, usersEffect, userDeleteEffect, userGetDetailEffect },
-    ]),
+    provideEffects([{ loginEffect, usersEffect, userDeleteEffect, userGetDetailEffect }]),
 
     provideStoreDevtools({ maxAge: 25, logOnly: false }),
   ],

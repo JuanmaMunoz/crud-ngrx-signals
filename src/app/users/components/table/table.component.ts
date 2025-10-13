@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, effect, signal, Signal } from '@angular/core';
+import { Component, effect, ElementRef, signal, Signal, ViewChild } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { NgxMaskDirective } from 'ngx-mask';
 import { debounceTime, Subscription } from 'rxjs';
 import { IGetUsers, IUserDeleteState, IUsersState } from '../../models/interfaces';
 import {
@@ -17,11 +18,12 @@ import { IUser } from './../../models/interfaces';
 
 @Component({
   selector: 'app-table',
-  imports: [DatePipe, ModalDeleteComponent, FormsModule],
+  imports: [DatePipe, ModalDeleteComponent, FormsModule, NgxMaskDirective],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
 export class TableComponent {
+  @ViewChild('page') inputPage!: ElementRef;
   public usersFromStore!: Signal<IUser[]>;
   public users = signal<IUser[]>([]);
   public totalPages!: Signal<number>;
@@ -58,7 +60,7 @@ export class TableComponent {
     );
 
     this.currentPage = toSignal(
-      this.store.select((state) => state.users.currentPage),
+      this.store.select((state) => state.users.page),
       { initialValue: 1 },
     );
 
@@ -81,13 +83,6 @@ export class TableComponent {
       this.store.select((state) => state.userDelete.success),
       { initialValue: false },
     );
-
-    effect(() => {
-      /*const params$ = toObservable(this.params)
-        .pipe(debounceTime(500))
-        .subscribe((data) => this.store.dispatch(getUsers(data)));
-      this.store.dispatch(getUsers(this.params()));*/
-    });
 
     effect(() => {
       this.users.set(this.usersFromStore());
@@ -143,6 +138,10 @@ export class TableComponent {
   }
 
   public changePage(): void {
+    if (this.pageText < 1) {
+      this.pageText = 1;
+    }
+    if (this.pageText > this.totalPages()) this.pageText = this.totalPages();
     this.params.update((params) => ({ ...params, page: this.pageText }));
   }
 

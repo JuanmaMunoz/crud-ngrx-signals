@@ -1,9 +1,20 @@
-.table {
-  cursor: pointer;
-}
-
-.pagination {
+.app-table {
   &__content {
-    max-width: 13rem;
+    min-height: 32.9rem;
+    position: relative;
+    &__loading {
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  &__pagination {
+    &__content {
+      max-width: 13rem;
+    }
+  }
+  .table {
+    cursor: pointer;
   }
 }

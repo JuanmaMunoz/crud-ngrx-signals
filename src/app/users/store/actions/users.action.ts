@@ -7,7 +7,7 @@ import { IUserDetail } from './../../models/interfaces';
 export const getUsers = createAction('[Users] Get Users', props<IGetUsers>());
 export const getUsersSuccess = createAction(
   '[Users] Get Users Success',
-  props<{ users: IUser[]; totalPages: number; currentPage: number; search: string }>(),
+  props<{ users: IUser[]; totalPages: number }>(),
 );
 export const getUsersFailure = createAction(
   '[Users] Get Users Failure',
