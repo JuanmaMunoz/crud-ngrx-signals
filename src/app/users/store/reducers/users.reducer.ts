@@ -20,16 +20,20 @@ export const initialState: IUsersState = {
   error: null,
   users: [],
   totalPages: 0,
+  currentPage: 1,
+  search: '',
 };
 
 export const usersReducer = createReducer(
   initialState,
   on(getUsers, (state) => ({ ...state, loading: true })),
-  on(getUsersSuccess, (state, { users, totalPages }) => ({
+  on(getUsersSuccess, (state, { users, totalPages, currentPage, search }) => ({
     ...state,
     loading: false,
     users,
     totalPages,
+    currentPage,
+    search,
   })),
   on(getUsersFailure, (state, { error }) => ({
     ...state,

@@ -31,3 +31,28 @@ body {
     color: var(--bs-light);
   }
 }
+
+.form-control {
+  background-color: transparent;
+  border-color: var(--bs-secondary);
+  color: var(--bs-primary);
+}
+
+.form-control:focus {
+  background-color: transparent;
+  color: var(--bs-primary);
+}
+
+.form-control::placeholder {
+  color: var(--bs-dark2);
+}
+
+.form-control:disabled {
+  background-color: var(--bs-dark2);
+}
+
+.input-group-text {
+  background-color: transparent;
+  border-color: var(--bs-secondary);
+  color: var(--bs-secondary);
+}

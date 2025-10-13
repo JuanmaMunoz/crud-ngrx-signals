@@ -16,6 +16,7 @@ export class UsersService {
   private usersStatistics: IUserStatistics[] = statistics;
 
   public getUsers(params: IGetUsers): Observable<IReqGetUsers> {
+    console.log('params->', params);
     return of(this.allUsers).pipe(
       map((users) =>
         users.filter(
@@ -29,11 +30,13 @@ export class UsersService {
       ),
       map((users) => ({
         users: users.slice(
-          params.page * params.number,
-          params.page * params.number + params.number,
+          (params.page - 1) * params.number,
+          (params.page - 1) * params.number + params.number,
         ),
         totalPages:
           users.length <= 0 ? 0 : users.length < 10 ? 1 : Math.floor(users.length / params.number),
+        currentPage: params.page,
+        search: params.search,
       })),
       delay(200),
     );

@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, effect, signal, Signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { debounceTime, Subscription } from 'rxjs';
 import { IGetUsers, IUserDeleteState, IUsersState } from '../../models/interfaces';
 import {
   deleteUser,
@@ -22,16 +23,20 @@ import { IUser } from './../../models/interfaces';
 })
 export class TableComponent {
   public usersFromStore!: Signal<IUser[]>;
-  public totalPages!: Signal<number>;
-  public currentPage = signal<number>(0);
-  public search = signal<string>('');
   public users = signal<IUser[]>([]);
+  public totalPages!: Signal<number>;
+  public params = signal<IGetUsers>({ page: 0, number: 10, search: '' });
+  public currentPage!: Signal<number>;
+  public search!: Signal<string>;
   public loading!: Signal<boolean>;
   public loadingDelete!: Signal<boolean>;
   public startDelete!: Signal<boolean>;
   public userDeleting!: Signal<IUser | null>;
   public successDelete!: Signal<boolean>;
   public openModal = signal<boolean>(false);
+  public searchText: string = '';
+  public pageText: number = 1;
+  private subscription = new Subscription();
 
   constructor(
     private store: Store<{ users: IUsersState; userDelete: IUserDeleteState }>,
@@ -45,6 +50,16 @@ export class TableComponent {
     this.totalPages = toSignal(
       this.store.select((state) => state.users.totalPages),
       { initialValue: 0 },
+    );
+
+    this.search = toSignal(
+      this.store.select((state) => state.users.search),
+      { initialValue: '' },
+    );
+
+    this.currentPage = toSignal(
+      this.store.select((state) => state.users.currentPage),
+      { initialValue: 1 },
     );
 
     this.loading = toSignal(
@@ -68,17 +83,22 @@ export class TableComponent {
     );
 
     effect(() => {
-      const data: IGetUsers = {
-        page: this.currentPage() - 1,
-        number: 10,
-        search: this.search(),
-      };
-      //this.store.dispatch(setInitialState());
-      this.store.dispatch(getUsers(data));
+      /*const params$ = toObservable(this.params)
+        .pipe(debounceTime(500))
+        .subscribe((data) => this.store.dispatch(getUsers(data)));
+      this.store.dispatch(getUsers(this.params()));*/
     });
 
     effect(() => {
       this.users.set(this.usersFromStore());
+    });
+
+    effect(() => {
+      this.searchText = this.search();
+    });
+
+    effect(() => {
+      this.pageText = this.currentPage();
     });
 
     effect(() => {
@@ -91,10 +111,20 @@ export class TableComponent {
         this.store.dispatch(setInitialStateDelete());
       }
     });
+
+    this.subscription.add(
+      toObservable(this.params)
+        .pipe(debounceTime(500))
+        .subscribe((data) => this.store.dispatch(getUsers(data))),
+    );
   }
 
   ngOnInit(): void {
-    this.currentPage.set(1);
+    this.params.update((params) => ({
+      ...params,
+      search: this.search(),
+      page: this.currentPage(),
+    }));
   }
 
   public userDetail(email: string): void {
@@ -112,11 +142,21 @@ export class TableComponent {
       : this.store.dispatch(setInitialStateDelete());
   }
 
+  public changePage(): void {
+    this.params.update((params) => ({ ...params, page: this.pageText }));
+  }
+
   public nextPage(): void {
-    this.currentPage.set(this.currentPage() + 1);
+    this.pageText++;
+    this.changePage();
   }
 
   public previousPage(): void {
-    this.currentPage.set(this.currentPage() - 1);
+    this.pageText--;
+    this.changePage();
+  }
+
+  public changeSearh(): void {
+    this.params.update((params) => ({ ...params, page: 1, search: this.searchText }));
   }
 }

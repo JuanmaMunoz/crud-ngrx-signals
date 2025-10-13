@@ -10,7 +10,7 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { UsersService } from '../../services/users.service';
 import {
   deleteUserConfirm,
@@ -28,10 +28,15 @@ export const usersEffect = createEffect(
 
     return actions$.pipe(
       ofType(getUsers),
-      mergeMap((data: IGetUsers) =>
+      switchMap((data: IGetUsers) =>
         usersService.getUsers(data).pipe(
           map((data: IReqGetUsers) =>
-            getUsersSuccess({ users: data.users, totalPages: data.totalPages }),
+            getUsersSuccess({
+              users: data.users,
+              totalPages: data.totalPages,
+              search: data.search,
+              currentPage: data.currentPage,
+            }),
           ),
           catchError((error) => of(getUsersFailure({ error: error.error }))),
         ),
