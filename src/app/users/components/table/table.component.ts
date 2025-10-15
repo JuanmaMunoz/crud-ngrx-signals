@@ -6,11 +6,13 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NgxMaskDirective } from 'ngx-mask';
 import { debounceTime, Subscription } from 'rxjs';
-import { IGetUsers, IUserDeleteState, IUsersState } from '../../models/interfaces';
+import { SpinnerComponent } from '../../../common/components/spinner/spinner.component';
+import { IGetUsersParams, IUserDeleteState, IUsersState } from '../../models/interfaces';
 import {
   deleteUser,
   deleteUserConfirm,
   getUsers,
+  getUsersRefresh,
   setInitialStateDelete,
 } from '../../store/actions/users.action';
 import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
@@ -18,7 +20,7 @@ import { IUser } from './../../models/interfaces';
 
 @Component({
   selector: 'app-table',
-  imports: [DatePipe, ModalDeleteComponent, FormsModule, NgxMaskDirective],
+  imports: [DatePipe, ModalDeleteComponent, FormsModule, NgxMaskDirective, SpinnerComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
@@ -27,7 +29,7 @@ export class TableComponent {
   public usersFromStore!: Signal<IUser[]>;
   public users = signal<IUser[]>([]);
   public totalPages!: Signal<number>;
-  public params = signal<IGetUsers>({ page: 0, number: 10, search: '' });
+  public params = signal<IGetUsersParams | null>(null);
   public currentPage!: Signal<number>;
   public search!: Signal<string>;
   public loading!: Signal<boolean>;
@@ -37,8 +39,11 @@ export class TableComponent {
   public successDelete!: Signal<boolean>;
   public openModal = signal<boolean>(false);
   public searchText: string = '';
+  public firstLoad!: Signal<boolean>;
   public pageText: number = 1;
   private subscription = new Subscription();
+  private delaySearch: number = 200;
+  private numberRows: number = 10;
 
   constructor(
     private store: Store<{ users: IUsersState; userDelete: IUserDeleteState }>,
@@ -69,6 +74,11 @@ export class TableComponent {
       { initialValue: false },
     );
 
+    this.firstLoad = toSignal(
+      this.store.select((state) => state.users.firstLoad),
+      { initialValue: true },
+    );
+
     this.userDeleting = toSignal(
       this.store.select((state) => state.userDelete.user),
       { initialValue: null },
@@ -97,29 +107,34 @@ export class TableComponent {
     });
 
     effect(() => {
-      this.userDeleting() ? this.openModal.set(true) : this.openModal.set(false);
-    });
-
-    effect(() => {
       if (this.successDelete()) {
-        this.users.update((users) => users.filter((u) => u.email !== this.userDeleting()?.email));
+        this.openModal.set(false);
+        this.store.dispatch(getUsers(this.params()!));
         this.store.dispatch(setInitialStateDelete());
       }
     });
 
     this.subscription.add(
       toObservable(this.params)
-        .pipe(debounceTime(500))
-        .subscribe((data) => this.store.dispatch(getUsers(data))),
+        .pipe(debounceTime(this.delaySearch))
+        .subscribe((data) => {
+          if (data) this.store.dispatch(getUsers(data));
+        }),
     );
   }
 
   ngOnInit(): void {
-    this.params.update((params) => ({
-      ...params,
+    this.store.dispatch(setInitialStateDelete());
+    this.store.dispatch(getUsersRefresh());
+    this.params.set({
+      number: this.numberRows,
       search: this.search(),
       page: this.currentPage(),
-    }));
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public userDetail(email: string): void {
@@ -128,13 +143,12 @@ export class TableComponent {
 
   public openModalDelete(user: IUser, event: MouseEvent): void {
     event.stopPropagation();
+    this.openModal.set(true);
     this.store.dispatch(deleteUser({ user }));
   }
 
   public actionModalDelete(deleteUser: boolean): void {
-    deleteUser
-      ? this.store.dispatch(deleteUserConfirm())
-      : this.store.dispatch(setInitialStateDelete());
+    deleteUser ? this.store.dispatch(deleteUserConfirm()) : this.openModal.set(false);
   }
 
   public changePage(): void {
@@ -142,7 +156,7 @@ export class TableComponent {
       this.pageText = 1;
     }
     if (this.pageText > this.totalPages()) this.pageText = this.totalPages();
-    this.params.update((params) => ({ ...params, page: this.pageText }));
+    this.params.set({ number: this.numberRows, page: this.pageText, search: this.search() });
   }
 
   public nextPage(): void {
@@ -156,6 +170,13 @@ export class TableComponent {
   }
 
   public changeSearh(): void {
-    this.params.update((params) => ({ ...params, page: 1, search: this.searchText }));
+    this.params.set({ number: this.numberRows, page: 1, search: this.searchText });
+  }
+
+  public deleteSearch(): void {
+    if (this.searchText) {
+      this.searchText = '';
+      this.changeSearh();
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { IGetUsers, IReqGetUsers, IUserDetail } from './../../models/interfaces';
+import { IGetUsersParams, IReqGetUsers, IUserDetail } from './../../models/interfaces';
 import {
   getUserDetail,
   getUserDetailFailure,
@@ -28,7 +28,7 @@ export const usersEffect = createEffect(
 
     return actions$.pipe(
       ofType(getUsers),
-      switchMap((data: IGetUsers) =>
+      switchMap((data: IGetUsersParams) =>
         usersService.getUsers(data).pipe(
           map((data: IReqGetUsers) =>
             getUsersSuccess({

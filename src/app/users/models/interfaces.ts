@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { Color } from './enums';
 
-export interface IGetUsers {
+export interface IGetUsersParams {
   page: number;
   number: number;
   search: string;
@@ -55,4 +56,21 @@ export interface IUserGetDetailState {
   loading: boolean;
   error: HttpErrorResponse | null;
   userDetail: IUserDetail | null;
+}
+
+export interface IBoxInfo {
+  label: string;
+  value: string | number;
+  color: Color;
+}
+
+export interface IDataset {
+  label: string;
+  data: number[];
+  backgroundColor: string[];
+}
+
+export interface ICharData {
+  labels: string[];
+  datasets: IDataset[];
 }

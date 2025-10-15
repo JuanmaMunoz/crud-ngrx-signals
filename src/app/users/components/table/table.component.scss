@@ -1,6 +1,6 @@
 .app-table {
   &__content {
-    min-height: 32.9rem;
+    min-height: 28.8rem;
     position: relative;
     &__loading {
       left: 50%;
@@ -16,5 +16,6 @@
   }
   .table {
     cursor: pointer;
+    line-height: 1.2;
   }
 }

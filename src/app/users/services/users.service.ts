@@ -4,7 +4,13 @@ import { delay, map, Observable, of } from 'rxjs';
 import { statistics } from '../../../assets/data/statistics';
 import { users } from '../../../assets/data/users';
 import { SessionService } from '../../common/services/session.service';
-import { IGetUsers, IReqGetUsers, IUser, IUserDetail, IUserStatistics } from '../models/interfaces';
+import {
+  IGetUsersParams,
+  IReqGetUsers,
+  IUser,
+  IUserDetail,
+  IUserStatistics,
+} from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +21,7 @@ export class UsersService {
   private allUsers: IUser[] = users;
   private usersStatistics: IUserStatistics[] = statistics;
 
-  public getUsers(params: IGetUsers): Observable<IReqGetUsers> {
+  public getUsers(params: IGetUsersParams): Observable<IReqGetUsers> {
     const search = this.normalizeText(params.search);
 
     return of(this.allUsers).pipe(
@@ -27,7 +33,11 @@ export class UsersService {
           const salary = this.normalizeText(user.salary.toString());
           const position = this.normalizeText(user.position);
           const fullName = `${name} ${lastName}`;
-          const date = new Date(user.date).toLocaleDateString();
+          const date = new Date(user.date).toLocaleDateString('en-US', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          });
           return (
             date.includes(search) ||
             fullName.includes(search) ||
@@ -66,6 +76,6 @@ export class UsersService {
     const statistics: IUserStatistics = this.usersStatistics.find(
       (u: IUserStatistics) => u.email === email,
     )!;
-    return of({ info, statistics });
+    return of({ info, statistics }).pipe(delay(200));
   }
 }

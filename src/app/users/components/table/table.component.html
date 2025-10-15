@@ -9,12 +9,15 @@
         class="form-control"
         placeholder="Search users"
       />
+      <button (click)="deleteSearch()" type="button" class="btn btn-outline-secondary">
+        <i class="bi bi-x-circle"></i>
+      </button>
     </div>
   </div>
   <div class="app-table__content table-responsive">
     @if (loading()) {
       <div class="app-table__content__loading">
-        <span class="text-secondary spinner-border" style="width: 5rem; height: 5rem"></span>
+        <app-spinner />
       </div>
     }
     <table class="table table-hover" [class.opacity-25]="loading()">
@@ -35,7 +38,7 @@
               {{ user.email }}
             </td>
             <td>
-              {{ user.date | date: "dd/MM/yyyy" }}
+              {{ user.date | date: "MM/dd/yyyy" }}
             </td>
             <td>
               {{ user.position }}
@@ -55,7 +58,7 @@
     <div class="input-group app-table__pagination__content">
       <button
         (click)="previousPage()"
-        [disabled]="currentPage() === 1"
+        [disabled]="currentPage() <= 1"
         type="button"
         class="btn btn-outline-secondary"
       >
@@ -72,7 +75,12 @@
         (ngModelChange)="changePage()"
       />
       <span class="input-group-text" id="basic-addon2">/ {{ totalPages() }}</span>
-      <button (click)="nextPage()" type="button" class="btn btn-outline-secondary">
+      <button
+        (click)="nextPage()"
+        [disabled]="currentPage() >= totalPages()"
+        type="button"
+        class="btn btn-outline-secondary"
+      >
         <i class="bi bi-chevron-right"></i>
       </button>
     </div>

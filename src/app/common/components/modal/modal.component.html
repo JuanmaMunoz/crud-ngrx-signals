@@ -1,9 +1,6 @@
-<div
-  class="modal"
-  [ngStyle]="visible() ? { display: 'block' } : { display: 'none' }"
->
+<div class="modal" [ngStyle]="visible() ? { display: 'block' } : { display: 'none' }">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content border-secondary bg-dark">
       <div class="modal-header">
         <ng-content select="[header]"></ng-content>
       </div>

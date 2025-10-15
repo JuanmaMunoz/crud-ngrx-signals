@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
-import { IGetUsers, IUser } from '../../models/interfaces';
+import { IGetUsersParams, IUser } from '../../models/interfaces';
 import { IUserDetail } from './../../models/interfaces';
 
 //GET USERS
-export const getUsers = createAction('[Users] Get Users', props<IGetUsers>());
+export const getUsers = createAction('[Users] Get Users', props<IGetUsersParams>());
 export const getUsersSuccess = createAction(
   '[Users] Get Users Success',
   props<{ users: IUser[]; totalPages: number }>(),
@@ -13,7 +13,8 @@ export const getUsersFailure = createAction(
   '[Users] Get Users Failure',
   props<{ error: HttpErrorResponse }>(),
 );
-export const setInitialState = createAction('[Users] Set Initial State Users');
+export const getUsersRefresh = createAction('[Users] Set Refresh Users');
+export const setInitialStateGetUsers = createAction('[Users] Set Initial State Users');
 
 //DELETE USER
 export const deleteUser = createAction('[User] Delete User', props<{ user: IUser }>());

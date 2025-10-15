@@ -8,14 +8,15 @@ import {
   getUserDetailSuccess,
   getUsers,
   getUsersFailure,
+  getUsersRefresh,
   getUsersSuccess,
-  setInitialState,
   setInitialStateDelete,
+  setInitialStateGetUsers,
 } from '../actions/users.action';
 
 //GET USERS
 
-export const initialState: IUsersState = {
+export const initialStateGetUsers: IUsersState = {
   loading: false,
   error: null,
   users: [],
@@ -26,7 +27,7 @@ export const initialState: IUsersState = {
 };
 
 export const usersReducer = createReducer(
-  initialState,
+  initialStateGetUsers,
   on(getUsers, (state, { page, search }) => ({
     ...state,
     page,
@@ -45,7 +46,12 @@ export const usersReducer = createReducer(
     loading: false,
     error,
   })),
-  on(setInitialState, () => initialState),
+  on(getUsersRefresh, (state) => ({
+    ...state,
+    loading: true,
+    users: [],
+  })),
+  on(setInitialStateGetUsers, () => initialStateGetUsers),
 );
 
 //DELETE USERS
