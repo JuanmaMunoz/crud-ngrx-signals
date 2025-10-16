@@ -24,7 +24,7 @@ import { IBoxInfo } from './../../models/interfaces';
   styleUrl: './info.component.scss',
 })
 export class InfoComponent {
-  @Input() userDetail = signal<IUserDetail | null>(null);
+  @Input() userDetail!: Signal<IUserDetail | null>;
   public boxInfoPosition = signal<IBoxInfo>({ color: Color.PRIMARY, label: 'Position', value: '' });
   public boxInfoIncorporation = signal<IBoxInfo>({
     color: Color.SECONDARY,

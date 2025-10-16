@@ -13,7 +13,6 @@ export const getUsersFailure = createAction(
   '[Users] Get Users Failure',
   props<{ error: HttpErrorResponse }>(),
 );
-export const getUsersRefresh = createAction('[Users] Set Refresh Users');
 export const setInitialStateGetUsers = createAction('[Users] Set Initial State Users');
 
 //DELETE USER

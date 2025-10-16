@@ -8,7 +8,6 @@ import {
   getUserDetailSuccess,
   getUsers,
   getUsersFailure,
-  getUsersRefresh,
   getUsersSuccess,
   setInitialStateDelete,
   setInitialStateGetUsers,
@@ -23,7 +22,6 @@ export const initialStateGetUsers: IUsersState = {
   totalPages: 0,
   page: 1,
   search: '',
-  firstLoad: true,
 };
 
 export const usersReducer = createReducer(
@@ -32,6 +30,7 @@ export const usersReducer = createReducer(
     ...state,
     page,
     search,
+    users: [],
     loading: true,
     firstLoad: false,
   })),
@@ -45,11 +44,6 @@ export const usersReducer = createReducer(
     ...state,
     loading: false,
     error,
-  })),
-  on(getUsersRefresh, (state) => ({
-    ...state,
-    loading: true,
-    users: [],
   })),
   on(setInitialStateGetUsers, () => initialStateGetUsers),
 );

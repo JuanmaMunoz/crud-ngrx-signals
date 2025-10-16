@@ -12,7 +12,6 @@ import {
   deleteUser,
   deleteUserConfirm,
   getUsers,
-  getUsersRefresh,
   setInitialStateDelete,
 } from '../../store/actions/users.action';
 import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
@@ -38,9 +37,9 @@ export class TableComponent {
   public userDeleting!: Signal<IUser | null>;
   public successDelete!: Signal<boolean>;
   public openModal = signal<boolean>(false);
-  public searchText: string = '';
-  public firstLoad!: Signal<boolean>;
-  public pageText: number = 1;
+  public searchText = signal<string>('');
+  public firstLoad: boolean = false;
+  public pageText = signal<number>(1);
   private subscription = new Subscription();
   private delaySearch: number = 200;
   private numberRows: number = 10;
@@ -74,11 +73,6 @@ export class TableComponent {
       { initialValue: false },
     );
 
-    this.firstLoad = toSignal(
-      this.store.select((state) => state.users.firstLoad),
-      { initialValue: true },
-    );
-
     this.userDeleting = toSignal(
       this.store.select((state) => state.userDelete.user),
       { initialValue: null },
@@ -99,11 +93,11 @@ export class TableComponent {
     });
 
     effect(() => {
-      this.searchText = this.search();
+      this.searchText.set(this.search());
     });
 
     effect(() => {
-      this.pageText = this.currentPage();
+      this.pageText.set(this.currentPage());
     });
 
     effect(() => {
@@ -114,18 +108,28 @@ export class TableComponent {
       }
     });
 
+    effect(() => {
+      if (this.params()) {
+        this.store.dispatch(getUsers(this.params()!));
+      }
+    });
+
+    effect(() => {
+      if (!this.firstLoad && this.pageText()) return;
+      this.params.update((params) => (params ? { ...params, page: this.pageText() } : null));
+    });
+
     this.subscription.add(
-      toObservable(this.params)
+      toObservable(this.searchText)
         .pipe(debounceTime(this.delaySearch))
-        .subscribe((data) => {
-          if (data) this.store.dispatch(getUsers(data));
+        .subscribe((search) => {
+          if (this.firstLoad) this.params.set({ number: this.numberRows, page: 1, search: search });
         }),
     );
   }
 
   ngOnInit(): void {
     this.store.dispatch(setInitialStateDelete());
-    this.store.dispatch(getUsersRefresh());
     this.params.set({
       number: this.numberRows,
       search: this.search(),
@@ -151,32 +155,38 @@ export class TableComponent {
     deleteUser ? this.store.dispatch(deleteUserConfirm()) : this.openModal.set(false);
   }
 
-  public changePage(): void {
-    if (this.pageText < 1) {
-      this.pageText = 1;
-    }
-    if (this.pageText > this.totalPages()) this.pageText = this.totalPages();
-    this.params.set({ number: this.numberRows, page: this.pageText, search: this.search() });
+  public changePage(page: number): void {
+    this.userAction(() => {
+      if (page < 1) {
+        page = 1;
+      }
+      if (page > this.totalPages()) page = this.totalPages();
+      this.pageText.set(page);
+    });
   }
 
   public nextPage(): void {
-    this.pageText++;
-    this.changePage();
+    this.userAction(() => this.pageText.update((value) => value + 1));
   }
 
   public previousPage(): void {
-    this.pageText--;
-    this.changePage();
+    this.userAction(() => this.pageText.update((value) => value - 1));
   }
 
-  public changeSearh(): void {
-    this.params.set({ number: this.numberRows, page: 1, search: this.searchText });
+  public changeSearh(search: string): void {
+    this.userAction(() => this.searchText.set(search));
   }
 
   public deleteSearch(): void {
-    if (this.searchText) {
-      this.searchText = '';
-      this.changeSearh();
-    }
+    this.userAction(() => {
+      if (this.searchText) {
+        this.searchText.set('');
+      }
+    });
+  }
+
+  private userAction(fn: () => void) {
+    this.firstLoad = true;
+    fn();
   }
 }

@@ -28,7 +28,6 @@ export interface IUsersState {
   totalPages: number;
   page: number;
   search: string;
-  firstLoad: boolean;
 }
 
 export interface IUserDeleteState {

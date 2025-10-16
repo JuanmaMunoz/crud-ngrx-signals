@@ -22,6 +22,7 @@ export class UsersService {
   private usersStatistics: IUserStatistics[] = statistics;
 
   public getUsers(params: IGetUsersParams): Observable<IReqGetUsers> {
+    console.log('getUsers->', params);
     const search = this.normalizeText(params.search);
 
     return of(this.allUsers).pipe(
