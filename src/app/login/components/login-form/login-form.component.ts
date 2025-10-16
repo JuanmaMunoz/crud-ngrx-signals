@@ -1,11 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, Signal, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { InputPassComponent } from '../../../common/components/input-pass/input-pass.component';
@@ -23,10 +19,7 @@ import { login } from '../../store/actions/login.action';
 })
 export class LoginFormComponent {
   public loginForm = new FormGroup({
-    email: new FormControl('user@test', [
-      Validators.required,
-      Validators.email,
-    ]),
+    email: new FormControl('user@test', [Validators.required, Validators.email]),
     pass: new FormControl('ajk38jkÑ', [
       Validators.required,
       Validators.minLength(4),
@@ -63,6 +56,7 @@ export class LoginFormComponent {
   public loading!: Signal<boolean>;
   public loginSuccess!: Signal<boolean>;
   public loginError!: Signal<boolean>;
+  public error!: Signal<HttpErrorResponse | null>;
 
   constructor(
     private store: Store<{ login: ILoginState }>,
@@ -76,6 +70,11 @@ export class LoginFormComponent {
     this.loginSuccess = toSignal(
       this.store.select((state) => state.login.success),
       { initialValue: false },
+    );
+
+    this.error = toSignal(
+      this.store.select((state) => state.login.error),
+      { initialValue: null },
     );
 
     effect(() => {

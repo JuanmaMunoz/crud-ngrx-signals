@@ -2,18 +2,17 @@
   <form [formGroup]="loginForm" (submit)="login()">
     <app-input-text [input]="emailInput" />
     <app-input-pass [input]="passInput" />
-    <button
-      [disabled]="loading()"
-      type="submit"
-      class="btn btn-primary form-control mt-3"
-    >
+    <button [disabled]="loading()" type="submit" class="btn btn-primary form-control mt-3">
       Login
       @if (loading()) {
-        <span
-          class="spinner-border spinner-border-sm"
-          aria-hidden="true"
-        ></span>
+        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
       }
     </button>
   </form>
+  @if (error()) {
+    <div class="login-form__error border border-danger rounded text-danger mt-3 p-3">
+      <h4><i class="bi bi-exclamation-triangle"></i> Invalid Credentials</h4>
+      <p>{{ error()?.message }}</p>
+    </div>
+  }
 </div>
