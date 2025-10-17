@@ -20,3 +20,8 @@ export interface IInput {
   focus?: boolean;
   mask?: string;
 }
+
+export interface IInputNumber extends IInput {
+  min: number;
+  max: number;
+}

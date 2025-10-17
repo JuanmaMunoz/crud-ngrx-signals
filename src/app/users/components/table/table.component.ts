@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, effect, ElementRef, signal, Signal, ViewChild } from '@angular/core';
+import { Component, effect, signal, Signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,7 +24,6 @@ import { IUser } from './../../models/interfaces';
   styleUrl: './table.component.scss',
 })
 export class TableComponent {
-  @ViewChild('page') inputPage!: ElementRef;
   public usersFromStore!: Signal<IUser[]>;
   public users = signal<IUser[]>([]);
   public totalPages!: Signal<number>;
