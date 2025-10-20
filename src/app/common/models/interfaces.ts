@@ -1,5 +1,4 @@
 import { FormControl } from '@angular/forms';
-import { TypeInput } from './enum';
 
 export interface ITokenState {
   token: string;
@@ -12,7 +11,6 @@ export interface IToken {
 }
 
 export interface IInput {
-  type: TypeInput;
   control: FormControl;
   placeholder: string;
   label: string;

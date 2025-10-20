@@ -1,16 +1,28 @@
 import { createReducer, on } from '@ngrx/store';
-import { IUserDeleteState, IUserGetDetailState, IUsersState } from '../../models/interfaces';
+import {
+  IUserDeleteState,
+  IUserEditState,
+  IUserGetDetailState,
+  IUsersState,
+} from '../../models/interfaces';
 import {
   deleteUser,
   deleteUserConfirm,
+  deleteUserFailure,
   deleteUserSuccess,
+  editUser,
+  editUserFailure,
+  editUserSuccess,
   getUserDetail,
+  getUserDetailFailure,
   getUserDetailSuccess,
   getUsers,
   getUsersFailure,
   getUsersSuccess,
   setInitialStateDelete,
+  setInitialStateEdit,
   setInitialStateGetUsers,
+  setInitialStateUserDetail,
 } from '../actions/users.action';
 
 //GET USERS
@@ -48,7 +60,7 @@ export const usersReducer = createReducer(
   on(setInitialStateGetUsers, () => initialStateGetUsers),
 );
 
-//DELETE USERS
+//DELETE USER
 
 export const initialStateDelete: IUserDeleteState = {
   loading: false,
@@ -66,7 +78,7 @@ export const userDeleteReducer = createReducer(
     loading: false,
     success: true,
   })),
-  on(getUsersFailure, (state, { error }) => ({
+  on(deleteUserFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error,
@@ -90,10 +102,41 @@ export const userGetDetailReducer = createReducer(
     loading: false,
     userDetail,
   })),
-  on(getUsersFailure, (state, { error }) => ({
+  on(getUserDetailFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error,
   })),
-  on(setInitialStateDelete, () => initialStateGetDetail),
+  on(setInitialStateUserDetail, () => initialStateGetDetail),
+);
+
+//EDIT USER
+
+export const initialStateEdit: IUserEditState = {
+  loading: false,
+  error: null,
+  success: false,
+  userDetail: null,
+  oldEmail: '',
+};
+
+export const userEditReducer = createReducer(
+  initialStateEdit,
+  on(editUser, (state, { userDetail, oldEmail }) => ({
+    ...state,
+    userDetail,
+    loading: true,
+    oldEmail,
+  })),
+  on(editUserSuccess, (state) => ({
+    ...state,
+    loading: false,
+    success: true,
+  })),
+  on(editUserFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+  on(setInitialStateEdit, () => initialStateEdit),
 );

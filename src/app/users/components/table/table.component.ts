@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, signal, Signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +7,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NgxMaskDirective } from 'ngx-mask';
 import { debounceTime, Subscription } from 'rxjs';
+import { ErrorComponent } from '../../../common/components/error/error.component';
 import { SpinnerComponent } from '../../../common/components/spinner/spinner.component';
 import { IGetUsersParams, IUserDeleteState, IUsersState } from '../../models/interfaces';
 import {
@@ -19,7 +21,14 @@ import { IUser } from './../../models/interfaces';
 
 @Component({
   selector: 'app-table',
-  imports: [DatePipe, ModalDeleteComponent, FormsModule, NgxMaskDirective, SpinnerComponent],
+  imports: [
+    DatePipe,
+    ModalDeleteComponent,
+    FormsModule,
+    NgxMaskDirective,
+    SpinnerComponent,
+    ErrorComponent,
+  ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
@@ -30,11 +39,13 @@ export class TableComponent {
   public params = signal<IGetUsersParams | null>(null);
   public currentPage!: Signal<number>;
   public search!: Signal<string>;
-  public loading!: Signal<boolean>;
-  public loadingDelete!: Signal<boolean>;
+  public loadingUsers!: Signal<boolean>;
+  public errorUsers!: Signal<HttpErrorResponse | null>;
+  public deleteLoading!: Signal<boolean>;
   public startDelete!: Signal<boolean>;
-  public userDeleting!: Signal<IUser | null>;
+  public deleteUser!: Signal<IUser | null>;
   public successDelete!: Signal<boolean>;
+  public errorDelete!: Signal<HttpErrorResponse | null>;
   public openModal = signal<boolean>(false);
   public searchText = signal<string>('');
   public firstLoad: boolean = false;
@@ -67,17 +78,22 @@ export class TableComponent {
       { initialValue: 1 },
     );
 
-    this.loading = toSignal(
+    this.loadingUsers = toSignal(
       this.store.select((state) => state.users.loading),
       { initialValue: false },
     );
 
-    this.userDeleting = toSignal(
+    this.errorUsers = toSignal(
+      this.store.select((state) => state.users.error),
+      { initialValue: null },
+    );
+
+    this.deleteUser = toSignal(
       this.store.select((state) => state.userDelete.user),
       { initialValue: null },
     );
 
-    this.loadingDelete = toSignal(
+    this.deleteLoading = toSignal(
       this.store.select((state) => state.userDelete.loading),
       { initialValue: false },
     );
@@ -85,6 +101,11 @@ export class TableComponent {
     this.successDelete = toSignal(
       this.store.select((state) => state.userDelete.success),
       { initialValue: false },
+    );
+
+    this.errorDelete = toSignal(
+      this.store.select((state) => state.userDelete.error),
+      { initialValue: null },
     );
 
     effect(() => {
@@ -104,6 +125,14 @@ export class TableComponent {
         this.openModal.set(false);
         this.store.dispatch(getUsers(this.params()!));
         this.store.dispatch(setInitialStateDelete());
+      }
+    });
+
+    effect(() => {
+      if (this.errorDelete()) {
+        console.log('ERROR------>', this.errorDelete());
+        this.openModal.set(false);
+        console.log(this.errorDelete());
       }
     });
 
@@ -147,6 +176,7 @@ export class TableComponent {
   public openModalDelete(user: IUser, event: MouseEvent): void {
     event.stopPropagation();
     this.openModal.set(true);
+    this.store.dispatch(setInitialStateDelete());
     this.store.dispatch(deleteUser({ user }));
   }
 

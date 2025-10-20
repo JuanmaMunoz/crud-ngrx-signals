@@ -10,25 +10,44 @@ import { SessionService } from '../../common/services/session.service';
 export class LoginService {
   private delay: number = 200;
   private sessionService = inject(SessionService);
+
+  private unknownError = timer(this.delay).pipe(
+    mergeMap(() =>
+      throwError(
+        () =>
+          ({
+            status: 500,
+            error: {
+              code: 'ERROR_UNKNOWN',
+              message: 'There is an unknown error in the system.',
+            },
+          }) as HttpErrorResponse,
+      ),
+    ),
+  );
+
   public startLogin(email: string, pass: string): Observable<ITokenState> {
-    if (email === 'user@test' && pass === 'ajk38jkÑ') {
-      return of(this.sessionService.createFakeToken(email)).pipe(delay(this.delay));
-    } else {
-      return timer(this.delay).pipe(
-        mergeMap(() =>
-          throwError(
-            () =>
-              ({
-                status: 401,
-                statusText: 'Unauthorized',
-                error: {
-                  code: '401',
-                  message: 'The username or password you entered is incorrect. Please try again.',
-                },
-              }) as HttpErrorResponse,
+    try {
+      if (email === 'user@test' && pass === 'ajk38jkÑ') {
+        return of(this.sessionService.createFakeToken(email)).pipe(delay(this.delay));
+      } else {
+        return timer(this.delay).pipe(
+          mergeMap(() =>
+            throwError(
+              () =>
+                ({
+                  status: 401,
+                  error: {
+                    code: 'UNAUTHORIZED',
+                    message: 'The username or password you entered is incorrect. Please try again.',
+                  },
+                }) as HttpErrorResponse,
+            ),
           ),
-        ),
-      );
+        );
+      }
+    } catch (error) {
+      return this.unknownError;
     }
   }
 }

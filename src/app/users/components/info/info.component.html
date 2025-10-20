@@ -1,14 +1,12 @@
 <div class="info">
   <div class="row">
     <div class="col-xl-6">
-      <app-img />
-      <h4 class="text-primary">
-        {{ userDetail()?.info?.name }} {{ userDetail()?.info?.lastName }}
-      </h4>
-      <h5 class="text-secondary">{{ userDetail()?.info?.email }}</h5>
+      <app-avatar [avatar]="infoAvatar" />
       <div class="row my-4">
         <div class="col-6">
-          <button class="btn btn-outline-secondary w-100"><i class="bi bi-pencil"></i> Edit</button>
+          <button (click)="edit()" class="btn btn-outline-primary w-100">
+            <i class="bi bi-pencil"></i> Edit
+          </button>
         </div>
         <div class="col-6">
           <button (click)="openModalDelete()" class="btn btn-outline-danger w-100">
@@ -31,9 +29,3 @@
     </div>
   </div>
 </div>
-<app-modal-delete
-  [openModal]="openModal"
-  [loadingDelete]="loadingDelete"
-  [userDeleting]="userDeleting"
-  (actionDelete)="actionModalDelete($event)"
-/>

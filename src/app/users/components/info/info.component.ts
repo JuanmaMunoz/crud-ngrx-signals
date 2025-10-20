@@ -1,30 +1,23 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, effect, Input, signal, Signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Component, effect, EventEmitter, Input, Output, signal, Signal } from '@angular/core';
 import { Color } from '../../models/enums';
-import { IUser, IUserDeleteState, IUserDetail, IUserGetDetailState } from '../../models/interfaces';
-import {
-  deleteUser,
-  deleteUserConfirm,
-  setInitialStateGetUsers,
-} from '../../store/actions/users.action';
+import { IAvatar, IUserDetail } from '../../models/interfaces';
+import { AvatarComponent } from '../avatar/avatar.component';
 import { BoxInfoComponent } from '../box-info/box-info.component';
 import { ChartComponent } from '../chart/chart.component';
-import { ImgComponent } from '../img/img.component';
-import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 import { IBoxInfo } from './../../models/interfaces';
 
 @Component({
   selector: 'app-info',
-  imports: [ImgComponent, BoxInfoComponent, ChartComponent, ModalDeleteComponent],
+  imports: [BoxInfoComponent, ChartComponent, AvatarComponent],
   providers: [DatePipe, CurrencyPipe],
   templateUrl: './info.component.html',
   styleUrl: './info.component.scss',
 })
 export class InfoComponent {
   @Input() userDetail!: Signal<IUserDetail | null>;
+  @Output() actionOpenModal: EventEmitter<null> = new EventEmitter();
+  @Output() actionEdit: EventEmitter<null> = new EventEmitter();
   public boxInfoPosition = signal<IBoxInfo>({ color: Color.PRIMARY, label: 'Position', value: '' });
   public boxInfoIncorporation = signal<IBoxInfo>({
     color: Color.SECONDARY,
@@ -32,50 +25,24 @@ export class InfoComponent {
     value: '',
   });
   public boxInfoSalary = signal<IBoxInfo>({ color: Color.SUCCESS, label: 'Salary', value: 0 });
-  public openModal = signal<boolean>(false);
-  public loadingDelete!: Signal<boolean>;
-  public successDelete!: Signal<boolean>;
-  public userDeleting!: Signal<IUser | null>;
+  public infoAvatar!: IAvatar;
   constructor(
     private datePipe: DatePipe,
     private currencyPipe: CurrencyPipe,
-    private router: Router,
-    private store: Store<{ userDelete: IUserDeleteState; userDetail: IUserGetDetailState }>,
   ) {
-    this.userDeleting = toSignal(
-      this.store.select((state) => state.userDelete.user),
-      { initialValue: null },
-    );
-
-    this.successDelete = toSignal(
-      this.store.select((state) => state.userDelete.success),
-      { initialValue: false },
-    );
-
-    this.loadingDelete = toSignal(
-      this.store.select((state) => state.userDelete.loading),
-      { initialValue: false },
-    );
-
     effect(() => {
       if (this.userDetail()) {
-        this.loadBoxesInfo({
+        this.setBoxesInfo({
           position: this.userDetail()?.info.position!,
           incorporation: this.userDetail()?.info.date!,
           salary: this.userDetail()?.info.salary!,
         });
-      }
-    });
-
-    effect(() => {
-      if (this.successDelete()) {
-        this.store.dispatch(setInitialStateGetUsers());
-        this.router.navigate(['/users']);
+        this.setInfoAvatar(this.userDetail()!);
       }
     });
   }
 
-  private loadBoxesInfo(info: {
+  private setBoxesInfo(info: {
     position: string;
     incorporation: EpochTimeStamp;
     salary: number;
@@ -94,13 +61,18 @@ export class InfoComponent {
     }));
   }
 
-  public openModalDelete(): void {
-    this.openModal.set(true);
-    const user: IUser = this.userDetail()?.info!;
-    this.store.dispatch(deleteUser({ user }));
+  private setInfoAvatar(user: IUserDetail): void {
+    this.infoAvatar = {
+      title: `${user.info.name} ${user.info.lastName}`,
+      description: `${user.info.email}`,
+    };
   }
 
-  public actionModalDelete(deleteUser: boolean): void {
-    deleteUser ? this.store.dispatch(deleteUserConfirm()) : this.openModal.set(false);
+  public openModalDelete(): void {
+    this.actionOpenModal.emit();
+  }
+
+  public edit(): void {
+    this.actionEdit.emit();
   }
 }

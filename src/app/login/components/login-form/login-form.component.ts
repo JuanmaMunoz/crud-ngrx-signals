@@ -4,16 +4,16 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { ErrorComponent } from '../../../common/components/error/error.component';
 import { InputPassComponent } from '../../../common/components/input-pass/input-pass.component';
 import { InputTextComponent } from '../../../common/components/input-text/input-text.component';
-import { TypeInput } from '../../../common/models/enum';
 import { IInput } from '../../../common/models/interfaces';
 import { ILoginState } from '../../models/interfaces';
 import { login } from '../../store/actions/login.action';
 
 @Component({
   selector: 'app-login-form',
-  imports: [InputTextComponent, InputPassComponent, ReactiveFormsModule],
+  imports: [InputTextComponent, InputPassComponent, ReactiveFormsModule, ErrorComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })
@@ -37,7 +37,6 @@ export class LoginFormComponent {
   };
 
   public emailInput = signal<IInput>({
-    type: TypeInput.TEXT,
     control: this.emailControl,
     placeholder: 'Insert email',
     label: 'Email',
@@ -46,7 +45,6 @@ export class LoginFormComponent {
   });
 
   public passInput = signal<IInput>({
-    type: TypeInput.PASS,
     control: this.passControl,
     placeholder: 'Insert password',
     label: 'Password',
@@ -55,8 +53,7 @@ export class LoginFormComponent {
   });
   public loading!: Signal<boolean>;
   public loginSuccess!: Signal<boolean>;
-  public loginError!: Signal<boolean>;
-  public error!: Signal<HttpErrorResponse | null>;
+  public loginError!: Signal<HttpErrorResponse | null>;
 
   constructor(
     private store: Store<{ login: ILoginState }>,
@@ -72,7 +69,7 @@ export class LoginFormComponent {
       { initialValue: false },
     );
 
-    this.error = toSignal(
+    this.loginError = toSignal(
       this.store.select((state) => state.login.error),
       { initialValue: null },
     );

@@ -2,11 +2,15 @@ import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { IGetUsersParams, IReqGetUsers, IUserDetail } from './../../models/interfaces';
 import {
+  editUser,
+  editUserFailure,
+  editUserSuccess,
   getUserDetail,
   getUserDetailFailure,
   getUserDetailSuccess,
 } from './../actions/users.action';
 
+import { HttpErrorResponse } from '@angular/common/http';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -36,7 +40,7 @@ export const usersEffect = createEffect(
               totalPages: data.totalPages,
             }),
           ),
-          catchError((error) => of(getUsersFailure({ error: error.error }))),
+          catchError((error: HttpErrorResponse) => of(getUsersFailure({ error }))),
         ),
       ),
     );
@@ -58,7 +62,7 @@ export const userDeleteEffect = createEffect(
       mergeMap(() =>
         usersService.deleteUser(userDeleting()).pipe(
           map((data: null) => deleteUserSuccess()),
-          catchError((error) => of(deleteUserFailure({ error: error.error }))),
+          catchError((error: HttpErrorResponse) => of(deleteUserFailure({ error }))),
         ),
       ),
     );
@@ -76,7 +80,25 @@ export const userGetDetailEffect = createEffect(
       mergeMap((data: { email: string }) =>
         usersService.getUserDetail(data.email).pipe(
           map((data: IUserDetail) => getUserDetailSuccess({ userDetail: data })),
-          catchError((error) => of(getUserDetailFailure({ error: error.error }))),
+          catchError((error: HttpErrorResponse) => of(getUserDetailFailure({ error }))),
+        ),
+      ),
+    );
+  },
+  { functional: true },
+);
+
+export const userEditEffect = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const usersService = inject(UsersService);
+
+    return actions$.pipe(
+      ofType(editUser),
+      mergeMap((data: { userDetail: IUserDetail; oldEmail: string }) =>
+        usersService.editUser(data.oldEmail, data.userDetail).pipe(
+          map((data: null) => editUserSuccess()),
+          catchError((error: HttpErrorResponse) => of(editUserFailure({ error }))),
         ),
       ),
     );

@@ -1,18 +1,19 @@
 <div class="input-number mb-3">
   <label [for]="input().label" class="form-label text-secondary fw-bold">{{ input().label }}</label>
   <div class="input-group app-table__pagination__content">
-    <button (click)="increase()" type="button" class="btn btn-outline-secondary">
+    <button (click)="decrease()" type="button" class="btn btn-outline-secondary">
       <i class="bi bi-chevron-left"></i>
     </button>
     <input
-      disabled
+      [placeholder]="input().placeholder"
+      [formControl]="input().control"
       [mask]="input().mask"
-      type="text"
+      type="number"
       class="form-control"
       [min]="input().min"
       [max]="input().max"
     />
-    <button (click)="decrease()" type="button" class="btn btn-outline-secondary">
+    <button (click)="increase()" type="button" class="btn btn-outline-secondary">
       <i class="bi bi-chevron-right"></i>
     </button>
   </div>

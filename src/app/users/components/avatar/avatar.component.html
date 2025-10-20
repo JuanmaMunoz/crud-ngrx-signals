@@ -1,0 +1,14 @@
+<div
+  class="avatar"
+  [class.text-start]="avatar.modeRow"
+  [class.d-flex]="avatar.modeRow"
+  [class.align-items-center]="avatar.modeRow"
+>
+  <div>
+    <app-img />
+  </div>
+  <div [class.ms-3]="avatar.modeRow">
+    <h4 class="text-primary">{{ avatar.title }}</h4>
+    <h5 class="text-light">{{ avatar.description }}</h5>
+  </div>
+</div>

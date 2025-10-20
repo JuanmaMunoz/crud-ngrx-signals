@@ -9,10 +9,7 @@
       }
     </button>
   </form>
-  @if (error()) {
-    <div class="login-form__error border border-danger rounded text-danger mt-3 p-3">
-      <h4><i class="bi bi-exclamation-triangle"></i> Invalid Credentials</h4>
-      <p>{{ error()?.message }}</p>
-    </div>
+  @if (loginError()) {
+    <app-error [errorDescription]="loginError()?.error.message" />
   }
 </div>

@@ -9,9 +9,9 @@ import { IUser } from '../../models/interfaces';
   styleUrl: './modal-delete.component.scss',
 })
 export class ModalDeleteComponent {
-  @Input() userDeleting!: Signal<IUser | null>;
+  @Input() deleteUser!: Signal<IUser | null>;
   @Input() openModal = signal<boolean>(false);
-  @Input() loadingDelete!: Signal<boolean>;
+  @Input() deleteLoading!: Signal<boolean>;
   @Output() actionDelete: EventEmitter<boolean> = new EventEmitter();
 
   public cancelDeleting(): void {

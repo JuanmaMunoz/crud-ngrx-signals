@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="app-table__content table-responsive">
-    @if (loading()) {
+    @if (loadingUsers()) {
       <div class="app-table__content__loading">
         <app-spinner />
       </div>
@@ -86,9 +86,17 @@
   </div>
 </div>
 
+@if (errorDelete()) {
+  <app-error [errorDescription]="errorDelete()?.error.message" />
+}
+
+@if (errorUsers()) {
+  <app-error [errorDescription]="errorUsers()?.error.message" />
+}
+
 <app-modal-delete
   [openModal]="openModal"
-  [loadingDelete]="loadingDelete"
-  [userDeleting]="userDeleting"
+  [deleteLoading]="deleteLoading"
+  [deleteUser]="deleteUser"
   (actionDelete)="actionModalDelete($event)"
 />

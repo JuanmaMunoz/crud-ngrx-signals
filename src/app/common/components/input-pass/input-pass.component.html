@@ -3,7 +3,7 @@
   <div class="input-pass input-group has-validation">
     <input
       #element
-      [type]="input().type"
+      [type]="type"
       [formControl]="input().control"
       [ngClass]="{
         'is-invalid':
@@ -15,8 +15,8 @@
       [placeholder]="input().placeholder"
     />
     <button (click)="showPass()" class="btn btn-outline-secondary" type="button">
-      <i *ngIf="input().type === enumTypeInput.PASS" class="bi bi-eye"></i
-      ><i *ngIf="input().type === enumTypeInput.TEXT" class="bi bi-eye-slash"></i>
+      <i *ngIf="type === enumTypeInput.PASS" class="bi bi-eye"></i
+      ><i *ngIf="type === enumTypeInput.TEXT" class="bi bi-eye-slash"></i>
     </button>
     <div class="invalid-feedback">
       {{ input().control.errors | validationErrors: input().validationErrors }}

@@ -13,11 +13,13 @@ import { loginEffect } from './login/store/effects/login.effect';
 import { loginReducer } from './login/store/reducers/login.reducer';
 import {
   userDeleteEffect,
+  userEditEffect,
   userGetDetailEffect,
   usersEffect,
 } from './users/store/effects/users.effect';
 import {
   userDeleteReducer,
+  userEditReducer,
   userGetDetailReducer,
   usersReducer,
 } from './users/store/reducers/users.reducer';
@@ -28,6 +30,7 @@ const store = {
   users: usersReducer,
   userDelete: userDeleteReducer,
   userDetail: userGetDetailReducer,
+  userEdit: userEditReducer,
 };
 
 export const appConfig: ApplicationConfig = {
@@ -36,7 +39,9 @@ export const appConfig: ApplicationConfig = {
     provideNgxMask(),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideStore(store),
-    provideEffects([{ loginEffect, usersEffect, userDeleteEffect, userGetDetailEffect }]),
+    provideEffects([
+      { loginEffect, usersEffect, userDeleteEffect, userGetDetailEffect, userEditEffect },
+    ]),
 
     provideStoreDevtools({ maxAge: 25, logOnly: false }),
   ],

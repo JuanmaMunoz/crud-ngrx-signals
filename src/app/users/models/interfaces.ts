@@ -37,6 +37,14 @@ export interface IUserDeleteState {
   user: IUser | null;
 }
 
+export interface IUserEditState {
+  loading: boolean;
+  error: HttpErrorResponse | null;
+  success: boolean;
+  userDetail: IUserDetail | null;
+  oldEmail: string;
+}
+
 export interface IUserStatistics {
   email: string;
   productivity: number;
@@ -72,4 +80,10 @@ export interface IDataset {
 export interface ICharData {
   labels: string[];
   datasets: IDataset[];
+}
+
+export interface IAvatar {
+  title: string;
+  description: string;
+  modeRow?: boolean;
 }

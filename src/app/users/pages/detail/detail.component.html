@@ -1,7 +1,31 @@
 <div class="detail">
-  @if (loading()) {
+  @if (userDetailLoading()) {
     <div class="mt-5"><app-spinner /></div>
   } @else {
-    <app-info [userDetail]="userDetail" />
+    @if (!userDetailError()) {
+      @if (modeEdit()) {
+        <app-user-form
+          (actionCancel)="cancelEdition()"
+          (actionSave)="saveEdition($event)"
+          [userDetail]="userDetail"
+          [loading]="editLoading"
+          [error]="editError"
+        />
+      } @else {
+        <app-info
+          (actionOpenModal)="openModalDelete()"
+          (actionEdit)="modeEdit.set(true)"
+          [userDetail]="userDetail"
+        />
+      }
+    } @else {
+      <app-error [errorDescription]="userDetailError()?.error.message" />
+    }
   }
 </div>
+<app-modal-delete
+  [openModal]="openModal"
+  [deleteLoading]="deleteLoading"
+  [deleteUser]="deleteUser"
+  (actionDelete)="actionModalDelete($event)"
+/>

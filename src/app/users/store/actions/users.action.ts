@@ -36,3 +36,15 @@ export const getUserDetailFailure = createAction(
   props<{ error: HttpErrorResponse }>(),
 );
 export const setInitialStateUserDetail = createAction('[User] Set Initial State Detail');
+
+//EDIT USER
+export const editUser = createAction(
+  '[User] Edit User',
+  props<{ userDetail: IUserDetail; oldEmail: string }>(),
+);
+export const editUserSuccess = createAction('[User] Edit User Success');
+export const editUserFailure = createAction(
+  '[User] Edit User Failure',
+  props<{ error: HttpErrorResponse }>(),
+);
+export const setInitialStateEdit = createAction('[User] Set Initial State Edit');

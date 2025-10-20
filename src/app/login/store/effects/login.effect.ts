@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
+import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { ITokenState } from '../../../common/models/interfaces';
@@ -21,7 +22,7 @@ export const loginEffect = createEffect(
             loginSuccess(),
             createToken({ token: data.token, jwt: data.jwt }),
           ]),
-          catchError((error) => of(loginFailure({ error: error.error }))),
+          catchError((error: HttpErrorResponse) => of(loginFailure({ error }))),
         ),
       ),
     );

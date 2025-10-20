@@ -14,9 +14,8 @@ import { ValidationErrors } from '../../utils/pipes/validation-errors.pipe';
 export class InputPassComponent {
   @Input() input = signal<IInput>({} as IInput);
   public enumTypeInput = TypeInput;
+  public type = TypeInput.PASS;
   public showPass(): void {
-    const inputType: TypeInput =
-      this.input().type === TypeInput.TEXT ? TypeInput.PASS : TypeInput.TEXT;
-    this.input.update((data) => ({ ...data, type: inputType }));
+    this.type = this.type === TypeInput.TEXT ? TypeInput.PASS : TypeInput.TEXT;
   }
 }

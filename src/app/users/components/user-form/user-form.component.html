@@ -1,0 +1,56 @@
+<div class="user-form text-start">
+  <app-avatar [avatar]="infoAvatar" />
+  <form [formGroup]="formUser" (submit)="saveUser()">
+    <div class="row">
+      <div class="col-lg-6">
+        <app-input-text [input]="inputName" />
+        <app-input-text [input]="inputLastName" />
+        <app-input-text [input]="inputEmail" />
+      </div>
+      <div class="col-lg-6">
+        <app-input-text [input]="inputPosition" />
+        <app-input-text [input]="inputDate" />
+        <app-input-text [input]="inputSalary" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2 offset-lg-1">
+        <app-input-number [input]="inputCoworker" />
+      </div>
+      <div class="col-lg-2">
+        <app-input-number [input]="inputHardworking" />
+      </div>
+      <div class="col-lg-2">
+        <app-input-number [input]="inputKnowledge" />
+      </div>
+      <div class="col-lg-2">
+        <app-input-number [input]="inputProactivity" />
+      </div>
+      <div class="col-lg-2">
+        <app-input-number [input]="inputProductivity" />
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-6">
+        <button [disabled]="loading()" (click)="cancel()" class="btn btn-outline-light w-100">
+          <i class="bi bi-box-arrow-left"></i> Cancel
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          type="submit"
+          [disabled]="!formUser.valid || loading()"
+          class="btn btn-outline-primary w-100"
+        >
+          <i class="bi bi-floppy"></i> Save
+          @if (loading()) {
+            <span class="spinner-border spinner-border-sm"></span>
+          }
+        </button>
+      </div>
+    </div>
+  </form>
+  @if (error()) {
+    <app-error [errorDescription]="error()?.error.message" />
+  }
+</div>
