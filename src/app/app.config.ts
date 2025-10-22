@@ -13,12 +13,14 @@ import { authInterceptor } from './common/utils/authInterceptor';
 import { loginEffect } from './login/store/effects/login.effect';
 import { loginReducer } from './login/store/reducers/login.reducer';
 import {
+  userCreateEffect,
   userDeleteEffect,
   userEditEffect,
   userGetDetailEffect,
   usersEffect,
 } from './users/store/effects/users.effect';
 import {
+  userCreateReducer,
   userDeleteReducer,
   userEditReducer,
   userGetDetailReducer,
@@ -32,7 +34,19 @@ const store = {
   userDelete: userDeleteReducer,
   userDetail: userGetDetailReducer,
   userEdit: userEditReducer,
+  userCreate: userCreateReducer,
 };
+
+const effects = [
+  {
+    loginEffect,
+    usersEffect,
+    userDeleteEffect,
+    userGetDetailEffect,
+    userEditEffect,
+    userCreateEffect,
+  },
+];
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,9 +55,7 @@ export const appConfig: ApplicationConfig = {
     provideNgxMask(),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideStore(store),
-    provideEffects([
-      { loginEffect, usersEffect, userDeleteEffect, userGetDetailEffect, userEditEffect },
-    ]),
+    provideEffects(effects),
 
     provideStoreDevtools({ maxAge: 25, logOnly: false }),
   ],

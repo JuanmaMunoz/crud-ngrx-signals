@@ -2,6 +2,9 @@ import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { IGetUsersParams, IReqGetUsers, IUserDetail } from './../../models/interfaces';
 import {
+  createUser,
+  createUserFailure,
+  createUserSuccess,
   editUser,
   editUserFailure,
   editUserSuccess,
@@ -99,6 +102,24 @@ export const userEditEffect = createEffect(
         usersService.editUser(data.oldEmail, data.userDetail).pipe(
           map((data: null) => editUserSuccess()),
           catchError((error: HttpErrorResponse) => of(editUserFailure({ error }))),
+        ),
+      ),
+    );
+  },
+  { functional: true },
+);
+
+export const userCreateEffect = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const usersService = inject(UsersService);
+
+    return actions$.pipe(
+      ofType(createUser),
+      mergeMap((data: { userDetail: IUserDetail }) =>
+        usersService.createUser(data.userDetail).pipe(
+          map((data: null) => createUserSuccess()),
+          catchError((error: HttpErrorResponse) => of(createUserFailure({ error }))),
         ),
       ),
     );

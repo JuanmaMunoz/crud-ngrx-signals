@@ -1,1 +1,15 @@
-<p>create works!</p>
+<div class="create">
+  <app-back-users />
+
+  <app-user-form
+    (actionCancel)="cancelCreation()"
+    (actionSave)="saveCreation($event)"
+    [userDetail]="userCreate"
+    [loading]="userCreateLoading"
+    [error]="userCreateError"
+  />
+
+  @if (userCreateError()) {
+    <app-error [errorDescription]="userCreateError()?.error.message" />
+  }
+</div>

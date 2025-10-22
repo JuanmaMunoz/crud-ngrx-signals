@@ -1,11 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
 import {
+  IUserCreateState,
   IUserDeleteState,
   IUserEditState,
   IUserGetDetailState,
   IUsersState,
 } from '../../models/interfaces';
 import {
+  createUser,
+  createUserFailure,
+  createUserSuccess,
   deleteUser,
   deleteUserConfirm,
   deleteUserFailure,
@@ -19,6 +23,7 @@ import {
   getUsers,
   getUsersFailure,
   getUsersSuccess,
+  setInitialStateCreate,
   setInitialStateDelete,
   setInitialStateEdit,
   setInitialStateGetUsers,
@@ -139,4 +144,33 @@ export const userEditReducer = createReducer(
     error,
   })),
   on(setInitialStateEdit, () => initialStateEdit),
+);
+
+//CREATE USER
+
+export const initialStateCreate: IUserCreateState = {
+  loading: false,
+  error: null,
+  success: false,
+  userDetail: null,
+};
+
+export const userCreateReducer = createReducer(
+  initialStateCreate,
+  on(createUser, (state, { userDetail }) => ({
+    ...state,
+    userDetail,
+    loading: true,
+  })),
+  on(createUserSuccess, (state) => ({
+    ...state,
+    loading: false,
+    success: true,
+  })),
+  on(createUserFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+  on(setInitialStateCreate, () => initialStateCreate),
 );

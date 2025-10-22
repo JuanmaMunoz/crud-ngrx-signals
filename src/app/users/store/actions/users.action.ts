@@ -48,3 +48,12 @@ export const editUserFailure = createAction(
   props<{ error: HttpErrorResponse }>(),
 );
 export const setInitialStateEdit = createAction('[User] Set Initial State Edit');
+
+//CREATE USER
+export const createUser = createAction('[User] Create User', props<{ userDetail: IUserDetail }>());
+export const createUserSuccess = createAction('[User] Create User Success');
+export const createUserFailure = createAction(
+  '[User] Create User Failure',
+  props<{ error: HttpErrorResponse }>(),
+);
+export const setInitialStateCreate = createAction('[User] Set Initial State Create');

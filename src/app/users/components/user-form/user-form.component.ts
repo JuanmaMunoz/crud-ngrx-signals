@@ -207,23 +207,23 @@ export class UserFormComponent {
         Validators.max(100000),
       ]),
       coworker: new FormControl(
-        { value: this.userDetail()?.statistics.coworker ?? '', disabled: true },
+        { value: this.userDetail()?.statistics.coworker ?? 5, disabled: true },
         [Validators.required],
       ),
       hardworking: new FormControl(
-        { value: this.userDetail()?.statistics.hardworking ?? '', disabled: true },
+        { value: this.userDetail()?.statistics.hardworking ?? 5, disabled: true },
         [Validators.required],
       ),
       knowledge: new FormControl(
-        { value: this.userDetail()?.statistics.knowledge ?? '', disabled: true },
+        { value: this.userDetail()?.statistics.knowledge ?? 5, disabled: true },
         [Validators.required],
       ),
       proactivity: new FormControl(
-        { value: this.userDetail()?.statistics.proactivity ?? '', disabled: true },
+        { value: this.userDetail()?.statistics.proactivity ?? 5, disabled: true },
         [Validators.required],
       ),
       productivity: new FormControl(
-        { value: this.userDetail()?.statistics.productivity ?? '', disabled: true },
+        { value: this.userDetail()?.statistics.productivity ?? 5, disabled: true },
         [Validators.required],
       ),
     });

@@ -21,7 +21,6 @@ import {
   deleteUserConfirm,
   editUser,
   getUserDetail,
-  setInitialStateGetUsers,
   setInitialStateUserDetail,
 } from '../../store/actions/users.action';
 import { setInitialStateDelete, setInitialStateEdit } from './../../store/actions/users.action';
@@ -110,7 +109,6 @@ export class DetailComponent {
 
     effect(() => {
       if (this.deleteSuccess()) {
-        this.store.dispatch(setInitialStateGetUsers());
         this.router.navigate(['/users']);
       }
     });

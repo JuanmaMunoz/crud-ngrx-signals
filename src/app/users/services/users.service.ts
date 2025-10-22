@@ -152,6 +152,21 @@ export class UsersService {
     }
   }
 
+  public createUser(userDetail: IUserDetail): Observable<null> {
+    try {
+      //throw new Error('Fallo intencional para test de catch');
+
+      if (!this.checkExistEmail(userDetail.info.email)) {
+        this.insertArrayUser(userDetail);
+        return of(null).pipe(delay(this.delay));
+      } else {
+        return this.errorEmailInUse;
+      }
+    } catch (error) {
+      return this.unknownError;
+    }
+  }
+
   private editArrayUser(oldEmail: string, user: IUserDetail): void {
     this.allUsers = this.allUsers.map((u: IUser) => {
       return u.email === oldEmail ? (u = user.info) : u;
@@ -160,6 +175,11 @@ export class UsersService {
     this.usersStatistics = this.usersStatistics.map((s: IUserStatistics) => {
       return s.email === oldEmail ? (s = user.statistics) : s;
     });
+  }
+
+  private insertArrayUser(user: IUserDetail): void {
+    this.allUsers.unshift(user.info);
+    this.usersStatistics.unshift(user.statistics);
   }
 
   private checkExistEmail(newEmail: string): boolean {

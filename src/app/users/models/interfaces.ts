@@ -45,6 +45,13 @@ export interface IUserEditState {
   oldEmail: string;
 }
 
+export interface IUserCreateState {
+  loading: boolean;
+  error: HttpErrorResponse | null;
+  success: boolean;
+  userDetail: IUserDetail | null;
+}
+
 export interface IUserStatistics {
   email: string;
   productivity: number;
