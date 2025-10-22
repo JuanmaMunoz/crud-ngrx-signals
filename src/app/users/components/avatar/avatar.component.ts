@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { fadeIn } from '../../../common/animations/animations';
 import { IAvatar } from '../../models/interfaces';
 import { ImgComponent } from '../img/img.component';
 
 @Component({
   selector: 'app-avatar',
   imports: [ImgComponent],
+  animations: [fadeIn()],
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss',
 })

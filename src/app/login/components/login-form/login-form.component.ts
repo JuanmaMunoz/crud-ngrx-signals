@@ -30,7 +30,7 @@ export class LoginFormComponent {
   public passControl: FormControl = this.loginForm.get('pass') as FormControl;
 
   public validationErrors: Record<string, string> = {
-    email: 'The email is not valid',
+    email: 'The email format is invalid',
     minlength: 'The minimum password length is 4',
     maxlength: 'The maximum password length is 8',
     required: 'The field is required',

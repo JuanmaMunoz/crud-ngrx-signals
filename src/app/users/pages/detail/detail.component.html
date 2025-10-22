@@ -1,8 +1,9 @@
 <div class="detail">
+  <app-back-users />
   @if (userDetailLoading()) {
     <div class="mt-5"><app-spinner /></div>
   } @else {
-    @if (!userDetailError()) {
+    @if (userDetail()) {
       @if (modeEdit()) {
         <app-user-form
           (actionCancel)="cancelEdition()"
@@ -18,7 +19,8 @@
           [userDetail]="userDetail"
         />
       }
-    } @else {
+    }
+    @if (userDetailError()) {
       <app-error [errorDescription]="userDetailError()?.error.message" />
     }
   }

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NgxMaskDirective } from 'ngx-mask';
 import { debounceTime, Subscription } from 'rxjs';
+import { fadeIn } from '../../../common/animations/animations';
 import { ErrorComponent } from '../../../common/components/error/error.component';
 import { SpinnerComponent } from '../../../common/components/spinner/spinner.component';
 import { IGetUsersParams, IUserDeleteState, IUsersState } from '../../models/interfaces';
@@ -29,6 +30,7 @@ import { IUser } from './../../models/interfaces';
     SpinnerComponent,
     ErrorComponent,
   ],
+  animations: [fadeIn(500)],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
@@ -130,9 +132,7 @@ export class TableComponent {
 
     effect(() => {
       if (this.errorDelete()) {
-        console.log('ERROR------>', this.errorDelete());
         this.openModal.set(false);
-        console.log(this.errorDelete());
       }
     });
 
@@ -167,6 +167,10 @@ export class TableComponent {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  public createUser() {
+    this.router.navigate(['/users/create']);
   }
 
   public userDetail(email: string): void {

@@ -1,5 +1,7 @@
 <div class="user-form text-start">
-  <app-avatar [avatar]="infoAvatar" />
+  <div class="d-flex justify-content-lg-center">
+    <app-avatar [avatar]="infoAvatar" />
+  </div>
   <form [formGroup]="formUser" (submit)="saveUser()">
     <div class="row">
       <div class="col-lg-6">

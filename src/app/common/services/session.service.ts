@@ -15,10 +15,7 @@ export class SessionService {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token') as string;
       this.jwt = JSON.parse(atob(this.token));
-      console.log('-->', this.jwt!.expiration >= new Date().getTime());
-      return this.jwt!.expiration >= new Date().getTime()
-        ? of(true)
-        : of(false);
+      return this.jwt!.expiration >= new Date().getTime() ? of(true) : of(false);
     } else {
       localStorage.removeItem('token');
       this.token = '';

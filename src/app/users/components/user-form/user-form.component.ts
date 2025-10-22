@@ -53,6 +53,9 @@ export class UserFormComponent {
     minlength: 'The min length is 2',
     maxlength: 'The max length is 50',
     emailExist: 'The email is already in use.',
+    min: 'The min value is 600',
+    max: 'The max value is $100,000',
+    email: 'The email format is invalid',
   };
 
   public infoAvatar: IAvatar = {
@@ -108,6 +111,7 @@ export class UserFormComponent {
     placeholder: 'Insert salary',
     label: 'Salary',
     validationErrors: this.validationErrors,
+    mask: '000999',
   });
 
   public inputCoworker: WritableSignal<IInputNumber> = signal({
@@ -163,7 +167,6 @@ export class UserFormComponent {
   constructor() {
     effect(() => {
       if (this.error()) {
-        console.log(this.error());
         if (this.error()?.error.code === 'USER_EMAIL_ALREADY_EXISTS') {
           this.emailControl.setErrors({ emailExist: 'error' });
         }
@@ -201,7 +204,7 @@ export class UserFormComponent {
       salary: new FormControl(this.userDetail()?.info.salary ?? '', [
         Validators.required,
         Validators.min(600),
-        Validators.max(1000000),
+        Validators.max(100000),
       ]),
       coworker: new FormControl(
         { value: this.userDetail()?.statistics.coworker ?? '', disabled: true },

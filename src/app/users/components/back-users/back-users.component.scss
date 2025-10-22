@@ -1,0 +1,14 @@
+.back-users {
+  position: relative;
+  & > a {
+    color: var(--bs-primary);
+    cursor: pointer;
+    left: 0rem;
+    position: absolute;
+    text-decoration: none;
+    top: -1rem;
+    &:hover {
+      color: var(--bs-secondary);
+    }
+  }
+}

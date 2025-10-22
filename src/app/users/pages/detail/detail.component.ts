@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ErrorComponent } from '../../../common/components/error/error.component';
 import { SpinnerComponent } from '../../../common/components/spinner/spinner.component';
+import { BackUsersComponent } from '../../components/back-users/back-users.component';
 import { InfoComponent } from '../../components/info/info.component';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
 import { UserFormComponent } from '../../components/user-form/user-form.component';
@@ -33,6 +34,8 @@ import { setInitialStateDelete, setInitialStateEdit } from './../../store/action
     ModalDeleteComponent,
     UserFormComponent,
     ErrorComponent,
+    RouterModule,
+    BackUsersComponent,
   ],
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss',
@@ -104,12 +107,6 @@ export class DetailComponent {
       this.store.select((state) => state.userEdit.error),
       { initialValue: null },
     );
-
-    effect(() => {
-      if (this.userDetail()) {
-        console.log(this.userDetail());
-      }
-    });
 
     effect(() => {
       if (this.deleteSuccess()) {

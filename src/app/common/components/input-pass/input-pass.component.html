@@ -13,6 +13,7 @@
       }"
       class="form-control"
       [placeholder]="input().placeholder"
+      autocomplete="off"
     />
     <button (click)="showPass()" class="btn btn-outline-secondary" type="button">
       <i *ngIf="type === enumTypeInput.PASS" class="bi bi-eye"></i
