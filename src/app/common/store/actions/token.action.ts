@@ -5,4 +5,4 @@ export const createToken = createAction(
   '[Token] create Token',
   props<{ token: string; jwt: IToken | null }>(),
 );
-export const setInitialState = createAction('[Token] Set initial state');
+export const setInitialStateToken = createAction('[Token] Set initial state');

@@ -1,36 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { IToken, ITokenState } from '../models/interfaces';
+import { createToken } from '../store/actions/token.action';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SessionService {
-  constructor() {}
+  constructor(private store: Store<{ token: ITokenState }>) {}
   private tokenDuration: number = 60000;
-  public token: string = '';
-  public jwt: IToken | null = null;
+  //public token: string = '';
+  //public jwt: IToken | null = null;
 
-  public checkSession(): Observable<boolean> {
+  public checkSessionFromStorage(): void {
     if (localStorage.getItem('token')) {
-      this.token = localStorage.getItem('token') as string;
-      this.jwt = JSON.parse(atob(this.token));
-      return this.jwt!.expiration >= new Date().getTime() ? of(true) : of(false);
+      const token = localStorage.getItem('token') as string;
+      const jwt: IToken = JSON.parse(atob(token));
+      if (jwt!.expiration >= new Date().getTime()) {
+        this.store.dispatch(createToken({ token: token, jwt: jwt }));
+      }
     } else {
       localStorage.removeItem('token');
-      this.token = '';
-      this.jwt = null;
-      return of(false);
     }
   }
 
   public createFakeToken(email: string): ITokenState {
-    this.jwt = {
+    const jwt: IToken = {
       email,
       expiration: new Date().getTime() + this.tokenDuration,
     };
-    this.token = btoa(JSON.stringify(this.jwt));
-    localStorage.setItem('token', this.token);
-    return { token: this.token, jwt: this.jwt };
+    const token = btoa(JSON.stringify(jwt));
+    localStorage.setItem('token', token);
+    return { token: token, jwt: jwt };
   }
 }

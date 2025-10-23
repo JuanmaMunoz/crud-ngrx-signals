@@ -2,26 +2,31 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
-import { SessionService } from '../services/session.service';
+import { Store } from '@ngrx/store';
+import { catchError, switchMap, take, throwError } from 'rxjs';
+import { ITokenState } from '../models/interfaces';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const sessionService = inject(SessionService);
   const router = inject(Router);
+  const store = inject(Store<{ token: ITokenState }>);
 
-  const token = sessionService.token;
+  return store
+    .select((state) => state.token.jwt)
+    .pipe(
+      take(1),
+      switchMap((token) => {
+        const authReq = token
+          ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
+          : req;
 
-  // If There is toke, clone de request
-  const authReq = token
-    ? req.clone({ setHeaders: { authorization: token } })
-    : req;
-
-  return next(authReq).pipe(
-    catchError((err) => {
-      if (err.status === 401) {
-        router.navigate(['/login/401']);
-      }
-      return throwError(() => err);
-    }),
-  );
+        return next(authReq).pipe(
+          catchError((err) => {
+            if (err.status === 401) {
+              router.navigate(['/login/401']);
+            }
+            return throwError(() => err);
+          }),
+        );
+      }),
+    );
 };

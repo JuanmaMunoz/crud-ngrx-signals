@@ -11,14 +11,12 @@ export const routes: Routes = [
   {
     path: 'login',
     canLoad: [loginGuard],
-    loadChildren: () =>
-      import('./login/login.routes').then((m) => m.LOGIN_ROUTES),
+    loadChildren: () => import('./login/login.routes').then((m) => m.LOGIN_ROUTES),
   },
   {
     path: 'users',
     canLoad: [authGuard],
-    loadChildren: () =>
-      import('./users/users.routes').then((m) => m.USERS_ROUTES),
+    loadChildren: () => import('./users/users.routes').then((m) => m.USERS_ROUTES),
   },
   {
     path: '**',

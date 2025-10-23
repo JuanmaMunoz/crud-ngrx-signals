@@ -1,6 +1,6 @@
 <div
-  class="avatar mt-2"
-  [class.text-start]="avatar.modeRow"
+  class="avatar"
+  [class]="avatar.modeRow ? 'text-start' : 'text-center'"
   [class.d-flex]="avatar.modeRow"
   [class.align-items-center]="avatar.modeRow"
 >

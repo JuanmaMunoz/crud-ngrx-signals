@@ -4,24 +4,21 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
-import { ITokenState } from '../../../common/models/interfaces';
-import { createToken } from '../../../common/store/actions/token.action';
+import { setInitialStateToken } from '../../../common/store/actions/token.action';
 import { LoginService } from '../../services/login.service';
-import { login, loginFailure, loginSuccess } from '../actions/login.action';
+import { loginFailure } from '../actions/login.action';
+import { logout, logoutSuccess } from '../actions/logout.action';
 
-export const loginEffect = createEffect(
+export const logoutEffect = createEffect(
   () => {
     const actions$ = inject(Actions);
     const loginService = inject(LoginService);
 
     return actions$.pipe(
-      ofType(login),
-      mergeMap(({ email, pass }) =>
-        loginService.login(email, pass).pipe(
-          mergeMap((data: ITokenState) => [
-            loginSuccess(),
-            createToken({ token: data.token, jwt: data.jwt }),
-          ]),
+      ofType(logout),
+      mergeMap(() =>
+        loginService.logout().pipe(
+          mergeMap(() => [logoutSuccess(), setInitialStateToken()]),
           catchError((error: HttpErrorResponse) => of(loginFailure({ error }))),
         ),
       ),

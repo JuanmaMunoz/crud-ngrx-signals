@@ -1,0 +1,15 @@
+.nav-bar {
+  position: relative;
+  &__user {
+    position: absolute;
+    right: 2rem;
+    top: 0rem;
+    > a {
+      color: var(--bs-primary);
+      cursor: pointer;
+      &:hover {
+        color: var(--bs-secondary);
+      }
+    }
+  }
+}

@@ -1,18 +1,21 @@
 import { inject } from '@angular/core';
 import { CanLoadFn, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { map, tap } from 'rxjs';
-import { SessionService } from '../../../common/services/session.service';
+import { ITokenState } from '../../../common/models/interfaces';
 
 export const loginGuard: CanLoadFn = () => {
-  const sessionService = inject(SessionService);
   const router = inject(Router);
-
-  return sessionService.checkSession().pipe(
-    map((ok) => !ok),
-    tap((ok) => {
-      if (!ok) {
-        router.navigate(['/users']);
-      }
-    }),
-  );
+  const store = inject(Store<{ token: ITokenState }>);
+  return store
+    .select((state) => state.token.jwt)
+    .pipe(
+      map((token) => !!token),
+      tap((isLoggedIn) => {
+        if (isLoggedIn) {
+          router.navigate(['/users']);
+        }
+      }),
+      map((isLoggedIn) => !isLoggedIn),
+    );
 };

@@ -9,9 +9,7 @@
     [formControl]="input().control"
     [mask]="input().mask"
     [ngClass]="{
-      'is-invalid':
-        (input().control.value && input().control.errors) ||
-        (input().control.errors && input().control.dirty),
+      'is-invalid': input().control.errors,
       'is-valid': input().control.value && input().control.valid
     }"
     autocomplete="off"

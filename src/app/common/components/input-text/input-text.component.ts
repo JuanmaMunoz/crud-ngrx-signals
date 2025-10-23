@@ -16,6 +16,6 @@ export class InputTextComponent {
   @ViewChild('element') element: ElementRef = {} as ElementRef;
 
   ngAfterViewInit(): void {
-    if (this.input().focus) this.element.nativeElement.focus();
+    if (this.input().focus) setTimeout(() => this.element.nativeElement.focus(), 0);
   }
 }

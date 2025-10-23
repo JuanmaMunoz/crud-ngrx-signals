@@ -8,8 +8,4 @@
     [loading]="userCreateLoading"
     [error]="userCreateError"
   />
-
-  @if (userCreateError()) {
-    <app-error [errorDescription]="userCreateError()?.error.message" />
-  }
 </div>

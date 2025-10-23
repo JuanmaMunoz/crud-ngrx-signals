@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ErrorComponent } from '../../../common/components/error/error.component';
+import { InputDateComponent } from '../../../common/components/input-date/input-date.component';
 import { InputNumberComponent } from '../../../common/components/input-number/input-number.component';
 import { InputTextComponent } from '../../../common/components/input-text/input-text.component';
 import { TypeInput } from '../../../common/models/enum';
@@ -24,6 +25,7 @@ import { AvatarComponent } from '../avatar/avatar.component';
     ReactiveFormsModule,
     InputTextComponent,
     InputNumberComponent,
+    InputDateComponent,
     AvatarComponent,
     ErrorComponent,
   ],
@@ -195,7 +197,12 @@ export class UserFormComponent {
         Validators.required,
         Validators.email,
       ]),
-      date: new FormControl(this.userDetail()?.info.date ?? '', [Validators.required]),
+      date: new FormControl(
+        this.userDetail()?.info.date
+          ? new Date(this.userDetail()?.info.date!).toISOString().split('T')[0]
+          : '',
+        [Validators.required],
+      ),
       position: new FormControl(this.userDetail()?.info.position ?? '', [
         Validators.required,
         Validators.minLength(2),
@@ -206,26 +213,19 @@ export class UserFormComponent {
         Validators.min(600),
         Validators.max(100000),
       ]),
-      coworker: new FormControl(
-        { value: this.userDetail()?.statistics.coworker ?? 5, disabled: true },
-        [Validators.required],
-      ),
-      hardworking: new FormControl(
-        { value: this.userDetail()?.statistics.hardworking ?? 5, disabled: true },
-        [Validators.required],
-      ),
-      knowledge: new FormControl(
-        { value: this.userDetail()?.statistics.knowledge ?? 5, disabled: true },
-        [Validators.required],
-      ),
-      proactivity: new FormControl(
-        { value: this.userDetail()?.statistics.proactivity ?? 5, disabled: true },
-        [Validators.required],
-      ),
-      productivity: new FormControl(
-        { value: this.userDetail()?.statistics.productivity ?? 5, disabled: true },
-        [Validators.required],
-      ),
+      coworker: new FormControl(this.userDetail()?.statistics.coworker ?? 5, [Validators.required]),
+      hardworking: new FormControl(this.userDetail()?.statistics.hardworking ?? 5, [
+        Validators.required,
+      ]),
+      knowledge: new FormControl(this.userDetail()?.statistics.knowledge ?? 5, [
+        Validators.required,
+      ]),
+      proactivity: new FormControl(this.userDetail()?.statistics.proactivity ?? 5, [
+        Validators.required,
+      ]),
+      productivity: new FormControl(this.userDetail()?.statistics.productivity ?? 5, [
+        Validators.required,
+      ]),
     });
 
     this.nameControl = this.formUser.get('name') as FormControl;

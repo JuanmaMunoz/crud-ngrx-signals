@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { ILoginState } from '../../models/interfaces';
-import { login, loginFailure, loginSuccess, setInitialState } from '../actions/login.action';
+import { login, loginFailure, loginSuccess, setInitialStateLogin } from '../actions/login.action';
 
 export const initialState: ILoginState = {
   loading: false,
@@ -22,5 +22,5 @@ export const loginReducer = createReducer(
     loading: false,
     error,
   })),
-  on(setInitialState, () => initialState),
+  on(setInitialStateLogin, () => initialState),
 );

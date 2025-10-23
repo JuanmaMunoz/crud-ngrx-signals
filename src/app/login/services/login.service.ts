@@ -26,7 +26,7 @@ export class LoginService {
     ),
   );
 
-  public startLogin(email: string, pass: string): Observable<ITokenState> {
+  public login(email: string, pass: string): Observable<ITokenState> {
     try {
       if (email === 'user@test' && pass === 'ajk38jkÑ') {
         return of(this.sessionService.createFakeToken(email)).pipe(delay(this.delay));
@@ -46,6 +46,15 @@ export class LoginService {
           ),
         );
       }
+    } catch (error) {
+      return this.unknownError;
+    }
+  }
+
+  public logout(): Observable<null> {
+    try {
+      localStorage.removeItem('token');
+      return of(null).pipe(delay(this.delay));
     } catch (error) {
       return this.unknownError;
     }

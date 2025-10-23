@@ -9,7 +9,8 @@ import { InputPassComponent } from '../../../common/components/input-pass/input-
 import { InputTextComponent } from '../../../common/components/input-text/input-text.component';
 import { IInput } from '../../../common/models/interfaces';
 import { ILoginState } from '../../models/interfaces';
-import { login } from '../../store/actions/login.action';
+import { login, setInitialStateLogin } from '../../store/actions/login.action';
+import { setInitialStateLogout } from './../../store/actions/logout.action';
 
 @Component({
   selector: 'app-login-form',
@@ -56,7 +57,7 @@ export class LoginFormComponent {
   public loginError!: Signal<HttpErrorResponse | null>;
 
   constructor(
-    private store: Store<{ login: ILoginState }>,
+    private store: Store<{ login: ILoginState; logout: ILoginState }>,
     private router: Router,
   ) {
     this.loading = toSignal(
@@ -89,6 +90,11 @@ export class LoginFormComponent {
         this.router.navigate(['/users']);
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(setInitialStateLogin());
+    this.store.dispatch(setInitialStateLogout());
   }
 
   public login(): void {

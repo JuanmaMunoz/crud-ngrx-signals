@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Signal } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { IInputNumber } from '../../models/interfaces';
 
@@ -12,13 +12,16 @@ import { IInputNumber } from '../../models/interfaces';
 })
 export class InputNumberComponent {
   @Input() input!: Signal<IInputNumber>;
+  public control!: FormControl;
+  ngOnInit(): void {
+    this.control = this.input().control;
+    this.control.disable();
+  }
 
   public increase(): void {
-    if (this.input().control.value < this.input().max)
-      this.input().control.setValue(this.input().control.value + 1);
+    if (this.control.value < this.input().max) this.control.setValue(this.control.value + 1);
   }
   public decrease(): void {
-    if (this.input().control.value > this.input().min)
-      this.input().control.setValue(this.input().control.value - 1);
+    if (this.control.value > this.input().min) this.control.setValue(this.control.value - 1);
   }
 }

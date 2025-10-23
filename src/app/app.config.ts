@@ -11,7 +11,9 @@ import { routes } from './app.routes';
 import { tokenReducer } from './common/store/reducers/token.reducer';
 import { authInterceptor } from './common/utils/authInterceptor';
 import { loginEffect } from './login/store/effects/login.effect';
+import { logoutEffect } from './login/store/effects/logout.effect';
 import { loginReducer } from './login/store/reducers/login.reducer';
+import { logoutReducer } from './login/store/reducers/logout.reducer';
 import {
   userCreateEffect,
   userDeleteEffect,
@@ -29,6 +31,7 @@ import {
 
 const store = {
   login: loginReducer,
+  logout: logoutReducer,
   token: tokenReducer,
   users: usersReducer,
   userDelete: userDeleteReducer,
@@ -40,6 +43,7 @@ const store = {
 const effects = [
   {
     loginEffect,
+    logoutEffect,
     usersEffect,
     userDeleteEffect,
     userGetDetailEffect,
