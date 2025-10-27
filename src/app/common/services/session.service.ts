@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { loginSuccess } from '../../login/store/actions/login.action';
 import { IToken, ITokenState } from '../models/interfaces';
 import { createToken } from '../store/actions/token.action';
 
@@ -9,8 +10,6 @@ import { createToken } from '../store/actions/token.action';
 export class SessionService {
   constructor(private store: Store<{ token: ITokenState }>) {}
   private tokenDuration: number = 60000;
-  //public token: string = '';
-  //public jwt: IToken | null = null;
 
   public checkSessionFromStorage(): void {
     if (localStorage.getItem('token')) {
@@ -18,6 +17,7 @@ export class SessionService {
       const jwt: IToken = JSON.parse(atob(token));
       if (jwt!.expiration >= new Date().getTime()) {
         this.store.dispatch(createToken({ token: token, jwt: jwt }));
+        this.store.dispatch(loginSuccess());
       }
     } else {
       localStorage.removeItem('token');

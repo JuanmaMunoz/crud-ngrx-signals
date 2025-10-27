@@ -10,10 +10,11 @@ import { provideNgxMask } from 'ngx-mask';
 import { routes } from './app.routes';
 import { tokenReducer } from './common/store/reducers/token.reducer';
 import { authInterceptor } from './common/utils/authInterceptor';
-import { loginEffect } from './login/store/effects/login.effect';
-import { logoutEffect } from './login/store/effects/logout.effect';
-import { loginReducer } from './login/store/reducers/login.reducer';
-import { logoutReducer } from './login/store/reducers/logout.reducer';
+import { loginEffect, logoutEffect } from './login/store/effects/login.effect';
+
+import { loginReducer, logoutReducer } from './login/store/reducers/login.reducer';
+
+import { metaReducers } from './common/store/reducers/clear-state.metareducer';
 import {
   userCreateEffect,
   userDeleteEffect,
@@ -58,7 +59,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withHashLocation()),
     provideNgxMask(),
     provideHttpClient(withInterceptors([authInterceptor])),
-    provideStore(store),
+    provideStore(store, { metaReducers }),
     provideEffects(effects),
 
     provideStoreDevtools({ maxAge: 25, logOnly: false }),

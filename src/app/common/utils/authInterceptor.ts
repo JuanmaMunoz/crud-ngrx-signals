@@ -22,7 +22,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         return next(authReq).pipe(
           catchError((err) => {
             if (err.status === 401) {
-              router.navigate(['/login/401']);
+              //Code Session Expired
             }
             return throwError(() => err);
           }),

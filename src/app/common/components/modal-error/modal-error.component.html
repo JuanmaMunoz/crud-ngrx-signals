@@ -1,0 +1,11 @@
+<app-modal [visible]="openModal">
+  <h3 class="text-danger" header><span class="bi bi-exclamation-triangle"></span> Error</h3>
+  <div body>
+    <p class="text-danger">{{ errorMessage() }}</p>
+  </div>
+  <div footer>
+    <button (click)="closeModal()" type="button" class="btn btn-outline-light me-4">
+      <i class="bi bi-x-lg"></i> Close
+    </button>
+  </div>
+</app-modal>

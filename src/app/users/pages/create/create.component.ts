@@ -54,6 +54,10 @@ export class CreateComponent {
     this.store.dispatch(setInitialStateCreate());
   }
 
+  ngOnDestroy(): void {
+    this.store.dispatch(setInitialStateCreate());
+  }
+
   public cancelCreation(): void {
     this.router.navigate(['/users']);
   }

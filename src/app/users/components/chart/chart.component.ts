@@ -22,16 +22,16 @@ export class ChartComponent {
     effect(() => {
       if (this.userDetail()) {
         this.chartData = {
-          labels: ['Productivity', 'Hard Working', 'Coworker', 'Knowledge', 'Proactivity'],
+          labels: ['Coworker', 'Hard Working', 'Knowledge', 'Proactivity', 'Productivity'],
           datasets: [
             {
               label: 'User´s Statistics',
               data: [
-                this.userDetail()?.statistics.productivity!,
-                this.userDetail()?.statistics.hardworking!,
                 this.userDetail()?.statistics.coworker!,
+                this.userDetail()?.statistics.hardworking!,
                 this.userDetail()?.statistics.knowledge!,
                 this.userDetail()?.statistics.proactivity!,
+                this.userDetail()?.statistics.productivity!,
               ],
               backgroundColor: [
                 'rgb(153, 230, 255)',

@@ -9,8 +9,11 @@ import { InputPassComponent } from '../../../common/components/input-pass/input-
 import { InputTextComponent } from '../../../common/components/input-text/input-text.component';
 import { IInput } from '../../../common/models/interfaces';
 import { ILoginState } from '../../models/interfaces';
-import { login, setInitialStateLogin } from '../../store/actions/login.action';
-import { setInitialStateLogout } from './../../store/actions/logout.action';
+import {
+  login,
+  setInitialStateLogin,
+  setInitialStateLogout,
+} from '../../store/actions/login.action';
 
 @Component({
   selector: 'app-login-form',

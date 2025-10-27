@@ -125,6 +125,7 @@ export class TableComponent {
     effect(() => {
       if (this.successDelete()) {
         this.openModal.set(false);
+        this.store.dispatch(setInitialStateDelete());
         this.store.dispatch(getUsers(this.params()!));
         this.store.dispatch(setInitialStateDelete());
       }
@@ -185,7 +186,12 @@ export class TableComponent {
   }
 
   public actionModalDelete(deleteUser: boolean): void {
-    deleteUser ? this.store.dispatch(deleteUserConfirm()) : this.openModal.set(false);
+    if (deleteUser) {
+      this.store.dispatch(deleteUserConfirm());
+    } else {
+      this.openModal.set(false);
+      this.store.dispatch(setInitialStateDelete());
+    }
   }
 
   public changePage(page: number): void {

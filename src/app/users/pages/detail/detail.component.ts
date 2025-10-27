@@ -110,6 +110,7 @@ export class DetailComponent {
     effect(() => {
       if (this.deleteSuccess()) {
         this.router.navigate(['/users']);
+        this.store.dispatch(setInitialStateDelete());
       }
     });
 
@@ -132,6 +133,10 @@ export class DetailComponent {
     });
   }
 
+  ngOnDestroy(): void {
+    this.store.dispatch(setInitialStateUserDetail());
+  }
+
   public openModalDelete(): void {
     this.openModal.set(true);
     const user: IUser = this.userDetail()?.info!;
@@ -139,7 +144,12 @@ export class DetailComponent {
   }
 
   public actionModalDelete(deleteUser: boolean): void {
-    deleteUser ? this.store.dispatch(deleteUserConfirm()) : this.openModal.set(false);
+    if (deleteUser) {
+      this.store.dispatch(deleteUserConfirm());
+    } else {
+      this.openModal.set(false);
+      this.store.dispatch(setInitialStateDelete());
+    }
   }
 
   public cancelEdition(): void {

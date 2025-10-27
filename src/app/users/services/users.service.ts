@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { delay, map, mergeMap, Observable, of, throwError, timer } from 'rxjs';
+import { delay, map, Observable, of } from 'rxjs';
 import { statistics } from '../../../assets/data/statistics';
 import { users } from '../../../assets/data/users';
 import { SessionService } from '../../common/services/session.service';
+import { emailInUseError, unknownError, userNotFoundError } from '../../common/utils/errors';
 import {
   IGetUsersParams,
   IReqGetUsers,
@@ -20,52 +21,10 @@ export class UsersService {
   private delay: number = 200;
   private allUsers: IUser[] = users;
   private usersStatistics: IUserStatistics[] = statistics;
-  private errorEmailInUse = timer(this.delay).pipe(
-    mergeMap(() =>
-      throwError(
-        () =>
-          ({
-            status: 409,
-            error: {
-              code: 'USER_EMAIL_ALREADY_EXISTS',
-              message: 'The email is already in use.',
-            },
-          }) as HttpErrorResponse,
-      ),
-    ),
-  );
-  private userNotFoundError = timer(this.delay).pipe(
-    mergeMap(() =>
-      throwError(
-        () =>
-          ({
-            status: 404,
-            error: {
-              code: 'USER_NOT_FOUND',
-              message: 'No user found with the provided email.',
-            },
-          }) as HttpErrorResponse,
-      ),
-    ),
-  );
-
-  private unknownError = timer(this.delay).pipe(
-    mergeMap(() =>
-      throwError(
-        () =>
-          ({
-            status: 500,
-            error: {
-              code: 'ERROR_UNKNOWN',
-              message: 'There is an unknown error in the system.',
-            },
-          }) as HttpErrorResponse,
-      ),
-    ),
-  );
 
   public getUsers(params: IGetUsersParams): Observable<IReqGetUsers> {
     try {
+      //throw new Error('Force unknown error'); // Check error handling
       const search = this.normalizeText(params.search);
       return of(this.allUsers).pipe(
         map((users) =>
@@ -101,24 +60,26 @@ export class UsersService {
         delay(200),
       );
     } catch (error) {
-      return this.unknownError;
+      return unknownError;
     }
   }
 
   public deleteUser(user: IUser): Observable<null> {
     try {
+      //throw new Error('Force unknown error'); // Check error handling
       this.allUsers = this.allUsers.filter((u: IUser) => u.email !== user.email);
       this.usersStatistics = this.usersStatistics.filter(
         (s: IUserStatistics) => s.email !== user.email,
       );
       return of(null).pipe(delay(this.delay));
     } catch (error) {
-      return this.unknownError;
+      return unknownError;
     }
   }
 
   public getUserDetail(email: string): Observable<IUserDetail> {
     try {
+      //throw new Error('Force unknown error'); // Check error handling
       const info: IUser = this.allUsers.find((u: IUser) => u.email === email)!;
       const statistics: IUserStatistics = this.usersStatistics.find(
         (u: IUserStatistics) => u.email === email,
@@ -126,44 +87,43 @@ export class UsersService {
       if (info && statistics) {
         return of({ info, statistics }).pipe(delay(this.delay));
       } else {
-        return this.userNotFoundError;
+        return userNotFoundError;
       }
     } catch (error) {
-      return this.unknownError;
+      return unknownError;
     }
   }
 
   public editUser(oldEmail: string, userDetail: IUserDetail): Observable<null> {
     try {
-      //throw new Error('Fallo intencional para test de catch');
+      //throw new Error('Force unknown error'); // Check error handling
       if (oldEmail !== userDetail.info.email) {
         if (!this.checkExistEmail(userDetail.info.email)) {
           this.editArrayUser(oldEmail, userDetail);
           return of(null).pipe(delay(this.delay));
         } else {
-          return this.errorEmailInUse;
+          return emailInUseError;
         }
       } else {
         this.editArrayUser(oldEmail, userDetail);
         return of(null).pipe(delay(this.delay));
       }
     } catch (error) {
-      return this.unknownError;
+      return unknownError;
     }
   }
 
   public createUser(userDetail: IUserDetail): Observable<null> {
     try {
-      //throw new Error('Fallo intencional para test de catch');
-
+      //throw new Error('Force unknown error'); // Check error handling
       if (!this.checkExistEmail(userDetail.info.email)) {
         this.insertArrayUser(userDetail);
         return of(null).pipe(delay(this.delay));
       } else {
-        return this.errorEmailInUse;
+        return emailInUseError;
       }
     } catch (error) {
-      return this.unknownError;
+      return unknownError;
     }
   }
 

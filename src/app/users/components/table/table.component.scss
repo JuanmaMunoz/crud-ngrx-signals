@@ -17,5 +17,6 @@
   .table {
     cursor: pointer;
     line-height: 1.2;
+    --bs-table-border-color: var(--bs-dark2);
   }
 }
