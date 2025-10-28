@@ -1,4 +1,8 @@
-<div [@fadeIn] class="modal" [ngStyle]="visible() ? { display: 'block' } : { display: 'none' }">
+<div
+  [@fadeInModal]="visible()"
+  class="modal"
+  [ngStyle]="visible() ? { display: 'block' } : { display: 'none' }"
+>
   <div class="modal-dialog">
     <div class="modal-content border-secondary bg-dark">
       <div class="modal-header">

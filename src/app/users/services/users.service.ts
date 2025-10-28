@@ -22,6 +22,31 @@ export class UsersService {
   private allUsers: IUser[] = users;
   private usersStatistics: IUserStatistics[] = statistics;
 
+  /*############ REAL API CALLS - TO BE USED IN PRODUCTION ############
+  #####################################################################
+  public getUsers(params: IGetUsersParams): Observable<IReqGetUsers> {
+    const { page, number, search } = params;
+    const apiUrl = `${your api url}/users?page=${page}&number=${number}&search=${search}`;
+    return this.http.get<IReqGetUsers>(apiUrl);
+  }
+  public deleteUser(user: IUser): Observable<null> {
+    return this.http.delete<null>(`${your api url}/users/${user.email}`, {}); 
+  }
+  public getUserDetail(email: string): Observable<IUserDetail> {
+    return this.http.get<IUserDetail>(`${your api url}/users/${email}`);
+  }
+  public editUser(oldEmail: string, userDetail: IUserDetail): Observable<null> {
+    return this.http.put<null>(`${your api url}/users/${oldEmail}`, userDetail);
+  }
+  public createUser(userDetail: IUserDetail): Observable<null> {
+    return this.http.post<null>(`${your api url}/users`, userDetail);
+  }
+  #####################################################################
+  #####################################################################*/
+
+  //########### MOCK API CALLS - TO BE USED ON GITHUB PAGES ###########//
+  //###################################################################
+
   public getUsers(params: IGetUsersParams): Observable<IReqGetUsers> {
     try {
       //throw new Error('Force unknown error'); // Check error handling
@@ -152,4 +177,6 @@ export class UsersService {
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
   }
+  /*#####################################################################
+  #####################################################################*/
 }

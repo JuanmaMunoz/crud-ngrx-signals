@@ -13,7 +13,7 @@ export const authGuard: CanLoadFn = () => {
       map((token) => !!token),
       tap((isLoggedIn) => {
         if (!isLoggedIn) {
-          router.navigate(['/login/403']);
+          router.navigate(['/login']);
         }
       }),
     );

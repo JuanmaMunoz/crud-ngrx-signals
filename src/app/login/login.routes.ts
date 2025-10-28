@@ -6,8 +6,4 @@ export const LOGIN_ROUTES: Routes = [
     path: '',
     component: LoginComponent,
   },
-  {
-    path: ':id',
-    component: LoginComponent,
-  },
 ];

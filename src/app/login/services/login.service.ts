@@ -11,6 +11,19 @@ export class LoginService {
   private delay: number = 200;
   private sessionService = inject(SessionService);
 
+  /*############ REAL API CALLS - TO BE USED IN PRODUCTION ############
+  #####################################################################
+  public login(email: string, pass: string): Observable<ITokenState> {
+    return this.http.post<ITokenState>(`${your api url}/login`, { email, password: pass });
+  }
+  public logout(): Observable<null> {
+    return this.http.delete<null>(`${your api url}/logout`, {});
+  }
+  #####################################################################
+  #####################################################################*/
+
+  //########### MOCK API CALLS - TO BE USED ON GITHUB PAGES ###########//
+  //###################################################################
   public login(email: string, pass: string): Observable<ITokenState> {
     try {
       //throw new Error('Force unknown error'); // Check error handling
@@ -33,4 +46,6 @@ export class LoginService {
       return unknownError;
     }
   }
+  //###################################################################
+  //###################################################################
 }

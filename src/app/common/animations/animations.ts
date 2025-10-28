@@ -8,3 +8,15 @@ export const fadeIn = (delay?: number) =>
       animate(`${delay ? delay : 1500}ms ease-out`, style({ opacity: 1 })),
     ]),
   ]);
+
+export const fadeInModal = (delay?: number) =>
+  trigger('fadeInModal', [
+    transition('false=>true', [
+      style({ opacity: 0 }),
+      animate(`${delay ? delay : 1500}ms ease-out`, style({ opacity: 1 })),
+    ]),
+    transition('true=>false', [
+      style({ opacity: 1 }),
+      animate(`${delay ? delay : 1500}ms ease-out`, style({ opacity: 0 })),
+    ]),
+  ]);
