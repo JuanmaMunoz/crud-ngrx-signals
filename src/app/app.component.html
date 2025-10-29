@@ -1,4 +1,15 @@
-<div class="app">
-  <app-navbar />
-  <router-outlet />
+<div class="app px-2 py-2">
+  @if (loginSuccess()) {
+    <app-navbar />
+  } @else {
+    <app-logo />
+  }
+  <div
+    class="container"
+    [ngStyle]="{
+      maxHeight: loginSuccess() ? '88dvh' : 'none'
+    }"
+  >
+    <router-outlet />
+  </div>
 </div>

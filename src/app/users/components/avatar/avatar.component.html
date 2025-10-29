@@ -1,14 +1,14 @@
 <div
   class="avatar"
-  [class]="avatar.modeRow ? 'text-start' : 'text-center'"
-  [class.d-flex]="avatar.modeRow"
+  [class]="avatar.modeRow ? 'text-lg-start text-center' : 'text-center'"
+  [class.d-lg-flex]="avatar.modeRow"
   [class.align-items-center]="avatar.modeRow"
 >
   <div>
     <app-img />
   </div>
-  <div [class.ms-3]="avatar.modeRow">
+  <div [class.ms-lg-3]="avatar.modeRow">
     <h4 class="text-primary">{{ avatar.title }}</h4>
-    <h5 [@fadeIn] class="text-light">{{ avatar.description }}</h5>
+    <h5 class="text-light">{{ avatar.description }}</h5>
   </div>
 </div>

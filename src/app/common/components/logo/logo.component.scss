@@ -1,0 +1,19 @@
+.logo {
+  &__title {
+    font-size: 4rem;
+  }
+  &__img {
+    width: 100px;
+  }
+}
+
+@media (max-width: 576px) {
+  .logo {
+    &__title {
+      font-size: 3rem;
+    }
+    &__img {
+      width: 70px;
+    }
+  }
+}

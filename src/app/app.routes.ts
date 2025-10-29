@@ -10,12 +10,12 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    canLoad: [loginGuard],
+    canActivate: [loginGuard],
     loadChildren: () => import('./login/login.routes').then((m) => m.LOGIN_ROUTES),
   },
   {
     path: 'users',
-    canLoad: [authGuard],
+    canActivate: [authGuard],
     loadChildren: () => import('./users/users.routes').then((m) => m.USERS_ROUTES),
   },
   {

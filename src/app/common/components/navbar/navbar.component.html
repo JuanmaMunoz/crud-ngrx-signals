@@ -1,19 +1,17 @@
-@if (token()) {
-  <div class="nav-bar my-2">
-    <div class="navbar__container d-flex justify-content-center">
-      <div class="navbar__container__title d-flex justify-content-center align-items-center">
-        <span class="text-secondary fs-1 me-2">CRUD</span>
-        <img [src]="imgAngular" height="55px" alt="CRUD Angular + NgRx" />
-        <span class="text-secondary fs-3 mx-2">+</span>
-        <img [src]="imgNgrx" height="55px" alt="Signals + NgRx" />
-        <span class="text-secondary fs-3 mx-2">with</span>
-        <span class="text-primary fs-2">Signals</span>
-      </div>
-    </div>
-    <div class="nav-bar__user d-flex align-items-center text-light">
-      <span class="me-3"><i class="bi bi-person me-1"></i>{{ token()?.email }}</span>
-      <a (click)="logout()" class="fs-5"><i class="bi bi-box-arrow-right"></i></a>
+<div [@fadeIn] class="nav-bar my-2">
+  <div class="navbar__container d-flex justify-content-center">
+    <div class="navbar__container__title d-flex justify-content-center align-items-center">
+      <span class="text-secondary fs-1 me-2">CRUD</span>
+      <img [src]="imgAngular" class="nav-bar__img" alt="CRUD Angular + NgRx" />
+      <span class="text-secondary fs-3 mx-2">+</span>
+      <img [src]="imgNgrx" class="nav-bar__img" alt="Signals + NgRx" />
+      <span class="nav-bar text-secondary fs-3 mx-2">with</span>
+      <span class="text-primary fs-2">Signals</span>
     </div>
   </div>
-}
+  <div class="nav-bar__user d-flex align-items-center text-light">
+    <span class="me-3"><i class="bi bi-person me-1"></i>{{ token()?.email }}</span>
+    <a (click)="logout()" class="fs-5"><i class="bi bi-box-arrow-right"></i></a>
+  </div>
+</div>
 <app-modal-error [openModal]="showErrorModal" [errorMessage]="errorMessage" />

@@ -9,7 +9,7 @@ import { createToken } from '../store/actions/token.action';
 })
 export class SessionService {
   constructor(private store: Store<{ token: ITokenState }>) {}
-  private tokenDuration: number = 60000;
+  private tokenDuration: number = 360000; // 1 hour in milliseconds
 
   public checkSessionFromStorage(): void {
     if (localStorage.getItem('token')) {

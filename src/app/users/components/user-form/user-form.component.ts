@@ -10,6 +10,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { fadeIn } from '../../../common/animations/animations';
 import { ErrorComponent } from '../../../common/components/error/error.component';
 import { InputDateComponent } from '../../../common/components/input-date/input-date.component';
 import { InputNumberComponent } from '../../../common/components/input-number/input-number.component';
@@ -29,6 +30,7 @@ import { AvatarComponent } from '../avatar/avatar.component';
     AvatarComponent,
     ErrorComponent,
   ],
+  animations: [fadeIn()],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss',
 })

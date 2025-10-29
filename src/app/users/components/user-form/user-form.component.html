@@ -1,8 +1,10 @@
-<div class="user-form text-start">
-  <div class="d-flex justify-content-lg-center">
-    <app-avatar [avatar]="infoAvatar" />
+<div class="user-form">
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <app-avatar [avatar]="infoAvatar" />
+    </div>
   </div>
-  <form [formGroup]="formUser" (submit)="saveUser()">
+  <form [@fadeIn] [formGroup]="formUser" (submit)="saveUser()">
     <div class="row">
       <div class="col-lg-6">
         <app-input-text [input]="inputName" />

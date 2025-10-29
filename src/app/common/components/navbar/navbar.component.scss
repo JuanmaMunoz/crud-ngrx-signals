@@ -12,4 +12,25 @@
       }
     }
   }
+  &__img {
+    height: 55px;
+  }
+}
+
+@media (max-width: 992px) {
+  .nav-bar {
+    &__user {
+      font-size: 0.9rem;
+      right: 0rem;
+      top: -1.1rem;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .nav-bar {
+    &__img {
+      height: 40px;
+    }
+  }
 }
