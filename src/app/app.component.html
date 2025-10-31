@@ -1,13 +1,15 @@
-<div class="app px-2 py-2">
-  @if (loginSuccess()) {
-    <app-navbar />
-  } @else {
-    <app-logo />
-  }
+<div
+  class="app px-2"
+  [ngStyle]="{
+    maxHeight: loginSuccess() ? '100dvh' : 'none',
+    overflowY: loginSuccess() ? 'hidden' : 'none'
+  }"
+>
+  <app-header />
   <div
     class="container"
     [ngStyle]="{
-      maxHeight: loginSuccess() ? '88dvh' : 'none'
+      maxHeight: loginSuccess() ? '90dvh' : 'none'
     }"
   >
     <router-outlet />

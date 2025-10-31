@@ -1,9 +1,9 @@
 <div class="detail">
-  <app-back-users />
   @if (userDetailLoading()) {
     <div class="mt-5"><app-spinner /></div>
   } @else {
     @if (userDetail()) {
+      <app-back-users />
       @if (modeEdit()) {
         <app-user-form
           (actionCancel)="cancelEdition()"

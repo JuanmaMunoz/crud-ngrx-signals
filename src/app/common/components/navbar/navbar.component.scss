@@ -1,28 +1,17 @@
 .nav-bar {
-  position: relative;
-  &__user {
-    position: absolute;
-    right: 2rem;
-    top: 0rem;
-    > a {
-      color: var(--bs-primary);
-      cursor: pointer;
-      &:hover {
-        color: var(--bs-secondary);
-      }
-    }
-  }
+  user-select: none;
   &__img {
     height: 55px;
   }
-}
-
-@media (max-width: 992px) {
-  .nav-bar {
-    &__user {
-      font-size: 0.9rem;
-      right: 0rem;
-      top: -1.1rem;
+  &__span {
+    line-height: 0.9;
+  }
+  &__logout {
+    color: var(--bs-secondary);
+    cursor: pointer;
+    line-height: 0;
+    &:hover {
+      color: var(--bs-primary);
     }
   }
 }

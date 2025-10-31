@@ -6,7 +6,6 @@
 
 body {
   background-color: var(--bs-dark);
-  overflow-y: hidden;
 }
 
 .container {
@@ -15,7 +14,7 @@ body {
   clip-path: inset(0 round 2rem);
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 2rem 1.5rem;
 }
 
 .table {

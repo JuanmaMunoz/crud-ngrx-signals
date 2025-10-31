@@ -1,0 +1,8 @@
+<div class="header">
+  @if (loginSuccess()) {
+    <app-navbar (actionLogout)="logout()" />
+  } @else {
+    <app-logo />
+  }
+</div>
+<app-modal-error [openModal]="showErrorModal" [errorMessage]="errorMessage" />
