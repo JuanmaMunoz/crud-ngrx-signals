@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
 import { IToken } from '../../common/models/interfaces';
 import { SessionService } from '../../common/services/session.service';
-import { loginError, unknownError } from '../../common/utils/errors';
+import { loginError$, unknownError$ } from '../../common/utils/errors';
 
 @Injectable({
   providedIn: 'root',
@@ -30,10 +30,10 @@ export class LoginService {
       if (email === 'user@test' && pass === 'ajk38jkÑ') {
         return of(this.sessionService.createFakeToken(email)).pipe(delay(this.delay));
       } else {
-        return loginError;
+        return loginError$;
       }
     } catch (error) {
-      return unknownError;
+      return unknownError$;
     }
   }
 
@@ -43,7 +43,7 @@ export class LoginService {
       localStorage.removeItem('token');
       return of(null).pipe(delay(this.delay));
     } catch (error) {
-      return unknownError;
+      return unknownError$;
     }
   }
   //###################################################################

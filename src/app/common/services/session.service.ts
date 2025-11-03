@@ -10,7 +10,7 @@ import { sessionExpiredError } from '../utils/errors';
 })
 export class SessionService {
   constructor(private store: Store<{ token: ITokenState }>) {}
-  private tokenDuration: number = 10000; // 1 hour in milliseconds
+  private tokenDuration: number = 3600000; //1 hour
   private jwt: IJWT | null = null;
 
   public checkSessionFromStorage(): void {
@@ -38,7 +38,7 @@ export class SessionService {
 
   public checkSession(): boolean {
     if (this.jwt!.expiration < new Date().getTime()) {
-      this.store.dispatch(tokenError(sessionExpiredError));
+      this.store.dispatch(tokenError({ error: sessionExpiredError }));
       return false;
     }
     return true;

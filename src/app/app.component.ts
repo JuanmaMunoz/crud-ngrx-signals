@@ -52,7 +52,7 @@ export class AppComponent {
 
     effect(() => {
       if (this.tokenError()) {
-        this.errorMessage.set(this.tokenError()?.message!);
+        this.errorMessage.set(this.tokenError()?.error.message);
         this.showErrorModal.set(true);
         this.store.dispatch(logout());
       }

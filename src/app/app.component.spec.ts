@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
@@ -6,6 +5,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { AppComponent } from './app.component';
 import { ITokenState } from './common/models/interfaces';
 import { SessionService } from './common/services/session.service';
+import { sessionExpiredError, unknownError } from './common/utils/errors';
 import { ILoginState } from './login/models/interfaces';
 import { logout } from './login/store/actions/login.action';
 
@@ -17,7 +17,6 @@ fdescribe('AppComponent', () => {
   let routerSpy: jasmine.SpyObj<Router>;
   let dispatchSpy: jasmine.Spy;
 
-  // initial state matching your interfaces
   const initialLoginState: ILoginState = {
     loading: false,
     error: null,
@@ -32,7 +31,7 @@ fdescribe('AppComponent', () => {
 
   const initialState = {
     login: { ...initialLoginState },
-    logout: { ...initialLoginState }, // you said logout uses same ILoginState
+    logout: { ...initialLoginState },
     token: { ...initialTokenState },
   };
 
@@ -53,7 +52,6 @@ fdescribe('AppComponent', () => {
     dispatchSpy = spyOn(store, 'dispatch');
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    // run initial change detection (constructor already executed at createComponent)
     fixture.detectChanges();
   });
 
@@ -66,57 +64,34 @@ fdescribe('AppComponent', () => {
   });
 
   it('should show the error modal and dispatch logout when tokenError exists', () => {
-    // Token error used in your component: this.tokenError()?.message
-    const tokenError = new HttpErrorResponse({
-      error: 'Invalid token', // message is read via .message in your effect with tokenError()?.message
-      status: 401,
-      statusText: 'Unauthorized',
-    });
-
-    // set the state with token.error
     store.setState({
       ...initialState,
       token: {
         ...initialTokenState,
-        error: tokenError,
+        error: { error: sessionExpiredError },
       },
     });
 
-    // trigger change detection so effects re-run
     fixture.detectChanges();
 
     expect(component.showErrorModal()).toBeTrue();
-    // your effect sets errorMessage to tokenError()?.message
-    console.log('tokenError.message-->', tokenError.message);
-    console.log('component.errorMessage()-->', component.errorMessage());
-    expect(component.errorMessage()).toContain(tokenError.message);
-    // expect dispatch(logout()) to have been called
+    expect(component.errorMessage()).toContain(sessionExpiredError.message);
     expect(dispatchSpy).toHaveBeenCalledWith(logout());
   });
 
   it('should show the error modal when logoutError exists', () => {
-    // In component you access logout.error.error.message
-    const logoutErrorPayload = { message: 'Logout error' };
-    const logoutError = new HttpErrorResponse({
-      error: logoutErrorPayload,
-      status: 500,
-      statusText: 'Server Error',
-    });
-
     store.setState({
       ...initialState,
       logout: {
         ...initialLoginState,
-        error: logoutError,
+        error: { error: unknownError },
       },
     });
 
     fixture.detectChanges();
 
     expect(component.showErrorModal()).toBeTrue();
-    // component sets errorMessage to logoutError()?.error.message
-    expect(component.errorMessage()).toBe(logoutErrorPayload.message);
-    // dispatch should NOT be called (only token error triggers logout dispatch)
+    expect(component.errorMessage()).toBe(unknownError.message);
     expect(dispatchSpy).not.toHaveBeenCalledWith(logout());
   });
 

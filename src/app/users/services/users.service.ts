@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { delay, map, Observable, of } from 'rxjs';
 import { statistics } from '../../../assets/data/statistics';
 import { users } from '../../../assets/data/users';
 import { SessionService } from '../../common/services/session.service';
-import { emailInUseError, unknownError, userNotFoundError } from '../../common/utils/errors';
+import { emailInUseError$, unknownError$, userNotFoundError$ } from '../../common/utils/errors';
 import {
   IGetUsersParams,
   IReqGetUsers,
@@ -17,7 +16,6 @@ import {
 })
 export class UsersService {
   private sessionService = inject(SessionService);
-  private http = inject(HttpClient);
   private delay: number = 200;
   private allUsers: IUser[] = users;
   private usersStatistics: IUserStatistics[] = statistics;
@@ -91,7 +89,7 @@ export class UsersService {
         delay(200),
       );
     } catch (error) {
-      return unknownError;
+      return unknownError$;
     }
   }
 
@@ -109,7 +107,7 @@ export class UsersService {
       );
       return of(null).pipe(delay(this.delay));
     } catch (error) {
-      return unknownError;
+      return unknownError$;
     }
   }
 
@@ -128,10 +126,10 @@ export class UsersService {
       if (info && statistics) {
         return of({ info, statistics }).pipe(delay(this.delay));
       } else {
-        return userNotFoundError;
+        return userNotFoundError$;
       }
     } catch (error) {
-      return unknownError;
+      return unknownError$;
     }
   }
 
@@ -148,14 +146,14 @@ export class UsersService {
           this.editArrayUser(oldEmail, userDetail);
           return of(null).pipe(delay(this.delay));
         } else {
-          return emailInUseError;
+          return emailInUseError$;
         }
       } else {
         this.editArrayUser(oldEmail, userDetail);
         return of(null).pipe(delay(this.delay));
       }
     } catch (error) {
-      return unknownError;
+      return unknownError$;
     }
   }
 
@@ -171,10 +169,10 @@ export class UsersService {
         this.insertArrayUser(userDetail);
         return of(null).pipe(delay(this.delay));
       } else {
-        return emailInUseError;
+        return emailInUseError$;
       }
     } catch (error) {
-      return unknownError;
+      return unknownError$;
     }
   }
 
