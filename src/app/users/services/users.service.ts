@@ -49,7 +49,13 @@ export class UsersService {
 
   public getUsers(params: IGetUsersParams): Observable<IReqGetUsers> {
     try {
-      //throw new Error('Force unknown error'); // Check error handling
+      //throw new Error('Force unknown error');
+
+      //FAKE interceptor
+      if (!this.sessionService.checkSession()) {
+        throw new Error('Session expired');
+      }
+
       const search = this.normalizeText(params.search);
       return of(this.allUsers).pipe(
         map((users) =>
@@ -91,7 +97,12 @@ export class UsersService {
 
   public deleteUser(user: IUser): Observable<null> {
     try {
-      //throw new Error('Force unknown error'); // Check error handling
+      //throw new Error('Force unknown error');
+
+      //FAKE interceptor
+      if (!this.sessionService.checkSession()) {
+        throw new Error('Session expired');
+      }
       this.allUsers = this.allUsers.filter((u: IUser) => u.email !== user.email);
       this.usersStatistics = this.usersStatistics.filter(
         (s: IUserStatistics) => s.email !== user.email,
@@ -104,7 +115,12 @@ export class UsersService {
 
   public getUserDetail(email: string): Observable<IUserDetail> {
     try {
-      //throw new Error('Force unknown error'); // Check error handling
+      //throw new Error('Force unknown error');
+
+      //FAKE interceptor
+      if (!this.sessionService.checkSession()) {
+        throw new Error('Session expired');
+      }
       const info: IUser = this.allUsers.find((u: IUser) => u.email === email)!;
       const statistics: IUserStatistics = this.usersStatistics.find(
         (u: IUserStatistics) => u.email === email,
@@ -121,7 +137,12 @@ export class UsersService {
 
   public editUser(oldEmail: string, userDetail: IUserDetail): Observable<null> {
     try {
-      //throw new Error('Force unknown error'); // Check error handling
+      //throw new Error('Force unknown error');
+
+      //FAKE interceptor
+      if (!this.sessionService.checkSession()) {
+        throw new Error('Session expired');
+      }
       if (oldEmail !== userDetail.info.email) {
         if (!this.checkExistEmail(userDetail.info.email)) {
           this.editArrayUser(oldEmail, userDetail);
@@ -140,7 +161,12 @@ export class UsersService {
 
   public createUser(userDetail: IUserDetail): Observable<null> {
     try {
-      //throw new Error('Force unknown error'); // Check error handling
+      //throw new Error('Force unknown error');
+
+      //FAKE interceptor
+      if (!this.sessionService.checkSession()) {
+        throw new Error('Session expired');
+      }
       if (!this.checkExistEmail(userDetail.info.email)) {
         this.insertArrayUser(userDetail);
         return of(null).pipe(delay(this.delay));

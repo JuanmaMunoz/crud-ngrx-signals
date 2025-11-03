@@ -4,9 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production --base-href https://juanmamunoz.github.io/crud-ngrx-signals/",
+    "prebuild": "npm run test",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test --code-coverage --browsers=ChromeHeadless --watch=false",
+    "test:dev": "ng test --code-coverage --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +42,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "karma-spec-reporter": "^0.0.36",
     "typescript": "~5.7.2",
     "prettier": "3.1"
   }

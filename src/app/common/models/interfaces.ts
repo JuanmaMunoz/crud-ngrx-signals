@@ -1,13 +1,20 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 
 export interface ITokenState {
   token: string;
-  jwt: IToken | null;
+  jwt: IJWT | null;
+  error: HttpErrorResponse | null;
+}
+
+export interface IJWT {
+  email: string;
+  expiration: EpochTimeStamp;
 }
 
 export interface IToken {
-  email: string;
-  expiration: EpochTimeStamp;
+  jwt: IJWT;
+  token: string;
 }
 
 export interface IInput {

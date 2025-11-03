@@ -17,20 +17,13 @@ export const unknownError = timer(delay).pipe(
   ),
 );
 
-export const sessionExpiredError = timer(delay).pipe(
-  mergeMap(() =>
-    throwError(
-      () =>
-        ({
-          status: 401,
-          error: {
-            code: 'SESSION_EXPIRED',
-            message: 'Your session has expired. Please log in again to continue.',
-          },
-        }) as HttpErrorResponse,
-    ),
-  ),
-);
+export const sessionExpiredError = {
+  status: 401,
+  error: {
+    code: 'SESSION_EXPIRED',
+    message: 'Your session has expired. Please log in again to continue.',
+  },
+} as HttpErrorResponse;
 
 export const loginError = timer(delay).pipe(
   mergeMap(() =>

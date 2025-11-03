@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
-import { ITokenState } from '../../common/models/interfaces';
+import { IToken } from '../../common/models/interfaces';
 import { SessionService } from '../../common/services/session.service';
 import { loginError, unknownError } from '../../common/utils/errors';
 
@@ -24,7 +24,7 @@ export class LoginService {
 
   //########### MOCK API CALLS - TO BE USED ON GITHUB PAGES ###########//
   //###################################################################
-  public login(email: string, pass: string): Observable<ITokenState> {
+  public login(email: string, pass: string): Observable<IToken> {
     try {
       //throw new Error('Force unknown error'); // Check error handling
       if (email === 'user@test' && pass === 'ajk38jkÑ') {

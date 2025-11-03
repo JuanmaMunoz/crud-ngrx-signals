@@ -115,6 +115,12 @@ export class TableComponent {
     });
 
     effect(() => {
+      if (this.errorUsers()) {
+        console.log('error load users');
+      }
+    });
+
+    effect(() => {
       this.searchText.set(this.search());
     });
 

@@ -7,7 +7,7 @@
       <img [src]="imgNgrx" class="nav-bar__img" alt="Signals + NgRx" />
       <div class="d-flex flex-column ms-2">
         <div class="d-flex align-items-center justify-content-end text-light">
-          <span class="me-2"><i class="bi bi-person me-1"></i>{{ token()?.email }}</span>
+          <span class="me-2"><i class="bi bi-person me-1"></i>{{ jwt()?.email }}</span>
           <a (click)="logout()" class="nav-bar__logout fs-4"
             ><i class="bi bi-box-arrow-right"></i
           ></a>

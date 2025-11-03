@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { fadeIn } from '../../animations/animations';
-import { IToken, ITokenState } from '../../models/interfaces';
+import { IJWT, ITokenState } from '../../models/interfaces';
 
 @Component({
   selector: 'app-navbar',
@@ -15,10 +15,10 @@ export class NavbarComponent {
   @Output() actionLogout: EventEmitter<null> = new EventEmitter();
   public imgAngular: string = 'assets/images/angular.svg';
   public imgNgrx: string = 'assets/images/ngrx.svg';
-  public token!: Signal<IToken | null>;
+  public jwt!: Signal<IJWT | null>;
 
   constructor(private store: Store<{ token: ITokenState }>) {
-    this.token = toSignal(
+    this.jwt = toSignal(
       this.store.select((state) => state.token.jwt),
       { initialValue: null },
     );
