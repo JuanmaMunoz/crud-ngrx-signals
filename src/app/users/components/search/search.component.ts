@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Output, signal } from '@angular/core';
+import { Component, effect, EventEmitter, Input, Output, Signal, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { debounceTime, Subscription } from 'rxjs';
+import { debounceTime, skip, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -11,29 +11,33 @@ import { debounceTime, Subscription } from 'rxjs';
   styleUrl: './search.component.scss',
 })
 export class SearchComponent {
+  @Input() search!: Signal<string>;
   @Output() actionSearch: EventEmitter<string> = new EventEmitter();
-  @Output() actionDelete: EventEmitter<null> = new EventEmitter();
-  private delaySearch: number = 200;
+
+  public searchText = signal<string>('');
+  private delaySearch: number = 400;
   private subscription = new Subscription();
-  private firstSearch: boolean = false;
+
   constructor(private router: Router) {
     this.subscription.add(
       toObservable(this.searchText)
-        .pipe(debounceTime(this.delaySearch))
+        .pipe(debounceTime(this.delaySearch), skip(1))
         .subscribe((search) => {
-          //if (this.firstLoad) this.params.set({ number: this.numberRows, page: 1, search: search });
           this.actionSearch.emit(search);
         }),
     );
-  }
-  public searchText = signal<string>('');
 
-  /*public changeSearh(search: string): void {
-    this.actionSearch.emit(search);
-  }*/
+    effect(() => {
+      this.searchText.set(this.search());
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   public deleteSearch(): void {
-    this.actionDelete.emit();
+    this.searchText.set('');
   }
 
   public createUser() {

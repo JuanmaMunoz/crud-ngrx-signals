@@ -1,9 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
 import { SearchComponent } from '../../components/search/search.component';
 import { TableComponent } from '../../components/table/table.component';
@@ -37,15 +35,9 @@ export class ListComponent {
   public successDelete!: Signal<boolean>;
   public errorDelete!: Signal<HttpErrorResponse | null>;
   public openModal = signal<boolean>(false);
-
-  public firstLoad: boolean = false;
-  private subscription = new Subscription();
   private numberRows: number = 10;
 
-  constructor(
-    private store: Store<{ users: IUsersState; userDelete: IUserDeleteState }>,
-    private router: Router,
-  ) {
+  constructor(private store: Store<{ users: IUsersState; userDelete: IUserDeleteState }>) {
     this.usersFromStore = toSignal(
       this.store.select((state) => state.users.users),
       { initialValue: [] },
@@ -101,16 +93,6 @@ export class ListComponent {
     });
 
     effect(() => {
-      if (this.errorUsers()) {
-        console.log('error load users');
-      }
-    });
-
-    /*effect(() => {
-      this.pageText.set(this.currentPage());
-    });*/
-
-    effect(() => {
       if (this.successDelete()) {
         this.openModal.set(false);
         this.store.dispatch(setInitialStateDelete());
@@ -130,19 +112,6 @@ export class ListComponent {
         this.store.dispatch(getUsers(this.params()!));
       }
     });
-
-    /*effect(() => {
-      if (!this.firstLoad && this.pageText()) return;
-      this.params.update((params) => (params ? { ...params, page: this.pageText() } : null));
-    });*/
-
-    /*this.subscription.add(
-      toObservable(this.searchText)
-        .pipe(debounceTime(this.delaySearch))
-        .subscribe((search) => {
-          if (this.firstLoad) this.params.set({ number: this.numberRows, page: 1, search: search });
-        }),
-    );*/
   }
 
   ngOnInit(): void {
@@ -154,14 +123,9 @@ export class ListComponent {
     });
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  public openModalDelete(user: IUser, event: MouseEvent): void {
-    event.stopPropagation();
-    this.openModal.set(true);
+  public openModalDelete(user: IUser): void {
     this.store.dispatch(setInitialStateDelete());
+    this.openModal.set(true);
     this.store.dispatch(deleteUser({ user }));
   }
 
@@ -175,42 +139,10 @@ export class ListComponent {
   }
 
   public changePage(page: number): void {
-    console.log('update changePage list', page);
-    this.params.update(() => ({ ...this.params()!, page: page }));
+    this.params.update(() => ({ ...this.params()!, page }));
   }
 
-  /*public changePage(page: number): void {
-    this.userAction(() => {
-      if (page < 1) {
-        page = 1;
-      }
-      if (page > this.totalPages()) page = this.totalPages();
-      this.pageText.set(page);
-    });
+  public searchUsers(search: string): void {
+    this.params.update(() => ({ ...this.params()!, search, page: 1 }));
   }
-
-  public nextPage(): void {
-    this.userAction(() => this.pageText.update((value) => value + 1));
-  }
-
-  public previousPage(): void {
-    this.userAction(() => this.pageText.update((value) => value - 1));
-  }*/
-
-  /*public changeSearh(search: string): void {
-    this.userAction(() => this.searchText.set(search));
-  }/*
-
-  /*public deleteSearch(): void {
-    this.userAction(() => {
-      if (this.searchText) {
-        this.searchText.set('');
-      }
-    });
-  }*/
-
-  /*private userAction(fn: () => void) {
-    this.firstLoad = true;
-    fn();
-  }*/
 }

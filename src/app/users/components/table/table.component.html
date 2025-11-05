@@ -43,7 +43,7 @@
     <div class="input-group app-table__pagination__content">
       <button
         (click)="previousPage()"
-        [disabled]="currentPage() <= 1"
+        [disabled]="page() <= 1"
         type="button"
         class="btn btn-outline-secondary"
       >
@@ -55,13 +55,13 @@
         class="form-control"
         [min]="1"
         [max]="totalPages()"
-        [(ngModel)]="pageText"
+        [(ngModel)]="page"
         (ngModelChange)="changePage($event)"
       />
       <span class="input-group-text" id="basic-addon2">/ {{ totalPages() }}</span>
       <button
         (click)="nextPage()"
-        [disabled]="currentPage() >= totalPages()"
+        [disabled]="page() >= totalPages()"
         type="button"
         class="btn btn-outline-secondary"
       >

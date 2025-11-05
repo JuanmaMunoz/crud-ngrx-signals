@@ -14,8 +14,8 @@ export class ChartComponent {
   @Input() userDetail!: Signal<IUserDetail | null>;
   @ViewChild('canvas') canvas!: HTMLCanvasElement;
   @ViewChild('canvasLine') canvasLine!: HTMLCanvasElement;
-  public chart: any = null;
-  public chartLine: any = null;
+  public chart: Chart | null = null;
+  public chartLine: Chart | null = null;
   public chartData!: ICharData;
 
   constructor() {
@@ -91,7 +91,7 @@ export class ChartComponent {
   }
 
   private createChartLine(): void {
-    if (this.chartLine) this.chart.destroy();
+    if (this.chartLine) this.chart?.destroy();
     const ctx = document.getElementById(this.idChart + 'line');
     this.chartLine = new Chart(ctx as any, {
       type: 'line',

@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, effect, EventEmitter, Input, Output, signal, Signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
+import { debounceTime, filter, skip, Subscription } from 'rxjs';
 import { fadeIn } from '../../../common/animations/animations';
 import { SpinnerComponent } from '../../../common/components/spinner/spinner.component';
 import { IUser } from './../../models/interfaces';
@@ -21,13 +23,27 @@ export class TableComponent {
   @Input() totalPages!: Signal<number>;
   @Output() actionDeleteUser: EventEmitter<IUser> = new EventEmitter();
   @Output() actionChangePage: EventEmitter<number> = new EventEmitter();
-  public pageText = signal<number>(1);
-  public firstChangePage: boolean = false;
+  public page = signal<number>(1);
+  private subscription = new Subscription();
+  private delayPagination: number = 200;
   constructor(private router: Router) {
+    this.subscription.add(
+      toObservable(this.page)
+        .pipe(
+          debounceTime(this.delayPagination),
+          skip(1),
+          filter(() => this.page() > 0),
+        )
+        .subscribe((page) => this.actionChangePage.emit(page)),
+    );
+
     effect(() => {
-      console.log('effect table', this.pageText());
-      if (this.firstChangePage) this.actionChangePage.emit(this.pageText());
+      this.page.set(this.currentPage());
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   public userDetail(email: string): void {
@@ -40,25 +56,16 @@ export class TableComponent {
   }
 
   public changePage(page: number): void {
-    if (page < 1) {
-      return;
-    }
     if (page > this.totalPages()) page = this.totalPages();
-    this.startChangePage(() => this.pageText.set(page));
-    console.log(page, this.pageText());
+    this.page.set(page);
   }
 
   public nextPage(): void {
-    this.startChangePage(() => this.pageText.update((value) => value + 1));
+    if (!this.page()) this.page.set(0);
+    this.page.update((value) => value + 1);
   }
 
   public previousPage(): void {
-    this.startChangePage(() => this.pageText.update((value) => value - 1));
-  }
-
-  private startChangePage(fn: () => void) {
-    console.log('startChangePage()');
-    this.firstChangePage = true;
-    fn();
+    this.page.update((value) => value - 1);
   }
 }
