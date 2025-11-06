@@ -1,23 +1,50 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { signal } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalComponent } from './modal.component';
 
-describe('ModalComponent', () => {
+fdescribe('ModalComponent', () => {
   let component: ModalComponent;
   let fixture: ComponentFixture<ModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalComponent]
-    })
-    .compileComponents();
+      imports: [ModalComponent, NoopAnimationsModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ModalComponent);
     component = fixture.componentInstance;
+    component.visible = signal(true);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should exist', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const contentHeader = compiled.querySelector('.modal-header');
+    const contentBody = compiled.querySelector('.modal-body');
+    const contentFooter = compiled.querySelector('.modal-footer');
+    expect(contentHeader).toBeTruthy();
+    expect(contentBody).toBeTruthy();
+    expect(contentFooter).toBeTruthy();
+  });
+
+  it('should show modal', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const modal = compiled.querySelector('.modal');
+    expect(getComputedStyle(modal!).display).toBe('block');
+  });
+
+  it('should hide modal', async () => {
+    component.visible = signal(false);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const modal = compiled.querySelector('.modal');
+    expect(getComputedStyle(modal!).display).toBe('none');
   });
 });

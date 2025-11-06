@@ -14,7 +14,7 @@ export class LoginService {
   /*############ REAL API CALLS - TO BE USED IN PRODUCTION ############
   #####################################################################
   public login(email: string, pass: string): Observable<ITokenState> {
-    return this.http.post<ITokenState>(`${your api url}/login`, { email, password: pass });
+    return this.http.post<ITokenState>(`${your api url}/login`, { email, pass });
   }
   public logout(): Observable<null> {
     return this.http.delete<null>(`${your api url}/logout`, {});
@@ -26,7 +26,7 @@ export class LoginService {
   //###################################################################
   public login(email: string, pass: string): Observable<IToken> {
     try {
-      //throw new Error('Force unknown error'); // Check error handling
+      //throw new Error('Force unknown error');
       if (email === 'user@test' && pass === 'ajk38jkÑ') {
         return of(this.sessionService.createFakeToken(email)).pipe(delay(this.delay));
       } else {
@@ -39,7 +39,7 @@ export class LoginService {
 
   public logout(): Observable<null> {
     try {
-      //throw new Error('Force unknown error'); // Check error handling
+      //throw new Error('Force unknown error');
       localStorage.removeItem('token');
       return of(null).pipe(delay(this.delay));
     } catch (error) {

@@ -4,14 +4,21 @@
     border-radius: 50%;
     height: 100px;
     margin-right: 1rem;
-    object-fit: cover;
     width: 100px;
+    &:hover {
+      background-color: var(--bs-primary);
+    }
   }
   &__github {
-    border-radius: 20px;
     width: 100px;
+    &:hover path {
+      fill: var(--bs-primary);
+    }
   }
   &__description {
     font-size: 0.9rem;
+  }
+  > a {
+    cursor: pointer;
   }
 }
