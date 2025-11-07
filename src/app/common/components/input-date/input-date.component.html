@@ -29,7 +29,7 @@
       ><i class="bi bi-calendar"></i
     ></span>
     <div class="invalid-feedback">
-      {{ input().control.errors | validationErrors: input().validationErrors }}
+      {{ input().control.errors | validationErrors: input().validationErrors! }}
     </div>
   </div>
 </div>

@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'validationErrors',
 })
 export class ValidationErrors implements PipeTransform {
-  transform(errors: any, errorsForm: any): any {
+  transform(errors: Record<string, any> | null, errorsForm: Record<string, string>): any {
     if (errors) {
       return errorsForm[Object.keys(errors)[0]];
     }

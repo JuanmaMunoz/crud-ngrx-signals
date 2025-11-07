@@ -15,6 +15,6 @@
     autocomplete="off"
   />
   <div class="invalid-feedback">
-    {{ input().control.errors | validationErrors: input().validationErrors }}
+    {{ input().control.errors | validationErrors: input().validationErrors! }}
   </div>
 </div>
