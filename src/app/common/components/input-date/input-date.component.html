@@ -14,22 +14,24 @@
         'is-valid': input().control.value && input().control.valid
       }"
       autocomplete="off"
-    />
-    <button
-      *ngIf="input().control.value"
-      (click)="reset()"
-      class="btn btn-outline-secondary"
-      type="button"
-    >
-      <i class="bi bi-x-circle"></i>
-    </button>
-    <span
-      *ngIf="!input().control.value && !userAgent.toLocaleLowerCase().includes('firefox')"
-      class="input-group-text"
-      ><i class="bi bi-calendar"></i
-    ></span>
-    <div class="invalid-feedback">
-      {{ input().control.errors | validationErrors: input().validationErrors! }}
+      />
+      @if (input().control.value) {
+        <button
+          (click)="reset()"
+          class="btn btn-outline-secondary"
+          type="button"
+          >
+          <i class="bi bi-x-circle"></i>
+        </button>
+      }
+      @if (!input().control.value && !userAgent.toLocaleLowerCase().includes('firefox')) {
+        <span
+          class="input-group-text"
+          ><i class="bi bi-calendar"></i
+        ></span>
+      }
+      <div class="invalid-feedback">
+        {{ input().control.errors | validationErrors: input().validationErrors! }}
+      </div>
     </div>
   </div>
-</div>

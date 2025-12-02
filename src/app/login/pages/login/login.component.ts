@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -13,7 +13,7 @@ import { login, setInitialStateLogout } from '../../store/actions/auth.action';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, LoginFormComponent, InfoCrudComponent, AboutMeComponent, ErrorComponent],
+  imports: [LoginFormComponent, InfoCrudComponent, AboutMeComponent, ErrorComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
