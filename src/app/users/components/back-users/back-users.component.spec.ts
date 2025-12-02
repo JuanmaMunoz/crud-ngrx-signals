@@ -22,7 +22,7 @@ fdescribe('BackUsersComponent', () => {
   it('should exist', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const link = compiled.querySelector('a');
-    expect(link!.getAttribute('ng-reflect-router-link')).toBe('/users');
+    expect(link!.getAttribute('href')).toBe('/users');
     expect(link?.textContent).toContain('Back to users');
   });
 });
