@@ -18,7 +18,7 @@
       ><i *ngIf="type === enumTypeInput.TEXT" class="bi bi-eye-slash"></i>
     </button>
     <div class="invalid-feedback">
-      {{ input().control.errors | validationErrors: input().validationErrors }}
+      {{ input().control.errors | validationErrors: input().validationErrors! }}
     </div>
   </div>
 </div>

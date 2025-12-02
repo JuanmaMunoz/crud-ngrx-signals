@@ -45,6 +45,7 @@ export class DetailComponent {
   public userDetailLoading!: Signal<boolean>;
   public deleteLoading!: Signal<boolean>;
   public deleteSuccess!: Signal<boolean>;
+  public deleteError!: Signal<HttpErrorResponse | null>;
   public deleteUser!: Signal<IUser | null>;
   public openModal = signal<boolean>(false);
   public modeEdit = signal<boolean>(false);
@@ -87,6 +88,11 @@ export class DetailComponent {
       { initialValue: false },
     );
 
+    this.deleteError = toSignal(
+      this.store.select((state) => state.userDelete.error),
+      { initialValue: null },
+    );
+
     this.deleteLoading = toSignal(
       this.store.select((state) => state.userDelete.loading),
       { initialValue: false },
@@ -115,6 +121,12 @@ export class DetailComponent {
     });
 
     effect(() => {
+      if (this.deleteError()) {
+        this.openModal.set(false);
+      }
+    });
+
+    effect(() => {
       if (this.editSuccess()) {
         this.store.dispatch(setInitialStateEdit());
         this.modeEdit.set(false);
@@ -138,6 +150,7 @@ export class DetailComponent {
   }
 
   public openModalDelete(): void {
+    this.store.dispatch(setInitialStateDelete());
     this.openModal.set(true);
     const user: IUser = this.userDetail()?.info!;
     this.store.dispatch(deleteUser({ user }));

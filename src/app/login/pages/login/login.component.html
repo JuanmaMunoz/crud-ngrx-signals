@@ -4,10 +4,13 @@
       <app-info-crud />
     </div>
     <div class="col-lg-4 col-lg-4 border-lg border-sm-0 px-lg-4">
-      <app-login-form />
+      <app-login-form [loading]="loading" (actionLogin)="login($event)" />
     </div>
     <div class="col-lg-4">
       <app-about-me />
     </div>
   </div>
 </div>
+@if (loginError()) {
+  <app-error [errorDescription]="loginError()?.error.message" />
+}

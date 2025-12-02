@@ -1,27 +1,19 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, effect, Signal, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, effect, EventEmitter, Input, Output, Signal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { ErrorComponent } from '../../../common/components/error/error.component';
 import { InputPassComponent } from '../../../common/components/input-pass/input-pass.component';
 import { InputTextComponent } from '../../../common/components/input-text/input-text.component';
 import { IInput } from '../../../common/models/interfaces';
-import { ILoginState } from '../../models/interfaces';
-import {
-  login,
-  setInitialStateLogin,
-  setInitialStateLogout,
-} from '../../store/actions/login.action';
 
 @Component({
   selector: 'app-login-form',
-  imports: [InputTextComponent, InputPassComponent, ReactiveFormsModule, ErrorComponent],
+  imports: [InputTextComponent, InputPassComponent, ReactiveFormsModule],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })
 export class LoginFormComponent {
+  @Input() loading!: Signal<boolean>;
+  @Output() actionLogin: EventEmitter<{ email: string; pass: string }> = new EventEmitter();
   public loginForm = new FormGroup({
     email: new FormControl('user@test', [Validators.required, Validators.email]),
     pass: new FormControl('ajk38jkÑ', [
@@ -55,29 +47,10 @@ export class LoginFormComponent {
     focus: true,
     validationErrors: this.validationErrors,
   });
-  public loading!: Signal<boolean>;
   public loginSuccess!: Signal<boolean>;
   public loginError!: Signal<HttpErrorResponse | null>;
 
-  constructor(
-    private store: Store<{ login: ILoginState; logout: ILoginState }>,
-    private router: Router,
-  ) {
-    this.loading = toSignal(
-      this.store.select((state) => state.login.loading),
-      { initialValue: false },
-    );
-
-    this.loginSuccess = toSignal(
-      this.store.select((state) => state.login.success),
-      { initialValue: false },
-    );
-
-    this.loginError = toSignal(
-      this.store.select((state) => state.login.error),
-      { initialValue: null },
-    );
-
+  constructor() {
     effect(() => {
       if (this.loading()) {
         this.emailControl.disable();
@@ -87,25 +60,12 @@ export class LoginFormComponent {
         this.passControl.enable();
       }
     });
-
-    effect(() => {
-      if (this.loginSuccess()) {
-        this.router.navigate(['/users']);
-      }
-    });
-  }
-
-  ngOnInit(): void {
-    this.store.dispatch(setInitialStateLogin());
-    this.store.dispatch(setInitialStateLogout());
   }
 
   public login(): void {
-    this.store.dispatch(
-      login({
-        email: this.emailControl.getRawValue(),
-        pass: this.passControl.getRawValue(),
-      }),
-    );
+    this.actionLogin.emit({
+      email: this.emailControl.getRawValue(),
+      pass: this.passControl.getRawValue(),
+    });
   }
 }

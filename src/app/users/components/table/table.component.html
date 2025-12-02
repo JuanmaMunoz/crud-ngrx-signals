@@ -1,24 +1,6 @@
 <div class="app-table text-start table-responsive">
-  <div class="app-table__search">
-    <div class="input-group mb-1">
-      <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
-      <input
-        type="text"
-        [(ngModel)]="searchText"
-        (ngModelChange)="changeSearh($event)"
-        class="form-control"
-        placeholder="Search users"
-      />
-      <button (click)="deleteSearch()" type="button" class="btn btn-outline-secondary">
-        <i class="bi bi-x-circle"></i>
-      </button>
-      <button class="btn btn-outline-primary" (click)="createUser()">
-        <i class="bi bi-person-plus"></i>
-      </button>
-    </div>
-  </div>
   <div class="app-table__content table-responsive">
-    @if (loadingUsers()) {
+    @if (loading()) {
       <div class="app-table__content__loading">
         <app-spinner />
       </div>
@@ -61,7 +43,7 @@
     <div class="input-group app-table__pagination__content">
       <button
         (click)="previousPage()"
-        [disabled]="currentPage() <= 1"
+        [disabled]="page() <= 1"
         type="button"
         class="btn btn-outline-secondary"
       >
@@ -73,13 +55,13 @@
         class="form-control"
         [min]="1"
         [max]="totalPages()"
-        [(ngModel)]="pageText"
+        [(ngModel)]="page"
         (ngModelChange)="changePage($event)"
       />
       <span class="input-group-text" id="basic-addon2">/ {{ totalPages() }}</span>
       <button
         (click)="nextPage()"
-        [disabled]="currentPage() >= totalPages()"
+        [disabled]="page() >= totalPages()"
         type="button"
         class="btn btn-outline-secondary"
       >
@@ -88,14 +70,3 @@
     </div>
   </div>
 </div>
-
-@if (errorDelete() || errorUsers()) {
-  <app-error [errorDescription]="errorDelete()?.error.message || errorUsers()?.error.message" />
-}
-
-<app-modal-delete
-  [openModal]="openModal"
-  [deleteLoading]="deleteLoading"
-  [deleteUser]="deleteUser"
-  (actionDelete)="actionModalDelete($event)"
-/>

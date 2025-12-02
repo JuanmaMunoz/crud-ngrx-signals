@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { NgxMaskDirective } from 'ngx-mask';
 import { IInputNumber } from '../../models/interfaces';
 
 @Component({
   selector: 'app-input-number',
-  imports: [NgxMaskDirective, CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './input-number.component.html',
   styleUrl: './input-number.component.scss',
 })

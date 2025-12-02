@@ -8,8 +8,8 @@ import { HeaderComponent } from './common/components/header/header.component';
 import { ModalErrorComponent } from './common/components/modal-error/modal-error.component';
 import { ITokenState } from './common/models/interfaces';
 import { SessionService } from './common/services/session.service';
-import { ILoginState } from './login/models/interfaces';
-import { logout } from './login/store/actions/login.action';
+import { IAuthState } from './login/models/interfaces';
+import { logout } from './login/store/actions/auth.action';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +28,7 @@ export class AppComponent {
 
   constructor(
     private sessionService: SessionService,
-    private store: Store<{ login: ILoginState; logout: ILoginState; token: ITokenState }>,
+    private store: Store<{ login: IAuthState; logout: IAuthState; token: ITokenState }>,
     private router: Router,
   ) {
     this.sessionService.checkSessionFromStorage();

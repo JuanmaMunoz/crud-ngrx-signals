@@ -15,7 +15,7 @@ import {
   logout,
   logoutFailure,
   logoutSuccess,
-} from '../actions/login.action';
+} from '../actions/auth.action';
 
 export const loginEffect = createEffect(
   () => {

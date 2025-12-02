@@ -1,3 +1,21 @@
 <div class="list">
-  <app-table />
+  <app-search [search]="search" (actionSearch)="searchUsers($event)" />
+  <app-table
+    [users]="users"
+    [loading]="loadingUsers"
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (actionChangePage)="changePage($event)"
+    (actionDeleteUser)="openModalDelete($event)"
+  />
 </div>
+@if (errorDelete() || errorUsers()) {
+  <app-error [errorDescription]="errorDelete()?.error.message || errorUsers()?.error.message" />
+}
+
+<app-modal-delete
+  [openModal]="openModal"
+  [deleteLoading]="deleteLoading"
+  [deleteUser]="deleteUser"
+  (actionDelete)="actionModalDelete($event)"
+/>

@@ -1,16 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { BackUsersComponent } from './back-users.component';
 
-describe('BackUsersComponent', () => {
+fdescribe('BackUsersComponent', () => {
   let component: BackUsersComponent;
   let fixture: ComponentFixture<BackUsersComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BackUsersComponent]
-    })
-    .compileComponents();
+      imports: [BackUsersComponent, RouterTestingModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BackUsersComponent);
     component = fixture.componentInstance;
@@ -19,5 +17,12 @@ describe('BackUsersComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should exist', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const link = compiled.querySelector('a');
+    expect(link!.getAttribute('ng-reflect-router-link')).toBe('/users');
+    expect(link?.textContent).toContain('Back to users');
   });
 });
