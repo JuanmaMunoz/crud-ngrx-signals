@@ -3,8 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { signal } from '@angular/core';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { ILoginState } from '../../../login/models/interfaces';
-import { logout, setInitialStateLogout } from '../../../login/store/actions/login.action';
+import { IAuthState } from '../../../login/models/interfaces';
+import { logout, setInitialStateLogout } from '../../../login/store/actions/auth.action';
 import { ITokenState } from '../../models/interfaces';
 import { LogoComponent } from '../logo/logo.component';
 import { NavbarComponent } from '../navbar/navbar.component';
@@ -15,12 +15,7 @@ fdescribe('HeaderComponent', () => {
   let fixture: ComponentFixture<HeaderComponent>;
   let store: MockStore;
 
-  const initialLoginState: ILoginState = {
-    loading: false,
-    error: null,
-    success: false,
-  };
-  const initialLogoutState: ILoginState = {
+  const initialLoginState: IAuthState = {
     loading: false,
     error: null,
     success: false,
@@ -33,7 +28,6 @@ fdescribe('HeaderComponent', () => {
 
   const initialState = {
     login: initialLoginState,
-    logout: initialLogoutState,
     token: initialTokenState,
   };
 

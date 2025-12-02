@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { ITokenState } from './common/models/interfaces';
 import { SessionService } from './common/services/session.service';
 import { sessionExpiredError, unknownError } from './common/utils/errors';
-import { ILoginState } from './login/models/interfaces';
-import { logout } from './login/store/actions/login.action';
+import { IAuthState } from './login/models/interfaces';
+import { logout } from './login/store/actions/auth.action';
 
 fdescribe('AppComponent', () => {
   let component: AppComponent;
@@ -17,7 +17,7 @@ fdescribe('AppComponent', () => {
   let routerSpy: jasmine.SpyObj<Router>;
   let dispatchSpy: jasmine.Spy;
 
-  const initialLoginState: ILoginState = {
+  const initialLoginState: IAuthState = {
     loading: false,
     error: null,
     success: false,

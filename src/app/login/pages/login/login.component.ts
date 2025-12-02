@@ -8,12 +8,8 @@ import { AboutMeComponent } from '../../../common/components/about-me/about-me.c
 import { ErrorComponent } from '../../../common/components/error/error.component';
 import { InfoCrudComponent } from '../../../common/components/info-crud/info-crud.component';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
-import { ILoginState } from '../../models/interfaces';
-import {
-  login,
-  setInitialStateLogin,
-  setInitialStateLogout,
-} from '../../store/actions/login.action';
+import { IAuthState } from '../../models/interfaces';
+import { login, setInitialStateLogout } from '../../store/actions/auth.action';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +22,7 @@ export class LoginComponent {
   public loginSuccess!: Signal<boolean>;
   public loginError!: Signal<HttpErrorResponse | null>;
   constructor(
-    private store: Store<{ login: ILoginState; logout: ILoginState }>,
+    private store: Store<{ login: IAuthState }>,
     private router: Router,
   ) {
     this.loading = toSignal(
@@ -50,8 +46,8 @@ export class LoginComponent {
       }
     });
   }
+
   ngOnInit(): void {
-    this.store.dispatch(setInitialStateLogin());
     this.store.dispatch(setInitialStateLogout());
   }
 

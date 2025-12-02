@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
-import { loginSuccess } from '../../login/store/actions/login.action';
+import { loginSuccess } from '../../login/store/actions/auth.action';
 import { IJWT } from '../models/interfaces';
 import { tokenCreate, tokenError } from '../store/actions/token.action';
 import { sessionExpiredError } from '../utils/errors';
