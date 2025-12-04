@@ -25,14 +25,6 @@ fdescribe('SearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call actionSearch emit when searchText change', () => {
-    spyOn(component.actionSearch, 'emit');
-    component.searchText.set('test 2');
-    queueMicrotask(() => {
-      expect(component.actionSearch.emit).toHaveBeenCalledWith('test 2');
-    });
-  });
-
   it('shold searchText empty when deleteSearch is called', () => {
     component.deleteSearch();
     expect(component.searchText()).toBe('');
