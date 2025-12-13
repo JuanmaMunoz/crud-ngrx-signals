@@ -74,3 +74,49 @@ describe('LoginService', () => {
     });
   });
 });
+
+//TESTS REAL API
+
+/* 
+it('should login and return token state', () => {
+  const email = 'user@test';
+  const pass = 'ajk38jkÑ';
+  
+
+  const mockToken: IJWT = {
+    email: 'test@test',
+    expiration: new Date().getTime() + 3600000,
+  };
+  
+  const tokenState: ITokenState = {
+    jwt: mockToken,
+    error: null,
+    token: btoa(JSON.stringify(mockToken)),
+  };
+
+  service.login(email, pass).subscribe((response) => {
+    expect(response).toEqual(tokenState);
+  });
+
+  const req = httpMock.expectOne(`${API_URL}/login`);
+
+  expect(req.request.method).toBe('POST');
+  expect(req.request.body).toEqual({ email, pass });
+
+  req.flush(tokenState);
+});
+
+it('should handle login error', () => {
+  const email = 'test@test.com';
+  const pass = 'wrong-pass';
+
+  service.login(email, pass).subscribe({
+    next: () => fail('should have failed'),
+    error: (error) => {
+      expect(error.status).toBe(401);
+    },
+  });
+
+  const req = httpMock.expectOne(`${API_URL}/login`);
+  req.flush('Unauthorized', { status: 401, statusText: 'Unauthorized' });
+});*/
