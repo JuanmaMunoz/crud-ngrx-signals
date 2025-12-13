@@ -9,7 +9,7 @@ import { IAuthState } from '../../models/interfaces';
 import { login } from '../../store/actions/auth.action';
 import { LoginComponent } from './login.component';
 
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let store: MockStore;

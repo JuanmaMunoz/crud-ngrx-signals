@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { IInputNumber } from '../../models/interfaces';
 import { InputNumberComponent } from './input-number.component';
 
-fdescribe('InputNumberComponent', () => {
+describe('InputNumberComponent', () => {
   let component: InputNumberComponent;
   let fixture: ComponentFixture<InputNumberComponent>;
   let input!: IInputNumber;

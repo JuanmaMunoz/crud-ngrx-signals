@@ -136,9 +136,6 @@ export class DetailComponent {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(setInitialStateUserDetail());
-    this.store.dispatch(setInitialStateEdit());
-    this.store.dispatch(setInitialStateDelete());
     this.route.paramMap.subscribe((params) => {
       const email = params.get('id') as string;
       this.store.dispatch(getUserDetail({ email }));
@@ -147,10 +144,11 @@ export class DetailComponent {
 
   ngOnDestroy(): void {
     this.store.dispatch(setInitialStateUserDetail());
+    this.store.dispatch(setInitialStateEdit());
+    this.store.dispatch(setInitialStateDelete());
   }
 
   public openModalDelete(): void {
-    this.store.dispatch(setInitialStateDelete());
     this.openModal.set(true);
     const user: IUser = this.userDetail()?.info!;
     this.store.dispatch(deleteUser({ user }));

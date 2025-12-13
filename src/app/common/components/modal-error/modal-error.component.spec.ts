@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalErrorComponent } from './modal-error.component';
 
-fdescribe('ModalErrorComponent', () => {
+describe('ModalErrorComponent', () => {
   let component: ModalErrorComponent;
   let fixture: ComponentFixture<ModalErrorComponent>;
 

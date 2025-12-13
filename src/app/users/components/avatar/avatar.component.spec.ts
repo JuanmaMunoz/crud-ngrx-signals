@@ -5,7 +5,7 @@ import { IAvatar } from '../../models/interfaces';
 import { ImgComponent } from '../img/img.component';
 import { AvatarComponent } from './avatar.component';
 
-fdescribe('AvatarComponent', () => {
+describe('AvatarComponent', () => {
   let component: AvatarComponent;
   let fixture: ComponentFixture<AvatarComponent>;
   let infoAvatar!: IAvatar;

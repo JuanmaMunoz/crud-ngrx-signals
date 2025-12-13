@@ -8,7 +8,7 @@ import { users } from '../../../../assets/data/users';
 import { IUser } from '../../models/interfaces';
 import { TableComponent } from './table.component';
 
-fdescribe('TableComponent', () => {
+describe('TableComponent', () => {
   let component: TableComponent;
   let fixture: ComponentFixture<TableComponent>;
   let routerSpy: jasmine.SpyObj<Router>;

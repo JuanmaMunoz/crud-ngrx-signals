@@ -6,7 +6,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { IInput } from '../../models/interfaces';
 import { InputTextComponent } from './input-text.component';
 
-fdescribe('InputTextComponent', () => {
+describe('InputTextComponent', () => {
   let component: InputTextComponent;
   let fixture: ComponentFixture<InputTextComponent>;
   let input!: IInput;

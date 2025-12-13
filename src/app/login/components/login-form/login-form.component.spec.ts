@@ -4,7 +4,7 @@ import { signal } from '@angular/core';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { LoginFormComponent } from './login-form.component';
 
-fdescribe('LoginFormComponent', () => {
+describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
   let fixture: ComponentFixture<LoginFormComponent>;
   const loading = signal<boolean>(false);

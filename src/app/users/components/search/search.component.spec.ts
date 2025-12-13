@@ -4,7 +4,7 @@ import { signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchComponent } from './search.component';
 
-fdescribe('SearchComponent', () => {
+describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
   let routerSpy: jasmine.SpyObj<Router>;

@@ -5,7 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { IInput } from '../../models/interfaces';
 import { InputPassComponent } from './input-pass.component';
 
-fdescribe('InputPassComponent', () => {
+describe('InputPassComponent', () => {
   let component: InputPassComponent;
   let fixture: ComponentFixture<InputPassComponent>;
   const validationErrors: Record<string, string> = {

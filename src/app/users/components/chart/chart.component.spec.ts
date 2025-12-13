@@ -6,7 +6,7 @@ import { users } from '../../../../assets/data/users';
 import { IUserDetail } from '../../models/interfaces';
 import { ChartComponent } from './chart.component';
 
-fdescribe('ChartComponent', () => {
+describe('ChartComponent', () => {
   let component: ChartComponent;
   let fixture: ComponentFixture<ChartComponent>;
   const userDetail: IUserDetail = {

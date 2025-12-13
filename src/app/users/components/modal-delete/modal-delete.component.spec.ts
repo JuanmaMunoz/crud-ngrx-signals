@@ -6,7 +6,7 @@ import { users } from '../../../../assets/data/users';
 import { IUser } from '../../models/interfaces';
 import { ModalDeleteComponent } from './modal-delete.component';
 
-fdescribe('ModalDeleteComponent', () => {
+describe('ModalDeleteComponent', () => {
   let component: ModalDeleteComponent;
   let fixture: ComponentFixture<ModalDeleteComponent>;
   const deleteUser: IUser = users[0];

@@ -1,20 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { signal, WritableSignal } from '@angular/core';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { statistics } from '../../../../assets/data/statistics';
 import { users } from '../../../../assets/data/users';
+import { emailInUseError } from '../../../common/utils/errors';
 import { IUserDetail } from '../../models/interfaces';
 import { UserFormComponent } from './user-form.component';
 
-fdescribe('UserFormComponent', () => {
+describe('UserFormComponent', () => {
   let component: UserFormComponent;
   let fixture: ComponentFixture<UserFormComponent>;
   const userDetail: IUserDetail = {
     info: users[0],
     statistics: statistics[0],
   };
+
+  const error: WritableSignal<HttpErrorResponse | null> = signal(null);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,7 +30,7 @@ fdescribe('UserFormComponent', () => {
     component = fixture.componentInstance;
     component.userDetail = signal(userDetail);
     component.loading = signal(false);
-    component.error = signal(null);
+    component.error = error;
     fixture.detectChanges();
   });
 
@@ -56,5 +60,48 @@ fdescribe('UserFormComponent', () => {
     spyOn(component.actionSave, 'emit');
     component.saveUser();
     expect(component.actionSave.emit).toHaveBeenCalledWith(userDetail);
+  });
+
+  it('should call actionCancel emit when call cancel', () => {
+    spyOn(component.actionCancel, 'emit');
+    component.cancel();
+    expect(component.actionCancel.emit).toHaveBeenCalled();
+  });
+
+  it('should enable save button when form is valid', () => {
+    component.loadForm();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const saveButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
+    expect(saveButton.disabled).toBeFalse();
+  });
+
+  it('should show error when user exists', () => {
+    component.loadForm();
+    fixture.detectChanges();
+    error.set(emailInUseError);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const saveButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
+    expect(saveButton.disabled).toBeTrue();
+  });
+
+  it('should disable save button when form is invalid', () => {
+    component.userDetail = signal(null);
+    component.loadForm();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const saveButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
+    expect(saveButton.disabled).toBeTrue();
+  });
+
+  it('should exist input, input-number, input-date components', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const inputComponents = compiled.querySelectorAll('app-input-text');
+    const inputNumberComponents = compiled.querySelectorAll('app-input-number');
+    const inputDateComponents = compiled.querySelectorAll('app-input-date');
+    expect(inputComponents.length).toBe(5);
+    expect(inputNumberComponents.length).toBe(5);
+    expect(inputDateComponents.length).toBe(1);
   });
 });

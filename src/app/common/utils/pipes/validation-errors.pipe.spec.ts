@@ -1,6 +1,6 @@
 import { ValidationErrors } from './validation-errors.pipe';
 
-fdescribe('ValidationErrors Pipe', () => {
+describe('ValidationErrors Pipe', () => {
   let pipe: ValidationErrors;
 
   beforeEach(() => {
@@ -33,7 +33,7 @@ fdescribe('ValidationErrors Pipe', () => {
     expect(result).toBe('The field is too short');
   });
 
-  it('should return undefined if there are no errors', () => {
+  it('should return undefined if there are not errors', () => {
     const errors = null as any;
     const errorsForm = {
       required: 'The field is required',

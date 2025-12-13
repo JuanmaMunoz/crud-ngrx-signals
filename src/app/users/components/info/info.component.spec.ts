@@ -8,7 +8,7 @@ import { users } from '../../../../assets/data/users';
 import { IUserDetail } from '../../models/interfaces';
 import { InfoComponent } from './info.component';
 
-fdescribe('InfoComponent', () => {
+describe('InfoComponent', () => {
   let component: InfoComponent;
   let fixture: ComponentFixture<InfoComponent>;
   let datePipe: DatePipe;

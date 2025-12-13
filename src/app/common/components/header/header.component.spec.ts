@@ -10,7 +10,7 @@ import { LogoComponent } from '../logo/logo.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HeaderComponent } from './header.component';
 
-fdescribe('HeaderComponent', () => {
+describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let store: MockStore;

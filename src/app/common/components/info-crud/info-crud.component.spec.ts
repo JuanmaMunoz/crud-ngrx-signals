@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InfoCrudComponent } from './info-crud.component';
 
-fdescribe('InfoCrudComponent', () => {
+describe('InfoCrudComponent', () => {
   let component: InfoCrudComponent;
   let fixture: ComponentFixture<InfoCrudComponent>;
 

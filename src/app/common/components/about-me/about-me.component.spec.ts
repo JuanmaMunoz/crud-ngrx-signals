@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AboutMeComponent } from './about-me.component';
 
-fdescribe('AboutMeComponent', () => {
+describe('AboutMeComponent', () => {
   let component: AboutMeComponent;
   let fixture: ComponentFixture<AboutMeComponent>;
 

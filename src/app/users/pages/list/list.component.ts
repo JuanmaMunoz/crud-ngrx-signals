@@ -97,7 +97,6 @@ export class ListComponent {
         this.openModal.set(false);
         this.store.dispatch(setInitialStateDelete());
         this.store.dispatch(getUsers(this.params()!));
-        this.store.dispatch(setInitialStateDelete());
       }
     });
 
@@ -115,7 +114,6 @@ export class ListComponent {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(setInitialStateDelete());
     this.params.set({
       number: this.numberRows,
       search: this.search(),
@@ -123,8 +121,11 @@ export class ListComponent {
     });
   }
 
-  public openModalDelete(user: IUser): void {
+  ngOnDestroy(): void {
     this.store.dispatch(setInitialStateDelete());
+  }
+
+  public openModalDelete(user: IUser): void {
     this.openModal.set(true);
     this.store.dispatch(deleteUser({ user }));
   }
