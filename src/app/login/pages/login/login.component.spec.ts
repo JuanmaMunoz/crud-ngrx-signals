@@ -53,7 +53,7 @@ describe('LoginComponent', () => {
     expect(dispatchSpy).toHaveBeenCalledWith(login(credetials));
   });
 
-  it('should call router.naviagte when login success', () => {
+  it('should call router.navigate when login success', () => {
     store.setState({
       login: {
         loading: false,

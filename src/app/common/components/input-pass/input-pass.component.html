@@ -1,6 +1,6 @@
-<div>
+<div class="input-pass">
   <label [for]="input().label" class="form-label text-secondary fw-bold">{{ input().label }}</label>
-  <div class="input-pass input-group has-validation">
+  <div class="input-group has-validation">
     <input
       #element
       [type]="type"
@@ -12,17 +12,17 @@
       class="form-control"
       [placeholder]="input().placeholder"
       autocomplete="off"
-      />
-      <button (click)="showPass()" class="btn btn-outline-secondary" type="button">
-        @if (type === enumTypeInput.PASS) {
-          <i class="bi bi-eye"></i
-            >
-          }@if (type === enumTypeInput.TEXT) {
-          <i class="bi bi-eye-slash"></i>
-        }
-      </button>
-      <div class="invalid-feedback">
-        {{ input().control.errors | validationErrors: input().validationErrors! }}
-      </div>
+    />
+    <button (click)="showPass()" class="btn btn-outline-secondary" type="button">
+      @if (type === enumTypeInput.PASS) {
+        <i class="bi bi-eye"></i>
+      }
+      @if (type === enumTypeInput.TEXT) {
+        <i class="bi bi-eye-slash"></i>
+      }
+    </button>
+    <div class="invalid-feedback">
+      {{ input().control.errors | validationErrors: input().validationErrors! }}
     </div>
   </div>
+</div>

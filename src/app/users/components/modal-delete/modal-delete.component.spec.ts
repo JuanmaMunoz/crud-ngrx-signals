@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { signal } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core';
 import { users } from '../../../../assets/data/users';
 import { IUser } from '../../models/interfaces';
 import { ModalDeleteComponent } from './modal-delete.component';
@@ -9,6 +9,7 @@ import { ModalDeleteComponent } from './modal-delete.component';
 describe('ModalDeleteComponent', () => {
   let component: ModalDeleteComponent;
   let fixture: ComponentFixture<ModalDeleteComponent>;
+  let deleteLoading: WritableSignal<boolean> = signal(false);
   const deleteUser: IUser = users[0];
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,7 +20,7 @@ describe('ModalDeleteComponent', () => {
     component = fixture.componentInstance;
     component.deleteUser = signal<IUser | null>(deleteUser);
     component.openModal = signal<boolean>(true);
-    component.deleteLoading = signal<boolean>(false);
+    component.deleteLoading = deleteLoading;
     fixture.detectChanges();
   });
 
@@ -40,7 +41,7 @@ describe('ModalDeleteComponent', () => {
   });
 
   it('should exist spinner-border when deleteLoading is true', () => {
-    component.deleteLoading = signal<boolean>(true);
+    deleteLoading.set(true);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const spinner = compiled.querySelector('.spinner-border');

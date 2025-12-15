@@ -25,7 +25,7 @@ describe('SearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('shold searchText empty when deleteSearch is called', () => {
+  it('should set searchText empty when deleteSearch is called', () => {
     component.deleteSearch();
     expect(component.searchText()).toBe('');
   });

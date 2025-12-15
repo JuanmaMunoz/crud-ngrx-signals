@@ -42,7 +42,7 @@ describe('LoginService', () => {
     });
   });
 
-  it('should return error when there is a exception in the login process', (done) => {
+  it('should return error when there is an exception in the login process', (done) => {
     sessionServiceSpy.createFakeToken.and.throwError('Error');
 
     service.login('user@test', 'ajk38jkÑ').subscribe({
@@ -53,7 +53,7 @@ describe('LoginService', () => {
     });
   });
 
-  it('should remove item in localStorage when call logout', (done) => {
+  it('should remove the item from localStorage when logout is called', (done) => {
     spyOn(localStorage, 'removeItem');
 
     service.logout().subscribe((result) => {
@@ -63,7 +63,7 @@ describe('LoginService', () => {
     });
   });
 
-  it('should return error when there is a exception in the logout process', (done) => {
+  it('should return an error when there is an exception in the logout process', (done) => {
     spyOn(localStorage, 'removeItem').and.throwError('Error localStorage');
 
     service.logout().subscribe({

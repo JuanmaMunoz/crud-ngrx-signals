@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { signal } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { LoginFormComponent } from './login-form.component';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
   let fixture: ComponentFixture<LoginFormComponent>;
-  const loading = signal<boolean>(false);
+  const loading: WritableSignal<boolean> = signal<boolean>(false);
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LoginFormComponent, NgxMaskDirective],

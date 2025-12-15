@@ -13,10 +13,10 @@ import { UserFormComponent } from './user-form.component';
 describe('UserFormComponent', () => {
   let component: UserFormComponent;
   let fixture: ComponentFixture<UserFormComponent>;
-  const userDetail: IUserDetail = {
+  const userDetail: WritableSignal<IUserDetail | null> = signal({
     info: users[0],
     statistics: statistics[0],
-  };
+  });
 
   const error: WritableSignal<HttpErrorResponse | null> = signal(null);
 
@@ -28,7 +28,7 @@ describe('UserFormComponent', () => {
 
     fixture = TestBed.createComponent(UserFormComponent);
     component = fixture.componentInstance;
-    component.userDetail = signal(userDetail);
+    component.userDetail = userDetail;
     component.loading = signal(false);
     component.error = error;
     fixture.detectChanges();
@@ -69,6 +69,11 @@ describe('UserFormComponent', () => {
   });
 
   it('should enable save button when form is valid', () => {
+    userDetail.set({
+      info: users[0],
+      statistics: statistics[0],
+    });
+    fixture.detectChanges();
     component.loadForm();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
@@ -87,7 +92,8 @@ describe('UserFormComponent', () => {
   });
 
   it('should disable save button when form is invalid', () => {
-    component.userDetail = signal(null);
+    userDetail.set(null);
+    fixture.detectChanges();
     component.loadForm();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
@@ -95,7 +101,7 @@ describe('UserFormComponent', () => {
     expect(saveButton.disabled).toBeTrue();
   });
 
-  it('should exist input, input-number, input-date components', () => {
+  it('should exist input, input-number and input-date components', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const inputComponents = compiled.querySelectorAll('app-input-text');
     const inputNumberComponents = compiled.querySelectorAll('app-input-number');

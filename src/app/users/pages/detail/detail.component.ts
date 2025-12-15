@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, effect, signal, Signal } from '@angular/core';
+import { Component, effect, signal, Signal, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -47,8 +47,8 @@ export class DetailComponent {
   public deleteSuccess!: Signal<boolean>;
   public deleteError!: Signal<HttpErrorResponse | null>;
   public deleteUser!: Signal<IUser | null>;
-  public openModal = signal<boolean>(false);
-  public modeEdit = signal<boolean>(false);
+  public openModal: WritableSignal<boolean> = signal<boolean>(false);
+  public modeEdit: WritableSignal<boolean> = signal<boolean>(false);
   public editLoading!: Signal<boolean>;
   public editSuccess!: Signal<boolean>;
   public editError!: Signal<HttpErrorResponse | null>;

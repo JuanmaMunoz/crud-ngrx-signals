@@ -73,7 +73,7 @@ describe('DetailComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call dispatch setInitialStateDelete and router navigate when deleteSuccess is true', () => {
+  it('should call dispatch setInitialStateDelete and router.navigate when deleteSuccess is true', () => {
     store.setState({
       userDetail: { ...userDetailState },
       userDelete: {
@@ -116,19 +116,19 @@ describe('DetailComponent', () => {
     expect(dispatchSpy).toHaveBeenCalledWith(getUserDetail({ email: component.newEmail }));
   });
 
-  it('should openModal to be true and  dispatch deleteUser when call openModalDelete', () => {
+  it('should openModal to be true and dispatch deleteUser when call openModalDelete', () => {
     component.openModalDelete();
     expect(component.openModal()).toBeTrue();
     const user = userDetail.info as IUser;
     expect(dispatchSpy).toHaveBeenCalledWith(deleteUser({ user }));
   });
 
-  it('should call dispatch deleteUserConfirm when call actionMoodalDelete(true)', () => {
+  it('should dispatch deleteUserConfirm when call actionMoodalDelete(true)', () => {
     component.actionModalDelete(true);
     expect(dispatchSpy).toHaveBeenCalledWith(deleteUserConfirm());
   });
 
-  it('should openModal to be false and  call dispatch setInitialStateDelete when call actionMoodalDelete(false)', () => {
+  it('should openModal to be false and dispatch setInitialStateDelete when call actionMoodalDelete(false)', () => {
     component.actionModalDelete(false);
     expect(component.openModal()).toBeFalse();
     expect(dispatchSpy).toHaveBeenCalledWith(setInitialStateDelete());
@@ -139,7 +139,7 @@ describe('DetailComponent', () => {
     expect(component.modeEdit()).toBeFalse();
   });
 
-  it('should call dispatch setInitialStateEdit and edit user when call saveEdition', () => {
+  it('should dispatch setInitialStateEdit and editUser when call saveEdition', () => {
     component.saveEdition(userDetail);
     expect(dispatchSpy).toHaveBeenCalledWith(setInitialStateEdit());
     expect(dispatchSpy).toHaveBeenCalledWith(
@@ -159,7 +159,7 @@ describe('DetailComponent', () => {
     expect(appSpinner).toBeTruthy();
   });
 
-  it('should exist app-back-users, app-modal-delete, app-info', () => {
+  it('should exist app-back-users, app-modal-delete and app-info', () => {
     store.setState({
       userDetail: { ...userDetailState },
       userDelete: { ...userDeleteState },

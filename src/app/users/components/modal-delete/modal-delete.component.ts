@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output, signal, Signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { ModalComponent } from '../../../common/components/modal/modal.component';
 import { IUser } from '../../models/interfaces';
 
@@ -10,7 +18,7 @@ import { IUser } from '../../models/interfaces';
 })
 export class ModalDeleteComponent {
   @Input() deleteUser!: Signal<IUser | null>;
-  @Input() openModal = signal<boolean>(false);
+  @Input() openModal: WritableSignal<boolean> = signal<boolean>(false);
   @Input() deleteLoading!: Signal<boolean>;
   @Output() actionDelete: EventEmitter<boolean> = new EventEmitter();
 

@@ -64,7 +64,7 @@ describe('InfoComponent', () => {
     expect(component.actionEdit.emit).toHaveBeenCalled();
   });
 
-  it('should exist avatar, box-info, chart components', () => {
+  it('should exist avatar, box-info, and chart components', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const avatar = compiled.querySelector('app-avatar');
     const boxInfo = compiled.querySelectorAll('app-box-info');

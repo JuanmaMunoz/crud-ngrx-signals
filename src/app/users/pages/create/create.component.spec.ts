@@ -44,7 +44,7 @@ describe('CreateComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call router navigate when call cancelCreation', () => {
+  it('should call router.navigate when call cancelCreation', () => {
     const routerSpy = spyOn(router, 'navigate');
     component.cancelCreation();
     expect(routerSpy).toHaveBeenCalledWith(['/users']);
@@ -59,7 +59,7 @@ describe('CreateComponent', () => {
     expect(dispatchSpy).toHaveBeenCalledWith(createUser({ userDetail }));
   });
 
-  it('should call router navigate users/detail when userCreateSuccess is true', () => {
+  it('should call router.navigate with users/detail when userCreateSuccess is true', () => {
     const routerSpy = spyOn(router, 'navigate');
     store.setState({
       userCreate: {
