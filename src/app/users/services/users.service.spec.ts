@@ -97,7 +97,7 @@ describe('UsersService', () => {
   });
 
   it('should return user detail when session is valid and user exists', (done) => {
-    const userEmail = users[0].email;
+    const userEmail = users[1].email;
     sessionServiceSpy.checkSession.and.returnValue(true);
 
     service.getUserDetail(userEmail).subscribe((result) => {
