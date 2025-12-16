@@ -116,30 +116,30 @@ describe('DetailComponent', () => {
     expect(dispatchSpy).toHaveBeenCalledWith(getUserDetail({ email: component.newEmail }));
   });
 
-  it('should openModal to be true and dispatch deleteUser when call openModalDelete', () => {
+  it('should openModal to be true and dispatch deleteUser when openModalDelete is called', () => {
     component.openModalDelete();
     expect(component.openModal()).toBeTrue();
     const user = userDetail.info as IUser;
     expect(dispatchSpy).toHaveBeenCalledWith(deleteUser({ user }));
   });
 
-  it('should dispatch deleteUserConfirm when call actionMoodalDelete(true)', () => {
+  it('should dispatch deleteUserConfirm when actionMoodalDelete(true) is called', () => {
     component.actionModalDelete(true);
     expect(dispatchSpy).toHaveBeenCalledWith(deleteUserConfirm());
   });
 
-  it('should openModal to be false and dispatch setInitialStateDelete when call actionMoodalDelete(false)', () => {
+  it('should openModal to be false and dispatch setInitialStateDelete when actionMoodalDelete(false) is called', () => {
     component.actionModalDelete(false);
     expect(component.openModal()).toBeFalse();
     expect(dispatchSpy).toHaveBeenCalledWith(setInitialStateDelete());
   });
 
-  it('should modeEdit to be false when call cancelEdition', () => {
+  it('should modeEdit to be false when cancelEdition is called', () => {
     component.cancelEdition();
     expect(component.modeEdit()).toBeFalse();
   });
 
-  it('should dispatch setInitialStateEdit and editUser when call saveEdition', () => {
+  it('should dispatch setInitialStateEdit and editUser when saveEdition is called', () => {
     component.saveEdition(userDetail);
     expect(dispatchSpy).toHaveBeenCalledWith(setInitialStateEdit());
     expect(dispatchSpy).toHaveBeenCalledWith(
@@ -159,7 +159,7 @@ describe('DetailComponent', () => {
     expect(appSpinner).toBeTruthy();
   });
 
-  it('should exist app-back-users, app-modal-delete and app-info', () => {
+  it('should exist app-back-users, app-modal-delete and app-info components', () => {
     store.setState({
       userDetail: { ...userDetailState },
       userDelete: { ...userDeleteState },
@@ -175,7 +175,7 @@ describe('DetailComponent', () => {
     expect(appModalDelete).toBeTruthy();
   });
 
-  it('should exist app-edit-user-form when modeEdit is true', () => {
+  it('should exist app-edit-user-form component when modeEdit is true', () => {
     store.setState({
       userDetail: { ...userDetailState },
       userDelete: { ...userDeleteState },

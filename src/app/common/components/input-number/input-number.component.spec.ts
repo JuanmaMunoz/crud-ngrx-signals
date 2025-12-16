@@ -39,28 +39,28 @@ describe('InputNumberComponent', () => {
     expect(parseInt(inputText?.value!)).toBe(input.control.getRawValue());
   });
 
-  it('should increase the input´s value', () => {
+  it('should increase the input´s value when increase is called', () => {
     const oldValue = input.control.getRawValue();
     component.increase();
     fixture.detectChanges();
     expect(component.control.value).toBe(oldValue + 1);
   });
 
-  it('should decrease the input´s value', () => {
+  it('should decrease the input´s value when decrease is called', () => {
     const oldValue = input.control.getRawValue();
     component.decrease();
     fixture.detectChanges();
     expect(component.control.value).toBe(oldValue - 1);
   });
 
-  it('should not increase the input´s value', () => {
+  it('should not increase the input´s value when increase is called', () => {
     input.control.setValue(input.max);
     component.increase();
     fixture.detectChanges();
     expect(component.control.value).toBe(input.max);
   });
 
-  it('should not decrease the input´s value', () => {
+  it('should not decrease the input´s value when decrease is called', () => {
     input.control.setValue(input.min);
     component.decrease();
     fixture.detectChanges();

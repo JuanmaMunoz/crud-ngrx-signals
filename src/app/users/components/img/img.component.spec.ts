@@ -20,7 +20,7 @@ describe('ImgComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should exist class person-circle', () => {
+  it('should exist class bi-person-circle', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const icon = compiled.querySelector('.bi-person-circle');
     expect(icon).toBeTruthy();

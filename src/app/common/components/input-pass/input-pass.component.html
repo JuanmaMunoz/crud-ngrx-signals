@@ -4,6 +4,7 @@
     <input
       #element
       [type]="type"
+      [id]="input().label"
       [formControl]="input().control"
       [ngClass]="{
         'is-invalid': input().control.errors,

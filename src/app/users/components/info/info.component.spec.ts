@@ -52,13 +52,13 @@ describe('InfoComponent', () => {
     expect(component.infoAvatar.description).toBe(userDetail.info.email);
   });
 
-  it('should emit actionOpenModal event', () => {
+  it('should call actionOpenModal.emit when openModalDelete is called', () => {
     spyOn(component.actionOpenModal, 'emit');
     component.openModalDelete();
     expect(component.actionOpenModal.emit).toHaveBeenCalled();
   });
 
-  it('should emit actionEdit event', () => {
+  it('should call actionEdit.emit when edit is called', () => {
     spyOn(component.actionEdit, 'emit');
     component.edit();
     expect(component.actionEdit.emit).toHaveBeenCalled();

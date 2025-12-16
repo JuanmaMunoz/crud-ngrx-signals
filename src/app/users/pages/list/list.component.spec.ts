@@ -58,7 +58,7 @@ describe('ListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should openModal to be false, call dispatch setInitialStateDelete and get users when successDelete to be true ', () => {
+  it('should openModal to be false, call dispatch setInitialStateDelete and dispatch getUsers when successDelete to be true ', () => {
     store.setState({
       users: { ...usersState },
       userDelete: { ...userDeleteState, success: true },
@@ -78,30 +78,30 @@ describe('ListComponent', () => {
     expect(component.openModal()).toBeFalse();
   });
 
-  it('should openModal to be true, call dispatch deleteUser when call openModalDelete', () => {
+  it('should openModal to be true, and dispatch deleteUser when openModalDelete is called', () => {
     const user = users[0];
     component.openModalDelete(user);
     expect(component.openModal()).toBeTrue();
     expect(dispatchSpy).toHaveBeenCalledWith(deleteUser({ user }));
   });
 
-  it('should call dispatch deleteUserConfirm when call actionMoodalDelete(true)', () => {
+  it('should call dispatch deleteUserConfirm when actionMoodalDelete(true) is called', () => {
     component.actionModalDelete(true);
     expect(dispatchSpy).toHaveBeenCalledWith(deleteUserConfirm());
   });
 
-  it('should openModal to be false and  call dispatch setInitialStateDelete when call actionMoodalDelete(false)', () => {
+  it('should openModal to be false and  call dispatch setInitialStateDelete when actionMoodalDelete(false) is called', () => {
     component.actionModalDelete(false);
     expect(component.openModal()).toBeFalse();
     expect(dispatchSpy).toHaveBeenCalledWith(setInitialStateDelete());
   });
 
-  it('should to change params when call changePage', () => {
+  it('should update params when changePage is called', () => {
     component.changePage(2);
     expect(component.params()?.page).toBe(2);
   });
 
-  it('should to change params when call searchUsers', () => {
+  it('should not update params when searchUsers is called', () => {
     component.searchUsers('test');
     expect(component.params()?.search).toBe('test');
   });

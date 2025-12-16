@@ -24,7 +24,7 @@ describe('LoginFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call actionLogin to call login', () => {
+  it('should call actionLogin when login is called', () => {
     const spyActionLogin = spyOn(component.actionLogin, 'emit');
     component.login();
     expect(spyActionLogin).toHaveBeenCalledOnceWith({

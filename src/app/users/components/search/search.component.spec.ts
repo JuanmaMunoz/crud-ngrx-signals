@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { signal } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { SearchComponent } from './search.component';
 
@@ -8,6 +8,7 @@ describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
   let routerSpy: jasmine.SpyObj<Router>;
+  let search: WritableSignal<string> = signal('');
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     await TestBed.configureTestingModule({
@@ -17,7 +18,7 @@ describe('SearchComponent', () => {
 
     fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
-    component.search = signal<string>('test');
+    component.search = search;
     fixture.detectChanges();
   });
 

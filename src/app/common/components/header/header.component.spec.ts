@@ -48,7 +48,7 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch logout actions when logout() is called', () => {
+  it('should dispatch logout actions when logout is called', () => {
     const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
     component.logout();
     expect(dispatchSpy).toHaveBeenCalledWith(logout());

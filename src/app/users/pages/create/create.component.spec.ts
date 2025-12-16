@@ -44,13 +44,13 @@ describe('CreateComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call router.navigate when call cancelCreation', () => {
+  it('should call router.navigate when cancelCreation is called', () => {
     const routerSpy = spyOn(router, 'navigate');
     component.cancelCreation();
     expect(routerSpy).toHaveBeenCalledWith(['/users']);
   });
 
-  it('should dispatch createUser when call saveCreation', () => {
+  it('should dispatch createUser when saveCreation is called', () => {
     const userDetail: IUserDetail = {
       info: users[0],
       statistics: statistics[0],

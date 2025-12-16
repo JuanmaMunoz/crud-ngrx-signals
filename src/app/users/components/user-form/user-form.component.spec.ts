@@ -38,7 +38,7 @@ describe('UserFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call actionSame emit when call saveUser', () => {
+  it('should call actionSame.emit when saveUser is called', () => {
     const userDetail: IUserDetail = {
       info: {
         name: component.nameControl.getRawValue(),
@@ -62,7 +62,7 @@ describe('UserFormComponent', () => {
     expect(component.actionSave.emit).toHaveBeenCalledWith(userDetail);
   });
 
-  it('should call actionCancel emit when call cancel', () => {
+  it('should call actionCancel.emit when cancel is called', () => {
     spyOn(component.actionCancel, 'emit');
     component.cancel();
     expect(component.actionCancel.emit).toHaveBeenCalled();

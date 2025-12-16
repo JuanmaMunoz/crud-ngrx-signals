@@ -41,7 +41,7 @@ describe('InputDateComponent', () => {
     expect(inputText?.value).toBe(input.control.getRawValue());
   });
 
-  it('should render validation´s error to click reset', () => {
+  it('should render validation´s error when click reset', () => {
     component.reset();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;

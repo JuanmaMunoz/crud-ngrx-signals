@@ -28,8 +28,8 @@ describe('InfoCrudComponent', () => {
     expect(h5?.textContent).toContain('Content:');
     expect(paragraphs[0].textContent).toContain('CRUD');
     expect(paragraphs[1].textContent).toContain('Login');
-    expect(paragraphs[2].textContent).toContain('Angular 19');
-    expect(paragraphs[3].textContent).toContain('NgRx 19:');
+    expect(paragraphs[2].textContent).toContain('Angular 20');
+    expect(paragraphs[3].textContent).toContain('NgRx 20:');
     expect(paragraphs[4].textContent).toContain('Signals');
     expect(paragraphs[5].textContent).toContain('Testing');
   });

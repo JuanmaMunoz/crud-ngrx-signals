@@ -28,13 +28,13 @@ describe('ModalDeleteComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call actionDelete emit with false', () => {
+  it('should call actionDelete.emit with false', () => {
     spyOn(component.actionDelete, 'emit');
     component.cancelDeleting();
     expect(component.actionDelete.emit).toHaveBeenCalledWith(false);
   });
 
-  it('should call actionDelete emit with true', () => {
+  it('should call actionDelete.emit with true', () => {
     spyOn(component.actionDelete, 'emit');
     component.confirmDeleting();
     expect(component.actionDelete.emit).toHaveBeenCalledWith(true);

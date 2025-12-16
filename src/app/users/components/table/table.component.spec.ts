@@ -33,20 +33,20 @@ describe('TableComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to user detail', () => {
+  it('should navigate to users/detail', () => {
     const email = 'user@test.es';
     component.userDetail(email);
     expect(routerSpy.navigate).toHaveBeenCalledWith([`users/detail/`, email]);
   });
 
-  it('should set page to called changePage', () => {
+  it('should set page when changePage is called', () => {
     component.changePage(2);
     expect(component.page()).toBe(2);
     component.changePage(4);
     expect(component.page()).toBe(3);
   });
 
-  it('should call actionDeleteUser on openModalDelete', () => {
+  it('should call actionDeleteUser.emit when openModalDelete is called', () => {
     spyOn(component.actionDeleteUser, 'emit');
     const userToDelete: IUser = usersList[0];
     const mouseEvent = new MouseEvent('click');
@@ -54,7 +54,7 @@ describe('TableComponent', () => {
     expect(component.actionDeleteUser.emit).toHaveBeenCalledWith(userToDelete);
   });
 
-  it('should set page to called nextPage', () => {
+  it('should set page when nextPage is called', () => {
     const page = component.page();
     component.nextPage();
     expect(component.page()).toBe(page + 1);
@@ -63,7 +63,7 @@ describe('TableComponent', () => {
     expect(component.page()).toBe(1);
   });
 
-  it('should set page to called previousPage', () => {
+  it('should set page when previousPage is called', () => {
     component.page.set(2);
     const page = component.page();
     component.previousPage();

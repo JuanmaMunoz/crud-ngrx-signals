@@ -34,7 +34,7 @@ describe('NavbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch logout action when logout() is called', () => {
+  it('should call actionLogout.emit when logout is called', () => {
     const actionSpy = spyOn(component.actionLogout, 'emit');
     component.logout();
     expect(actionSpy).toHaveBeenCalled();

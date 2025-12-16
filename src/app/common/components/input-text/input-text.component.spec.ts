@@ -44,7 +44,7 @@ describe('InputTextComponent', () => {
     expect(inputText?.value).toBe(input.control.getRawValue());
   });
 
-  it('should render validation´s error to clear input', () => {
+  it('should render validation´s error when clear input', () => {
     input.control.setValue('');
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;

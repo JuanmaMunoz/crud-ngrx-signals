@@ -23,7 +23,7 @@ export const loginError = new HttpErrorResponse({
   status: 401,
   error: {
     code: 'UNAUTHORIZED',
-    message: 'The username or password you entered is incorrect. Please try again.',
+    message: 'The email or password you entered is incorrect. Please try again.',
   },
 });
 
