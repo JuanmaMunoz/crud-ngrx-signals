@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 describe('Logout Tests', () => {
   beforeEach(() => {
     cy.fixture('login').then((user) => {

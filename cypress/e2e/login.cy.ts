@@ -1,9 +1,10 @@
+/// <reference types="cypress" />
 describe('Login Tests', () => {
   beforeEach(() => {
     cy.visit('http://localhost:4200/#/login');
   });
 
-  it('Check content in the template', () => {
+  it('Check content in the web', () => {
     cy.get('app-header').should('be.visible');
     cy.get('app-info-crud').should('be.visible');
     cy.get('app-login-form').should('be.visible');
@@ -33,4 +34,8 @@ describe('Login Tests', () => {
       cy.get('app-error').should('be.visible');
     });
   });
+});
+
+it('detail', function() {
+
 });
