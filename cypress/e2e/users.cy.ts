@@ -4,7 +4,7 @@ import { users } from '../fixtures/users';
 describe('Users Tests', () => {
   beforeEach(() => {
     cy.fixture('login').then((user) => {
-      const jwt = { email: user.email, expiration: new Date().getTime() + 5000 };
+      const jwt = { email: user.email, expiration: new Date().getTime() + 3600000 };
       const token = btoa(JSON.stringify(jwt));
       localStorage.setItem('token', token);
       cy.visit('http://localhost:4200/#/users');
@@ -52,18 +52,64 @@ describe('Users Tests', () => {
     cy.get('h5').should('contain', 'Insert new user in the system');
   });
 
-  it('Should delete user when clicking the icon', () => {
+  it('Should show a modal and delete the user when clicking the delete button', () => {
     cy.get('tbody tr')
       .eq(0)
       .within(() => {
         cy.get('.bi-x-circle').click();
       });
-    cy.get('h3').should('contain', 'Delete user');
-    cy.get('span').should('contain', `${users[0].name}`);
-    cy.get('span').should('contain', `${users[0].email}`);
+    cy.validateDeletionUserModal(users[0]);
+    cy.contains('button', 'Delete').filter(':visible').first().click();
+    cy.wait(500);
+    cy.get('.modal-dialog').should('not.be.visible');
+    cy.get('tbody tr')
+      .eq(0)
+      .within(() => {
+        cy.get('td').eq(0).should('not.have.text', users[0].name);
+      });
   });
 
-  /*it('Should return to /users when clicking ‘Back to users', () => {
+  it('Should show a modal and cancel user deletion when clicking the delete button', () => {
+    cy.get('tbody tr')
+      .eq(0)
+      .within(() => {
+        cy.get('.bi-x-circle').click();
+      });
+    cy.validateDeletionUserModal(users[0]);
+    cy.contains('button', 'Cancel').filter(':visible').first().click();
+    cy.wait(500);
+    cy.get('.modal-dialog').should('not.be.visible');
+    cy.get('tbody tr')
+      .eq(0)
+      .within(() => {
+        cy.get('td').eq(0).should('contain', users[0].name);
+      });
+  });
+
+  // it('Should fail getUsers and show error 500 message (MOCK REAL API)', () => {
+  //   cy.intercept('GET', '**/users', {
+  //     statusCode: 500,
+  //     body: { error: 'Internal Server Error', message: 'Error Get Users' },
+  //     delay: 500,
+  //   }).as('getUsersFailure');
+  //   cy.visit('/users');
+  //   cy.wait('@getUsersFailure');
+  //   cy.get('app-error').should('be.visible');
+  // });
+
+  // it('Should fail deleteUser and show error 500 message (MOCK REAL API)', () => {
+  //   cy.intercept('DELETE', '**/user*', {
+  //     statusCode: 500,
+  //     body: { error: 'Internal Server Error', message: 'Error Delete User' },
+  //     delay: 500,
+  //   }).as('deleteUserFailure');
+  //   cy.validateDeletionUserModal(users[0]);
+  //   cy.contains('button', 'Delete').filter(':visible').first().click()
+  //   cy.wait('@deleteUserFailure');
+  //   cy.get('app-error').should('be.visible');
+  // });
+
+  /*it('Should return to /users when clicking Back to users', () => {
     cy.get('a[href="#/users"]').click();
     cy.url().should('eq', 'http://localhost:4200/#/login');
   });*/

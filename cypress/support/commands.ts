@@ -15,3 +15,10 @@ Cypress.Commands.add('validateUserRow', (rowIndex, user) => {
       cy.get('td').eq(3).should('contain', user.position);
     });
 });
+
+Cypress.Commands.add('validateDeletionUserModal', (user) => {
+  cy.get('.modal-dialog').should('be.visible');
+  cy.get('h3').should('contain', 'Delete user');
+  cy.get('span').should('contain', `${user.name}`);
+  cy.get('span').should('contain', `${user.email}`);
+});

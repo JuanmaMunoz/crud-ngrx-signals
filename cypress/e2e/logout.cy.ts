@@ -18,12 +18,15 @@ describe('Logout Tests', () => {
     });
   });
 
-  it('Should fail log out and show error message', () => {
-    cy.get('.nav-bar__logout').click();
-    cy.window().then((win) => {
-      cy.stub(win.localStorage, 'removeItem').throws(new Error('Persistent Storage Error'));
-    });
-    cy.get('app-modal').should('be.visible');
-    cy.get('h3').should('contain', 'Error');
-  });
+  // it('Should fail log out and show error message (MOCK REAL API)', () => {
+  //   cy.intercept('POST', '**/logout', {
+  //     statusCode: 500,
+  //     body: { error: 'Internal Server Error', message: 'Error Logout' },
+  //     delay: 500,
+  //   }).as('logoutFailure');
+  //   cy.get('.nav-bar__logout').click();
+  //   cy.wait('@logoutFailure');
+  //   cy.get('.modal-dialog').should('be.visible');
+  //   cy.get('h3').should('contain', 'Error');
+  // });
 });

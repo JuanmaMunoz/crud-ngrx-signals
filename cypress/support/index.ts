@@ -1,3 +1,4 @@
+import { IUser } from './../../src/app/users/models/interfaces';
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -6,7 +7,8 @@ declare global {
        * @param rowIndex Índice de la fila (0 para la primera)
        * @param user Objeto con los datos del usuario
        */
-      validateUserRow(rowIndex: number, user: any): Chainable<void>;
+      validateUserRow(rowIndex: number, user: IUser): Chainable<void>;
+      validateDeletionUserModal(user: IUser): Chainable<void>;
     }
   }
 }

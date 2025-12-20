@@ -34,8 +34,17 @@ describe('Login Tests', () => {
       cy.get('app-error').should('be.visible');
     });
   });
-});
 
-it('detail', function() {
-
+  // it('Should fail log in and show error 500 message (MOCK REAL API)', () => {
+  //   cy.intercept('POST', '**/login', {
+  //     statusCode: 500,
+  //     body: { error: 'Internal Server Error', message: 'Error Login' },
+  //     delay: 500,
+  //   }).as('loginFailure');
+  //   cy.get('input[id="Email"]').clear().type(user.email);
+  //   cy.get('input[id="Password"]').clear().type(user.pass);
+  //   cy.get('button[type="submit"]').click();
+  //   cy.wait('@loginFailure');
+  //   cy.get('app-error').should('be.visible');
+  // });
 });
