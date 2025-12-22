@@ -1,4 +1,4 @@
-import { IUser } from './../../src/app/users/models/interfaces';
+import { IUser, IUserDetail } from './../../src/app/users/models/interfaces';
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -9,6 +9,8 @@ declare global {
        */
       validateUserRow(rowIndex: number, user: IUser): Chainable<void>;
       validateDeletionUserModal(user: IUser): Chainable<void>;
+      validateEditionMode(userDetail: IUserDetail): Chainable<void>;
+      validateCreation(newUser: IUser): Chainable<void>;
     }
   }
 }

@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 import { users } from '../fixtures/users';
 
-describe('Users Tests', () => {
+describe('List Tests', () => {
   beforeEach(() => {
     cy.fixture('login').then((user) => {
       const jwt = { email: user.email, expiration: new Date().getTime() + 3600000 };
@@ -11,7 +11,7 @@ describe('Users Tests', () => {
     });
   });
 
-  it('Check content in the web', () => {
+  it('Check the content on the web', () => {
     cy.get('app-navbar').should('be.visible');
     cy.get('app-list').should('be.visible');
     cy.get('table').should('be.visible').find('tbody tr').should('have.length', 10);
@@ -60,7 +60,6 @@ describe('Users Tests', () => {
       });
     cy.validateDeletionUserModal(users[0]);
     cy.contains('button', 'Delete').filter(':visible').first().click();
-    cy.wait(500);
     cy.get('.modal-dialog').should('not.be.visible');
     cy.get('tbody tr')
       .eq(0)
@@ -108,9 +107,4 @@ describe('Users Tests', () => {
   //   cy.wait('@deleteUserFailure');
   //   cy.get('app-error').should('be.visible');
   // });
-
-  /*it('Should return to /users when clicking Back to users', () => {
-    cy.get('a[href="#/users"]').click();
-    cy.url().should('eq', 'http://localhost:4200/#/login');
-  });*/
 });

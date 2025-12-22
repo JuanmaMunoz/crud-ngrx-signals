@@ -1,5 +1,9 @@
+import { IUser } from './../../src/app/users/models/interfaces';
 /// <reference types="cypress" />
-Cypress.Commands.add('validateUserRow', (rowIndex, user) => {
+
+import { IUserDetail } from '../../src/app/users/models/interfaces';
+
+Cypress.Commands.add('validateUserRow', (rowIndex: number, user: IUser) => {
   const formattedDate = new Intl.DateTimeFormat('en-US', {
     month: '2-digit',
     day: '2-digit',
@@ -16,9 +20,39 @@ Cypress.Commands.add('validateUserRow', (rowIndex, user) => {
     });
 });
 
-Cypress.Commands.add('validateDeletionUserModal', (user) => {
+Cypress.Commands.add('validateDeletionUserModal', (user: IUser) => {
   cy.get('.modal-dialog').should('be.visible');
   cy.get('h3').should('contain', 'Delete user');
   cy.get('span').should('contain', `${user.name}`);
   cy.get('span').should('contain', `${user.email}`);
+});
+
+Cypress.Commands.add('validateEditionMode', (userDetail: IUserDetail) => {
+  cy.contains('button', 'Edit').click();
+  cy.get('app-navbar').should('be.visible');
+  cy.get('app-back-users').should('be.visible');
+  cy.get('app-info').should('not.exist');
+  cy.get('app-user-form').should('be.visible');
+  cy.get('app-avatar').should('be.visible');
+  cy.get('h4').should('contain', userDetail.info.name);
+  cy.get('h5').should('contain', userDetail.info.email);
+});
+
+Cypress.Commands.add('validateCreation', (newUser: IUser) => {
+  cy.get('input[id="Name"]').type(newUser.name!);
+  cy.get('input[id="Lastname"]').type(newUser.lastName!);
+  cy.get('input[id="Email"]').type(newUser.email!);
+  cy.get('input[id="Position"]').type(newUser.position!);
+  const isoDate = new Date().toISOString().split('T')[0];
+
+  cy.get('input[type="date"]')
+    .click()
+    .focus()
+    .invoke('val', isoDate)
+    .trigger('input')
+    .trigger('change');
+
+  cy.get('input[type="date"]').should('have.value', isoDate);
+
+  cy.get('input[id="Salary"]').type(newUser.salary!.toString());
 });

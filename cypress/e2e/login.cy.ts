@@ -4,7 +4,7 @@ describe('Login Tests', () => {
     cy.visit('http://localhost:4200/#/login');
   });
 
-  it('Check content in the web', () => {
+  it('Check the content on the web', () => {
     cy.get('app-header').should('be.visible');
     cy.get('app-info-crud').should('be.visible');
     cy.get('app-login-form').should('be.visible');

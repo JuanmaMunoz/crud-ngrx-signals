@@ -121,8 +121,8 @@ export class UserFormComponent {
   public inputCoworker: WritableSignal<IInputNumber> = signal({
     type: TypeInput.NUMBER,
     control: {} as FormControl,
-    placeholder: 'Insert cooworker',
-    label: 'Cooworker',
+    placeholder: 'Insert coworker',
+    label: 'Coworker',
     validationErrors: this.validationErrors,
     min: 1,
     max: 10,
