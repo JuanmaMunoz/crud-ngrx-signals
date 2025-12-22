@@ -14,24 +14,20 @@
         'is-valid': input().control.value && input().control.valid
       }"
       autocomplete="off"
-      />
-      @if (input().control.value) {
-        <button
-          (click)="reset()"
-          class="btn btn-outline-secondary"
-          type="button"
-          >
-          <i class="bi bi-x-circle"></i>
-        </button>
-      }
-      @if (!input().control.value && !userAgent.toLocaleLowerCase().includes('firefox')) {
-        <span
-          class="input-group-text"
-          ><i class="bi bi-calendar"></i
-        ></span>
-      }
-      <div class="invalid-feedback">
-        {{ input().control.errors | validationErrors: input().validationErrors! }}
-      </div>
+      autocorrect="off"
+      spellcheck="false"
+    />
+    />
+    @if (input().control.value) {
+      <button (click)="reset()" class="btn btn-outline-secondary" type="button">
+        <i class="bi bi-x-circle"></i>
+      </button>
+    }
+    @if (!input().control.value && !userAgent.toLocaleLowerCase().includes("firefox")) {
+      <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+    }
+    <div class="invalid-feedback">
+      {{ input().control.errors | validationErrors: input().validationErrors! }}
     </div>
   </div>
+</div>

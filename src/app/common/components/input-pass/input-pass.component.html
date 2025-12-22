@@ -13,6 +13,9 @@
       class="form-control"
       [placeholder]="input().placeholder"
       autocomplete="off"
+      autocorrect="off"
+      spellcheck="false"
+    />
     />
     <button (click)="showPass()" class="btn btn-outline-secondary" type="button">
       @if (type === enumTypeInput.PASS) {
