@@ -1,6 +1,6 @@
 # CrudNgrxSignals
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.11.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.12.
 
 ## Development server
 
@@ -49,7 +49,7 @@ ng test
 For end-to-end (e2e) testing, run:
 
 ```bash
-ng e2e
+npx cypress open
 ```
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.

@@ -1,14 +1,15 @@
 {
   "name": "crud-ngrx-signals",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --base-href https://juanmamunoz.github.io/crud-ngrx-signals/",
-    "prebuild": "npm run test",
-    "watch": "ng build --watch --configuration development",
+    "prebuild": "npm run test && npm run e2e:ci",
     "test": "ng test --code-coverage --browsers=ChromeHeadless --watch=false",
-    "test:dev": "ng test --code-coverage --browsers=ChromeHeadless"
+    "e2e:ci": "cypress run",
+    "watch": "ng build --watch --configuration development",
+    "test:dev": "ng test --code-coverage --browsers=ChromeHeadless",
+    "build": "ng build --configuration production --base-href https://juanmamunoz.github.io/crud-ngrx-signals/ && xcopy docs\\browser docs /E /H /Y && rmdir /S /Q docs\\browser"
   },
   "private": true,
   "dependencies": {
