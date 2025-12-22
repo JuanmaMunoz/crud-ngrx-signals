@@ -9,6 +9,5 @@ import { fadeIn } from '../../animations/animations';
   styleUrl: './about-me.component.scss',
 })
 export class AboutMeComponent {
-  public img: string = '/assets/images/photo.png';
-  public imgGithub: string = '/assets/images/github.svg';
+  public img: string = 'assets/images/photo.png';
 }
