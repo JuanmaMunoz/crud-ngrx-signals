@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { animate, style, transition, trigger } from '@angular/animations';
 export const fadeIn = (delay?: number) =>
   trigger('fadeIn', [

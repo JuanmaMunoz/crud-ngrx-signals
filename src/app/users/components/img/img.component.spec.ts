@@ -8,9 +8,8 @@ describe('ImgComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ImgComponent]
-    })
-    .compileComponents();
+      imports: [ImgComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ImgComponent);
     component = fixture.componentInstance;
@@ -19,5 +18,11 @@ describe('ImgComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should exist class bi-person-circle', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const icon = compiled.querySelector('.bi-person-circle');
+    expect(icon).toBeTruthy();
   });
 });

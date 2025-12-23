@@ -1,5 +1,14 @@
 import { DatePipe } from '@angular/common';
-import { Component, effect, EventEmitter, Input, Output, signal, Signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  EventEmitter,
+  Input,
+  Output,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -23,7 +32,7 @@ export class TableComponent {
   @Input() totalPages!: Signal<number>;
   @Output() actionDeleteUser: EventEmitter<IUser> = new EventEmitter();
   @Output() actionChangePage: EventEmitter<number> = new EventEmitter();
-  public page = signal<number>(1);
+  public page: WritableSignal<number> = signal<number>(1);
   private subscription = new Subscription();
   private delayPagination: number = 200;
   constructor(private router: Router) {

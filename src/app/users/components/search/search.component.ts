@@ -1,4 +1,13 @@
-import { Component, effect, EventEmitter, Input, Output, Signal, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  EventEmitter,
+  Input,
+  Output,
+  Signal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,7 +23,7 @@ export class SearchComponent {
   @Input() search!: Signal<string>;
   @Output() actionSearch: EventEmitter<string> = new EventEmitter();
 
-  public searchText = signal<string>('');
+  public searchText: WritableSignal<string> = signal<string>('');
   private delaySearch: number = 400;
   private subscription = new Subscription();
 

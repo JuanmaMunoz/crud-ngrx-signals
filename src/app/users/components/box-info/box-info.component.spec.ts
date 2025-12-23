@@ -6,7 +6,7 @@ import { Color } from '../../models/enums';
 import { IBoxInfo } from '../../models/interfaces';
 import { BoxInfoComponent } from './box-info.component';
 
-fdescribe('BoxInfoComponent', () => {
+describe('BoxInfoComponent', () => {
   let component: BoxInfoComponent;
   let fixture: ComponentFixture<BoxInfoComponent>;
 

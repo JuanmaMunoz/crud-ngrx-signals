@@ -8,7 +8,7 @@ import { ModalComponent } from '../modal/modal.component';
   styleUrl: './modal-error.component.scss',
 })
 export class ModalErrorComponent {
-  @Input() openModal = signal<boolean>(false);
+  @Input() openModal: WritableSignal<boolean> = signal<boolean>(false);
   @Input() errorMessage!: WritableSignal<string>;
 
   public closeModal(): void {

@@ -115,14 +115,14 @@ export class UserFormComponent {
     placeholder: 'Insert salary',
     label: 'Salary',
     validationErrors: this.validationErrors,
-    mask: '000999',
+    mask: 'separator.2',
   });
 
   public inputCoworker: WritableSignal<IInputNumber> = signal({
     type: TypeInput.NUMBER,
     control: {} as FormControl,
-    placeholder: 'Insert cooworker',
-    label: 'Cooworker',
+    placeholder: 'Insert coworker',
+    label: 'Coworker',
     validationErrors: this.validationErrors,
     min: 1,
     max: 10,

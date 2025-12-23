@@ -5,7 +5,7 @@ import { IAvatar } from '../../models/interfaces';
 import { ImgComponent } from '../img/img.component';
 import { AvatarComponent } from './avatar.component';
 
-fdescribe('AvatarComponent', () => {
+describe('AvatarComponent', () => {
   let component: AvatarComponent;
   let fixture: ComponentFixture<AvatarComponent>;
   let infoAvatar!: IAvatar;
@@ -38,7 +38,7 @@ fdescribe('AvatarComponent', () => {
     expect(img).toBeTruthy();
   });
 
-  it('should exist these classes in mode row', () => {
+  it('should exist these classes in row mode', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const flex = compiled.querySelector('.d-lg-flex');
     const textStart = compiled.querySelector('.text-lg-start');
@@ -48,7 +48,7 @@ fdescribe('AvatarComponent', () => {
     expect(marginStart).toBeTruthy();
   });
 
-  it('should not exist these classes in mode row', () => {
+  it('should not exist these classes in row mode', () => {
     infoAvatar = { ...infoAvatar, modeRow: false };
     component.avatar = infoAvatar;
     fixture.detectChanges();

@@ -5,7 +5,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { ITokenState } from '../../models/interfaces';
 import { NavbarComponent } from './navbar.component';
 
-fdescribe('NavbarComponent', () => {
+describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let store: MockStore;
@@ -34,7 +34,7 @@ fdescribe('NavbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch logout action when logout() is called', () => {
+  it('should call actionLogout.emit when logout is called', () => {
     const actionSpy = spyOn(component.actionLogout, 'emit');
     component.logout();
     expect(actionSpy).toHaveBeenCalled();

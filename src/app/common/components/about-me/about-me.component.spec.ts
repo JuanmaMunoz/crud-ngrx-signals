@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AboutMeComponent } from './about-me.component';
 
-fdescribe('AboutMeComponent', () => {
+describe('AboutMeComponent', () => {
   let component: AboutMeComponent;
   let fixture: ComponentFixture<AboutMeComponent>;
 
@@ -30,5 +30,6 @@ fdescribe('AboutMeComponent', () => {
     const paragraphs = compiled.querySelectorAll('p');
     expect(paragraphs[0]?.textContent).toContain('Front-End Architect');
     expect(paragraphs[1]).toBeTruthy();
+    expect(paragraphs[2]).toBeTruthy();
   });
 });

@@ -9,7 +9,7 @@ import { sessionExpiredError, unknownError } from './common/utils/errors';
 import { IAuthState } from './login/models/interfaces';
 import { logout } from './login/store/actions/auth.action';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let store: MockStore;

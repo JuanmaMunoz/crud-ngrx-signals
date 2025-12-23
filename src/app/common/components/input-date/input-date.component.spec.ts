@@ -5,7 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { IInput } from '../../models/interfaces';
 import { InputDateComponent } from './input-date.component';
 
-fdescribe('InputDateComponent', () => {
+describe('InputDateComponent', () => {
   let component: InputDateComponent;
   let fixture: ComponentFixture<InputDateComponent>;
   const date = new Date().toISOString().split('T')[0];
@@ -41,7 +41,7 @@ fdescribe('InputDateComponent', () => {
     expect(inputText?.value).toBe(input.control.getRawValue());
   });
 
-  it('should render validation´s error to click reset', () => {
+  it('should render validation´s error when click reset', () => {
     component.reset();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;

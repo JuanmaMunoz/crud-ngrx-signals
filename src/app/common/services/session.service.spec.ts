@@ -6,7 +6,7 @@ import { tokenCreate, tokenError } from '../store/actions/token.action';
 import { sessionExpiredError } from '../utils/errors';
 import { SessionService } from './session.service';
 
-fdescribe('SessionService', () => {
+describe('SessionService', () => {
   let service: SessionService;
   let storeSpy: jasmine.SpyObj<Store>;
 

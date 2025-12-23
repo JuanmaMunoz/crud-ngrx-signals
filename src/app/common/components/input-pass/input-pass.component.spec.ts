@@ -5,7 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { IInput } from '../../models/interfaces';
 import { InputPassComponent } from './input-pass.component';
 
-fdescribe('InputPassComponent', () => {
+describe('InputPassComponent', () => {
   let component: InputPassComponent;
   let fixture: ComponentFixture<InputPassComponent>;
   const validationErrors: Record<string, string> = {
@@ -40,7 +40,7 @@ fdescribe('InputPassComponent', () => {
     expect(inputPass?.value).toBe(input.control.getRawValue());
   });
 
-  it('should render validation´s error to clear input', () => {
+  it('should render validation´s error when clear input', () => {
     input.control.setValue('');
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
@@ -48,7 +48,7 @@ fdescribe('InputPassComponent', () => {
     expect(validation?.textContent).toContain(validationErrors['required']);
   });
 
-  it('should change input´s type to click button', () => {
+  it('should change input´s type when click button', () => {
     component.showPass();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;

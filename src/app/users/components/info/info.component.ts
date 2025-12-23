@@ -1,5 +1,14 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, effect, EventEmitter, Input, Output, signal, Signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  EventEmitter,
+  Input,
+  Output,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { Color } from '../../models/enums';
 import { IAvatar, IUserDetail } from '../../models/interfaces';
 import { AvatarComponent } from '../avatar/avatar.component';
@@ -18,13 +27,21 @@ export class InfoComponent {
   @Input() userDetail!: Signal<IUserDetail | null>;
   @Output() actionOpenModal: EventEmitter<null> = new EventEmitter();
   @Output() actionEdit: EventEmitter<null> = new EventEmitter();
-  public boxInfoPosition = signal<IBoxInfo>({ color: Color.PRIMARY, label: 'Position', value: '' });
-  public boxInfoIncorporation = signal<IBoxInfo>({
+  public boxInfoPosition: WritableSignal<IBoxInfo> = signal<IBoxInfo>({
+    color: Color.PRIMARY,
+    label: 'Position',
+    value: '',
+  });
+  public boxInfoIncorporation: WritableSignal<IBoxInfo> = signal<IBoxInfo>({
     color: Color.SECONDARY,
     label: 'Incorporation',
     value: '',
   });
-  public boxInfoSalary = signal<IBoxInfo>({ color: Color.SUCCESS, label: 'Salary', value: 0 });
+  public boxInfoSalary: WritableSignal<IBoxInfo> = signal<IBoxInfo>({
+    color: Color.SUCCESS,
+    label: 'Salary',
+    value: 0,
+  });
   public infoAvatar!: IAvatar;
   constructor(
     private datePipe: DatePipe,
@@ -57,7 +74,7 @@ export class InfoComponent {
     }));
     this.boxInfoSalary.update((data) => ({
       ...data,
-      value: this.currencyPipe.transform(info.salary, 'USD', 'symbol', '1.0-0')!,
+      value: this.currencyPipe.transform(info.salary, 'USD', 'symbol', '1.0-2')!,
     }));
   }
 

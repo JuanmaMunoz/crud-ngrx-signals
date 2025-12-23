@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { signal } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { IAuthState } from '../../../login/models/interfaces';
-import { logout, setInitialStateLogout } from '../../../login/store/actions/auth.action';
+import { logout } from '../../../login/store/actions/auth.action';
 import { ITokenState } from '../../models/interfaces';
 import { LogoComponent } from '../logo/logo.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HeaderComponent } from './header.component';
 
-fdescribe('HeaderComponent', () => {
+describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let store: MockStore;
-
+  let success: WritableSignal<boolean> = signal(false);
   const initialLoginState: IAuthState = {
     loading: false,
     error: null,
@@ -40,6 +40,7 @@ fdescribe('HeaderComponent', () => {
     store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
+    component.loginSuccess = success;
     fixture.detectChanges();
   });
 
@@ -47,15 +48,14 @@ fdescribe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch logout actions when logout() is called', () => {
+  it('should dispatch logout actions when logout is called', () => {
     const dispatchSpy = spyOn(store, 'dispatch').and.callThrough();
     component.logout();
-    expect(dispatchSpy).toHaveBeenCalledWith(setInitialStateLogout());
     expect(dispatchSpy).toHaveBeenCalledWith(logout());
   });
 
   it('should render NavbarComponent when loginSuccess is true', () => {
-    component.loginSuccess = signal(true);
+    success.set(true);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const navbar = compiled.querySelector('app-navbar');
@@ -65,7 +65,7 @@ fdescribe('HeaderComponent', () => {
   });
 
   it('should render LogoComponent when loginSuccess is false', () => {
-    component.loginSuccess = signal(false);
+    success.set(false);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const navbar = compiled.querySelector('app-navbar');

@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, tap } from 'rxjs';
+import { map, take, tap } from 'rxjs';
 import { ITokenState } from '../../models/interfaces';
 
 export const authGuard: CanActivateFn = () => {
@@ -10,6 +10,7 @@ export const authGuard: CanActivateFn = () => {
   return store
     .select((state) => state?.token?.jwt?.expiration)
     .pipe(
+      take(1),
       map((expiration) => expiration! >= new Date().getTime()),
       tap((isLoggedIn) => {
         if (!isLoggedIn) {

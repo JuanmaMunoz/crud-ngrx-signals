@@ -1,6 +1,6 @@
 import { ValidationErrors } from './validation-errors.pipe';
 
-fdescribe('ValidationErrors Pipe', () => {
+describe('ValidationErrors Pipe', () => {
   let pipe: ValidationErrors;
 
   beforeEach(() => {

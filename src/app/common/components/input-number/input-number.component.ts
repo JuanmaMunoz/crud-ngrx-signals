@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, Signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IInputNumber } from '../../models/interfaces';
 
 @Component({
   selector: 'app-input-number',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './input-number.component.html',
   styleUrl: './input-number.component.scss',
 })

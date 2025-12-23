@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, effect, signal, Signal } from '@angular/core';
+import { Component, effect, signal, Signal, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
@@ -22,9 +22,9 @@ import { ErrorComponent } from './../../../common/components/error/error.compone
 })
 export class ListComponent {
   public usersFromStore!: Signal<IUser[]>;
-  public users = signal<IUser[]>([]);
+  public users: WritableSignal<IUser[]> = signal<IUser[]>([]);
   public totalPages!: Signal<number>;
-  public params = signal<IGetUsersParams | null>(null);
+  public params: WritableSignal<IGetUsersParams | null> = signal<IGetUsersParams | null>(null);
   public currentPage!: Signal<number>;
   public search!: Signal<string>;
   public loadingUsers!: Signal<boolean>;
@@ -34,7 +34,7 @@ export class ListComponent {
   public deleteUser!: Signal<IUser | null>;
   public successDelete!: Signal<boolean>;
   public errorDelete!: Signal<HttpErrorResponse | null>;
-  public openModal = signal<boolean>(false);
+  public openModal: WritableSignal<boolean> = signal<boolean>(false);
   private numberRows: number = 10;
 
   constructor(private store: Store<{ users: IUsersState; userDelete: IUserDeleteState }>) {
@@ -97,7 +97,6 @@ export class ListComponent {
         this.openModal.set(false);
         this.store.dispatch(setInitialStateDelete());
         this.store.dispatch(getUsers(this.params()!));
-        this.store.dispatch(setInitialStateDelete());
       }
     });
 
@@ -115,7 +114,6 @@ export class ListComponent {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(setInitialStateDelete());
     this.params.set({
       number: this.numberRows,
       search: this.search(),
@@ -123,8 +121,11 @@ export class ListComponent {
     });
   }
 
-  public openModalDelete(user: IUser): void {
+  ngOnDestroy(): void {
     this.store.dispatch(setInitialStateDelete());
+  }
+
+  public openModalDelete(user: IUser): void {
     this.openModal.set(true);
     this.store.dispatch(deleteUser({ user }));
   }

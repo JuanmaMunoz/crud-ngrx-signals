@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { signal } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalComponent } from './modal.component';
 
-fdescribe('ModalComponent', () => {
+describe('ModalComponent', () => {
   let component: ModalComponent;
   let fixture: ComponentFixture<ModalComponent>;
-
+  let visible: WritableSignal<boolean> = signal(true);
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ModalComponent, NoopAnimationsModule],
@@ -15,7 +15,7 @@ fdescribe('ModalComponent', () => {
 
     fixture = TestBed.createComponent(ModalComponent);
     component = fixture.componentInstance;
-    component.visible = signal(true);
+    component.visible = visible;
     fixture.detectChanges();
   });
 
@@ -34,13 +34,15 @@ fdescribe('ModalComponent', () => {
   });
 
   it('should show modal', () => {
+    visible.set(true);
+    fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const modal = compiled.querySelector('.modal');
     expect(getComputedStyle(modal!).display).toBe('block');
   });
 
   it('should hide modal', async () => {
-    component.visible = signal(false);
+    visible.set(false);
     fixture.detectChanges();
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;

@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalErrorComponent } from './modal-error.component';
 
-fdescribe('ModalErrorComponent', () => {
+describe('ModalErrorComponent', () => {
   let component: ModalErrorComponent;
   let fixture: ComponentFixture<ModalErrorComponent>;
 
@@ -36,7 +36,7 @@ fdescribe('ModalErrorComponent', () => {
     expect(button).toBeTruthy();
   });
 
-  it('should change visibility status on button click', () => {
+  it('should change visibility status when click button', () => {
     component.closeModal();
     fixture.detectChanges();
     expect(component.openModal()).toBeFalsy();

@@ -2,7 +2,7 @@ import { Component, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { IAuthState } from '../../../login/models/interfaces';
-import { logout, setInitialStateLogout } from '../../../login/store/actions/auth.action';
+import { logout } from '../../../login/store/actions/auth.action';
 import { LogoComponent } from '../logo/logo.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 
@@ -23,7 +23,6 @@ export class HeaderComponent {
   }
 
   public logout(): void {
-    this.store.dispatch(setInitialStateLogout());
     this.store.dispatch(logout());
   }
 }
