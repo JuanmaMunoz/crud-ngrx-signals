@@ -57,7 +57,10 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
     provideRouter(routes, withHashLocation()),
-    provideNgxMask(),
+    provideNgxMask({
+      decimalMarker: '.',
+      thousandSeparator: ',',
+    }),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideStore(store, { metaReducers }),
     provideEffects(effects),

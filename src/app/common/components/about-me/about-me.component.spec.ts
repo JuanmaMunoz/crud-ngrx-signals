@@ -30,5 +30,6 @@ describe('AboutMeComponent', () => {
     const paragraphs = compiled.querySelectorAll('p');
     expect(paragraphs[0]?.textContent).toContain('Front-End Architect');
     expect(paragraphs[1]).toBeTruthy();
+    expect(paragraphs[2]).toBeTruthy();
   });
 });

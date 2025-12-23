@@ -115,7 +115,7 @@ export class UserFormComponent {
     placeholder: 'Insert salary',
     label: 'Salary',
     validationErrors: this.validationErrors,
-    mask: '000999',
+    mask: 'separator.2',
   });
 
   public inputCoworker: WritableSignal<IInputNumber> = signal({

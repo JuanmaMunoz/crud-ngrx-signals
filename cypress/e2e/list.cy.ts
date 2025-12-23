@@ -21,12 +21,25 @@ describe('List Tests', () => {
 
   it('should find the user when searching', () => {
     const delay = 400;
-    cy.get('input[name="search"]').type(' ');
+    cy.get('input[name="search"]').clear();
     cy.wait(delay);
     cy.get('input[name="search"]').clear().type(users[0].email);
     cy.wait(delay);
     cy.get('table').should('be.visible').find('tbody tr').should('have.length', 1);
     cy.validateUserRow(0, users[0]);
+  });
+
+  it('should  not find a user when searching for a non-existent user', () => {
+    const delay = 400;
+    cy.get('input[name="search"]').clear();
+    cy.wait(delay);
+    cy.get('input[name="search"]').clear().type('fakeemail@es.es');
+    cy.wait(delay);
+    cy.get('table')
+      .should('be.visible')
+      .find('tbody')
+      .contains('td', 'No users found') // Busca específicamente un td que tenga ese texto
+      .should('be.visible');
   });
 
   it('should show 10 users when clearing the search', () => {

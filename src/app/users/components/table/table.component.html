@@ -25,7 +25,7 @@
             <td>
               {{ user.date | date: "MM/dd/yyyy" }}
             </td>
-            <td>
+            <td class="text-nowrap">
               {{ user.position }}
             </td>
             <td>
@@ -34,6 +34,11 @@
                 class="text-danger bi bi-x-circle fs-5"
               ></i>
             </td>
+          </tr>
+        }
+        @if (users().length === 0 && !loading()) {
+          <tr>
+            <td colspan="5" style="text-align: center">No users found</td>
           </tr>
         }
       </tbody>

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { signal } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { users } from '../../../../assets/data/users';
@@ -12,7 +12,7 @@ describe('TableComponent', () => {
   let component: TableComponent;
   let fixture: ComponentFixture<TableComponent>;
   let routerSpy: jasmine.SpyObj<Router>;
-  const usersList = users;
+  const usersList: WritableSignal<IUser[]> = signal(users);
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     await TestBed.configureTestingModule({
@@ -22,7 +22,7 @@ describe('TableComponent', () => {
 
     fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
-    component.users = signal<IUser[]>(usersList);
+    component.users = usersList;
     component.loading = signal<boolean>(false);
     component.currentPage = signal<number>(1);
     component.totalPages = signal<number>(3);
@@ -48,7 +48,7 @@ describe('TableComponent', () => {
 
   it('should call actionDeleteUser.emit when openModalDelete is called', () => {
     spyOn(component.actionDeleteUser, 'emit');
-    const userToDelete: IUser = usersList[0];
+    const userToDelete: IUser = usersList()[0];
     const mouseEvent = new MouseEvent('click');
     component.openModalDelete(userToDelete, mouseEvent);
     expect(component.actionDeleteUser.emit).toHaveBeenCalledWith(userToDelete);
@@ -75,5 +75,14 @@ describe('TableComponent', () => {
     const buttons = compiled.querySelectorAll('button');
     expect(buttons.length).toBeGreaterThanOrEqual(2);
     expect(compiled.querySelector('table')).toBeTruthy();
+  });
+
+  it('should show No users found message when users list is empty', () => {
+    usersList.set([]);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const noUsersMessage = compiled.querySelector('tbody tr td');
+    expect(noUsersMessage).toBeTruthy();
+    expect(noUsersMessage?.textContent).toContain('No users found');
   });
 });

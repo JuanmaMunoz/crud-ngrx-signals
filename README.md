@@ -1,6 +1,22 @@
 # CrudNgrxSignals
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.12.
+CRUD example using Angular and NgRx with Signals, ideal for developers who want to explore these technologies and see how they work with the latest features.
+
+## 🛠️ Tech Stack
+
+- Angular 20
+- NgRx 20
+- Rxjs 20
+- Bootstrap 5.3
+- ngx-mask
+- Cypress
+- Jasmine
+
+## Install dependecies
+
+```bash
+npm install
+```
 
 ## Development server
 
@@ -12,20 +28,6 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
 ## Building
 
 To build the project run:
@@ -34,14 +36,14 @@ To build the project run:
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+This will compile your project and store the build artifacts in the `docs/` directory. By default, the production build optimizes your application for performance and speed.
 
 ## Running unit tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
 ```bash
-ng test
+ng test:dev
 ```
 
 ## Running end-to-end tests
@@ -52,8 +54,6 @@ For end-to-end (e2e) testing, run:
 npx cypress open
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Author
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Juan Manuel Muñoz González

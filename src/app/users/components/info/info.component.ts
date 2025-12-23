@@ -74,7 +74,7 @@ export class InfoComponent {
     }));
     this.boxInfoSalary.update((data) => ({
       ...data,
-      value: this.currencyPipe.transform(info.salary, 'USD', 'symbol', '1.0-0')!,
+      value: this.currencyPipe.transform(info.salary, 'USD', 'symbol', '1.0-2')!,
     }));
   }
 

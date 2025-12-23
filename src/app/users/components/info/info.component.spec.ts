@@ -43,7 +43,7 @@ describe('InfoComponent', () => {
     expect(component.boxInfoPosition().value).toBe(userDetail.info.position);
     const date = datePipe.transform(userDetail.info.date, 'MM/dd/yyyy');
     expect(component.boxInfoIncorporation().value).toBe(date!);
-    const salary = currencyPipe.transform(userDetail.info.salary, 'USD', 'symbol', '1.0-0');
+    const salary = currencyPipe.transform(userDetail.info.salary, 'USD', 'symbol', '1.0-2');
     expect(component.boxInfoSalary().value).toBe(salary!);
   });
 
