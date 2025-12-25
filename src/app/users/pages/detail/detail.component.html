@@ -20,11 +20,6 @@
         />
       }
     }
-    @if (userDetailError() || deleteError()) {
-      <app-error
-        [errorDescription]="userDetailError()?.error.message || deleteError()?.error.message"
-      />
-    }
   }
 </div>
 <app-modal-delete
@@ -33,3 +28,8 @@
   [deleteUser]="deleteUser"
   (actionDelete)="actionModalDelete($event)"
 />
+@if (userDetailError() || deleteError()) {
+  <app-error
+    [errorDescription]="userDetailError()?.error.message || deleteError()?.error.message"
+  />
+}

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Router, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { HeaderComponent } from './common/components/header/header.component';
 import { ModalErrorComponent } from './common/components/modal-error/modal-error.component';
@@ -20,16 +20,13 @@ import { logout } from './login/store/actions/auth.action';
 export class AppComponent {
   title = 'crud-ngrx-signals';
   public loginSuccess!: Signal<boolean>;
-  public logoutSuccess!: Signal<boolean>;
-  public logoutError!: Signal<HttpErrorResponse | null>;
   public tokenError!: Signal<HttpErrorResponse | null>;
   public errorMessage = signal<string>('');
   public showErrorModal = signal<boolean>(false);
 
   constructor(
     private sessionService: SessionService,
-    private store: Store<{ login: IAuthState; logout: IAuthState; token: ITokenState }>,
-    private router: Router,
+    private store: Store<{ login: IAuthState; token: ITokenState }>,
   ) {
     this.sessionService.checkSessionFromStorage();
 
@@ -37,14 +34,7 @@ export class AppComponent {
       this.store.select((state) => state.login.success),
       { initialValue: false },
     );
-    this.logoutSuccess = toSignal(
-      this.store.select((state) => state.logout.success),
-      { initialValue: false },
-    );
-    this.logoutError = toSignal(
-      this.store.select((state) => state.logout.error),
-      { initialValue: null },
-    );
+
     this.tokenError = toSignal(
       this.store.select((state) => state.token.error),
       { initialValue: null },
@@ -52,22 +42,9 @@ export class AppComponent {
 
     effect(() => {
       if (this.tokenError()) {
-        this.errorMessage.set(this.tokenError()?.error.message);
         this.showErrorModal.set(true);
         this.store.dispatch(logout());
-      }
-    });
-
-    effect(() => {
-      if (this.logoutError()) {
-        this.errorMessage.set(this.logoutError()?.error.message);
-        this.showErrorModal.set(true);
-      }
-    });
-
-    effect(() => {
-      if (this.logoutSuccess()) {
-        this.router.navigate(['/login']);
+        this.errorMessage.set(this.tokenError()?.error.message);
       }
     });
   }

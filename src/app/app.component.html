@@ -3,6 +3,7 @@
   <div
     class="container"
     [ngStyle]="{
+      minHeight: loginSuccess() ? '60dvh' : '0',
       maxHeight: loginSuccess() ? '90dvh' : 'none'
     }"
   >

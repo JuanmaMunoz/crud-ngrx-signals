@@ -126,6 +126,7 @@ export class ListComponent {
   }
 
   public openModalDelete(user: IUser): void {
+    this.store.dispatch(setInitialStateDelete());
     this.openModal.set(true);
     this.store.dispatch(deleteUser({ user }));
   }

@@ -11,6 +11,7 @@ import { sessionExpiredError } from '../utils/errors';
 export class SessionService {
   constructor(private store: Store) {}
   private tokenDuration: number = 3600000; //1 hour
+  //private tokenDuration: number = 2000; //2 seconds for testing
   private jwt: IJWT | null = null;
 
   public checkSessionFromStorage(): void {

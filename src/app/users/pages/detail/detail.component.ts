@@ -149,6 +149,7 @@ export class DetailComponent {
   }
 
   public openModalDelete(): void {
+    this.store.dispatch(setInitialStateDelete());
     this.openModal.set(true);
     const user: IUser = this.userDetail()?.info!;
     this.store.dispatch(deleteUser({ user }));
