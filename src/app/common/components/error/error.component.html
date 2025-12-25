@@ -1,6 +1,4 @@
-@if (visible) {
-  <div [@fadeAndOut] class="error border border-danger rounded text-start text-danger mt-3 p-3">
-    <h4><i class="bi bi-exclamation-triangle"></i> Error:</h4>
-    <p>{{ errorDescription }}</p>
-  </div>
-}
+<div [@fadeAndOut] class="error border border-danger rounded text-start text-danger mt-3 p-3">
+  <h4><i class="bi bi-exclamation-triangle"></i> Error:</h4>
+  <p>{{ messageError() }}</p>
+</div>

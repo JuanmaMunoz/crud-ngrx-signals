@@ -12,11 +12,10 @@ import {
   getUsers,
   setInitialStateDelete,
 } from '../../store/actions/users.action';
-import { ErrorComponent } from './../../../common/components/error/error.component';
 
 @Component({
   selector: 'app-list',
-  imports: [TableComponent, SearchComponent, ErrorComponent, ModalDeleteComponent],
+  imports: [TableComponent, SearchComponent, ModalDeleteComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
@@ -28,7 +27,6 @@ export class ListComponent {
   public currentPage!: Signal<number>;
   public search!: Signal<string>;
   public loadingUsers!: Signal<boolean>;
-  public errorUsers!: Signal<HttpErrorResponse | null>;
   public deleteLoading!: Signal<boolean>;
   public startDelete!: Signal<boolean>;
   public deleteUser!: Signal<IUser | null>;
@@ -61,11 +59,6 @@ export class ListComponent {
     this.loadingUsers = toSignal(
       this.store.select((state) => state.users.loading),
       { initialValue: false },
-    );
-
-    this.errorUsers = toSignal(
-      this.store.select((state) => state.users.error),
-      { initialValue: null },
     );
 
     this.deleteUser = toSignal(

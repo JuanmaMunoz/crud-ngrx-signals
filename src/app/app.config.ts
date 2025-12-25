@@ -15,6 +15,7 @@ import { loginEffect, logoutEffect } from './login/store/effects/auth.effect';
 import { loginReducer, logoutReducer } from './login/store/reducers/auth.reducer';
 
 import { metaReducers } from './common/store/reducers/clear-state.metareducer';
+import { messageReducer } from './common/store/reducers/message.reducer';
 import {
   userCreateEffect,
   userDeleteEffect,
@@ -39,6 +40,7 @@ const store = {
   userDetail: userGetDetailReducer,
   userEdit: userEditReducer,
   userCreate: userCreateReducer,
+  message: messageReducer,
 };
 
 const effects = [

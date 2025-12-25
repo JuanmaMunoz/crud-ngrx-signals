@@ -7,6 +7,10 @@ export interface ITokenState {
   error: HttpErrorResponse | null;
 }
 
+export interface IMessageState {
+  message: string | null;
+}
+
 export interface IJWT {
   email: string;
   expiration: EpochTimeStamp;

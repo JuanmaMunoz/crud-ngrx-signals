@@ -15,6 +15,3 @@
   [deleteUser]="deleteUser"
   (actionDelete)="actionModalDelete($event)"
 />
-@if (errorDelete() || errorUsers()) {
-  <app-error [errorDescription]="errorDelete()?.error.message || errorUsers()?.error.message" />
-}

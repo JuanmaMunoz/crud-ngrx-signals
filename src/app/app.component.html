@@ -11,3 +11,6 @@
   </div>
 </div>
 <app-modal-error [openModal]="showErrorModal" [errorMessage]="errorMessage" />
+@if (messageError()) {
+  <app-error />
+}

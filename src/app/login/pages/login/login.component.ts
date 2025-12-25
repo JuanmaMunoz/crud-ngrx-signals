@@ -1,11 +1,8 @@
-
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AboutMeComponent } from '../../../common/components/about-me/about-me.component';
-import { ErrorComponent } from '../../../common/components/error/error.component';
 import { InfoCrudComponent } from '../../../common/components/info-crud/info-crud.component';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { IAuthState } from '../../models/interfaces';
@@ -13,14 +10,13 @@ import { login, setInitialStateLogout } from '../../store/actions/auth.action';
 
 @Component({
   selector: 'app-login',
-  imports: [LoginFormComponent, InfoCrudComponent, AboutMeComponent, ErrorComponent],
+  imports: [LoginFormComponent, InfoCrudComponent, AboutMeComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   public loading!: Signal<boolean>;
   public loginSuccess!: Signal<boolean>;
-  public loginError!: Signal<HttpErrorResponse | null>;
   constructor(
     private store: Store<{ login: IAuthState }>,
     private router: Router,
@@ -33,11 +29,6 @@ export class LoginComponent {
     this.loginSuccess = toSignal(
       this.store.select((state) => state.login.success),
       { initialValue: false },
-    );
-
-    this.loginError = toSignal(
-      this.store.select((state) => state.login.error),
-      { initialValue: null },
     );
 
     effect(() => {

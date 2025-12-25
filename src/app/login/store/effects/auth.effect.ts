@@ -2,10 +2,11 @@ import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { HttpErrorResponse } from '@angular/common/http';
-import { of } from 'rxjs';
+import { from } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { IToken } from '../../../common/models/interfaces';
 
+import { messageShow } from '../../../common/store/actions/message.action';
 import { tokenCreate } from '../../../common/store/actions/token.action';
 import { LoginService } from '../../services/login.service';
 import {
@@ -30,7 +31,9 @@ export const loginEffect = createEffect(
             loginSuccess(),
             tokenCreate({ token: data.token, jwt: data.jwt }),
           ]),
-          catchError((error: HttpErrorResponse) => of(loginFailure({ error }))),
+          catchError((error: HttpErrorResponse) =>
+            from([loginFailure({ error }), messageShow({ message: error.error.message })]),
+          ),
         ),
       ),
     );
@@ -48,7 +51,9 @@ export const logoutEffect = createEffect(
       mergeMap(() =>
         loginService.logout().pipe(
           map(() => logoutSuccess()),
-          catchError((error: HttpErrorResponse) => of(logoutFailure({ error }))),
+          catchError((error: HttpErrorResponse) =>
+            from([logoutFailure({ error }), messageShow({ message: error.error.message })]),
+          ),
         ),
       ),
     );
