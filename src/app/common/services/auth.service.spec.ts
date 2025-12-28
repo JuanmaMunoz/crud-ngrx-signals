@@ -58,7 +58,7 @@ describe('AuthService', () => {
 
     service.logout().subscribe((result) => {
       expect(localStorage.removeItem).toHaveBeenCalledWith('token');
-      expect(result).toBeNull();
+      expect(result).toBeUndefined();
       done();
     });
   });

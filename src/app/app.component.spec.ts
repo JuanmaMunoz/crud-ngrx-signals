@@ -3,11 +3,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { AppComponent } from './app.component';
-import { IMessageState, ITokenState } from './common/models/interfaces';
+import { IAuthState, IMessageState, ITokenState } from './common/models/interfaces';
 import { SessionService } from './common/services/session.service';
 import { logout } from './common/store/actions/auth.action';
 import { sessionExpiredError, unknownError } from './common/utils/errors';
-import { IAuthState } from './login/models/interfaces';
 
 describe('AppComponent', () => {
   let component: AppComponent;

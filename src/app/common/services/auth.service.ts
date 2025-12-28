@@ -16,8 +16,8 @@ export class AuthService {
   public login(email: string, pass: string): Observable<ITokenState> {
     return this.http.post<ITokenState>(`${your api url}/login`, { email, pass });
   }
-  public logout(): Observable<null> {
-    return this.http.delete<null>(`${your api url}/logout`, {});
+  public logout(): Observable<void> {
+    return this.http.delete<void>(`${your api url}/logout`, {});
   }
   #####################################################################
   #####################################################################*/
@@ -37,11 +37,11 @@ export class AuthService {
     }
   }
 
-  public logout(): Observable<null> {
+  public logout(): Observable<void> {
     try {
       //throw new Error('Force unknown error');
       localStorage.removeItem('token');
-      return of(null).pipe(delay(this.delay));
+      return of(undefined).pipe(delay(this.delay));
     } catch (error) {
       return unknownError$;
     }

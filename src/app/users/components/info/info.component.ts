@@ -25,8 +25,8 @@ import { IBoxInfo } from './../../models/interfaces';
 })
 export class InfoComponent {
   @Input() userDetail!: Signal<IUserDetail | null>;
-  @Output() actionOpenModal: EventEmitter<null> = new EventEmitter();
-  @Output() actionEdit: EventEmitter<null> = new EventEmitter();
+  @Output() actionOpenModal: EventEmitter<void> = new EventEmitter();
+  @Output() actionEdit: EventEmitter<void> = new EventEmitter();
   public boxInfoPosition: WritableSignal<IBoxInfo> = signal<IBoxInfo>({
     color: Color.PRIMARY,
     label: 'Position',

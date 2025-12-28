@@ -17,23 +17,6 @@ body {
   padding: 1.5rem;
 }
 
-.table {
-  --bs-table-bg: none;
-  tr > th {
-    color: var(--bs-secondary);
-  }
-  tr > td {
-    color: var(--bs-primary);
-  }
-}
-
-.table-hover tbody tr:hover {
-  background-color: var(--bs-dark2);
-  > td {
-    color: var(--bs-light);
-  }
-}
-
 .form-control {
   background-color: transparent;
   border-color: var(--bs-secondary);
@@ -57,6 +40,52 @@ body {
   background-color: transparent;
   border-color: var(--bs-secondary);
   color: var(--bs-secondary);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
+.modal-header {
+  border-bottom-color: var(--bs-dark2);
+}
+.modal-footer {
+  border-top-color: var(--bs-dark2);
+}
+
+.modal {
+  background-color: rgba(30, 30, 30, 0.8);
+  margin-top: 5rem;
+}
+
+.table {
+  --bs-table-bg: none;
+  --bs-table-border-color: var(--bs-dark2);
+  cursor: pointer;
+  line-height: 1.2;
+  tr > th {
+    color: var(--bs-secondary);
+  }
+  tr > td {
+    color: var(--bs-primary);
+  }
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--bs-dark2);
+  > td {
+    color: var(--bs-light);
+  }
 }
 
 //ScrollBar

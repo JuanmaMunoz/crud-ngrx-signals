@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AboutMeComponent } from '../../../common/components/about-me/about-me.component';
 import { InfoCrudComponent } from '../../../common/components/info-crud/info-crud.component';
+import { IAuthState } from '../../../common/models/interfaces';
 import { login, setInitialStateLogout } from '../../../common/store/actions/auth.action';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
-import { IAuthState } from '../../models/interfaces';
 
 @Component({
   selector: 'app-login',

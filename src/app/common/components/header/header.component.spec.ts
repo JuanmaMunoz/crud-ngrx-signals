@@ -3,8 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { signal, WritableSignal } from '@angular/core';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { IAuthState } from '../../../login/models/interfaces';
-import { ITokenState } from '../../models/interfaces';
+import { IAuthState, ITokenState } from '../../models/interfaces';
 import { logout } from '../../store/actions/auth.action';
 import { LogoComponent } from '../logo/logo.component';
 import { NavbarComponent } from '../navbar/navbar.component';

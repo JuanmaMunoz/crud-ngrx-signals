@@ -84,7 +84,7 @@ describe('AuthEffects', () => {
   describe('logoutEffect', () => {
     it('should dispatch logoutSuccess action on successful logout', (done) => {
       actions$ = of(logout());
-      authService.logout.and.returnValue(of(null));
+      authService.logout.and.returnValue(of(undefined));
 
       TestBed.runInInjectionContext(() => {
         logoutEffect().subscribe((action) => {

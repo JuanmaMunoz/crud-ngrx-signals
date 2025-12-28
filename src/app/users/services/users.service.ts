@@ -27,17 +27,17 @@ export class UsersService {
     const apiUrl = `${your api url}/users?page=${page}&number=${number}&search=${search}`;
     return this.http.get<IReqGetUsers>(apiUrl);
   }
-  public deleteUser(user: IUser): Observable<null> {
-    return this.http.delete<null>(`${your api url}/users/${user.email}`, {}); 
+  public deleteUser(user: IUser): Observable<void> {
+    return this.http.delete<void>(`${your api url}/users/${user.email}`, {}); 
   }
   public getUserDetail(email: string): Observable<IUserDetail> {
     return this.http.get<IUserDetail>(`${your api url}/users/${email}`);
   }
-  public editUser(oldEmail: string, userDetail: IUserDetail): Observable<null> {
-    return this.http.put<null>(`${your api url}/users/${oldEmail}`, userDetail);
+  public editUser(oldEmail: string, userDetail: IUserDetail): Observable<void> {
+    return this.http.put<void>(`${your api url}/users/${oldEmail}`, userDetail);
   }
-  public createUser(userDetail: IUserDetail): Observable<null> {
-    return this.http.post<null>(`${your api url}/users`, userDetail);
+  public createUser(userDetail: IUserDetail): Observable<void> {
+    return this.http.post<void>(`${your api url}/users`, userDetail);
   }
   #####################################################################
   #####################################################################*/

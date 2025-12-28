@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { IAuthState } from '../../../login/models/interfaces';
+import { IAuthState } from '../../models/interfaces';
 import {
   login,
   loginFailure,

@@ -36,7 +36,7 @@ export class UserFormComponent {
   @Input() userDetail!: Signal<IUserDetail | null>;
   @Input() loading!: Signal<boolean>;
   @Input() error!: Signal<HttpErrorResponse | null>;
-  @Output() actionCancel: EventEmitter<null> = new EventEmitter();
+  @Output() actionCancel: EventEmitter<void> = new EventEmitter();
   @Output() actionSave: EventEmitter<IUserDetail> = new EventEmitter();
   public formUser!: FormGroup;
   public nameControl!: FormControl;

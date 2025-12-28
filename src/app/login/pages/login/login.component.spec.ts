@@ -4,8 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { IAuthState } from '../../../common/models/interfaces';
 import { login } from '../../../common/store/actions/auth.action';
-import { IAuthState } from '../../models/interfaces';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {

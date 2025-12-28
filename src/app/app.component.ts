@@ -7,10 +7,9 @@ import { Store } from '@ngrx/store';
 import { ErrorComponent } from './common/components/error/error.component';
 import { HeaderComponent } from './common/components/header/header.component';
 import { ModalErrorComponent } from './common/components/modal-error/modal-error.component';
-import { IMessageState, ITokenState } from './common/models/interfaces';
+import { IAuthState, IMessageState, ITokenState } from './common/models/interfaces';
 import { SessionService } from './common/services/session.service';
 import { logout } from './common/store/actions/auth.action';
-import { IAuthState } from './login/models/interfaces';
 
 @Component({
   selector: 'app-root',
