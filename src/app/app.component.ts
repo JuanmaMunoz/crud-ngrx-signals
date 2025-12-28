@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, signal, Signal } from '@angular/core';
+import { Component, effect, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -9,6 +9,7 @@ import { HeaderComponent } from './common/components/header/header.component';
 import { ModalErrorComponent } from './common/components/modal-error/modal-error.component';
 import { IMessageState, ITokenState } from './common/models/interfaces';
 import { SessionService } from './common/services/session.service';
+import { logout } from './common/store/actions/auth.action';
 import { IAuthState } from './login/models/interfaces';
 
 @Component({
@@ -46,12 +47,12 @@ export class AppComponent {
       { initialValue: null },
     );
 
-    /*effect(() => {
+    effect(() => {
       if (this.tokenError()) {
         this.showErrorModal.set(true);
         this.store.dispatch(logout());
         this.errorMessage.set(this.tokenError()?.error.message);
       }
-    });*/
+    });
   }
 }

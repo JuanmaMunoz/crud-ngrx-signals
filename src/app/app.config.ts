@@ -8,11 +8,11 @@ import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideNgxMask } from 'ngx-mask';
 import { routes } from './app.routes';
+import { loginEffect, logoutEffect } from './common/store/effects/auth.effect';
 import { tokenReducer } from './common/store/reducers/token.reducer';
 import { authInterceptor } from './common/utils/authInterceptor';
-import { loginEffect, logoutEffect } from './login/store/effects/auth.effect';
 
-import { loginReducer, logoutReducer } from './login/store/reducers/auth.reducer';
+import { loginReducer, logoutReducer } from './common/store/reducers/auth.reducer';
 
 import { metaReducers } from './common/store/reducers/clear-state.metareducer';
 import { messageReducer } from './common/store/reducers/message.reducer';

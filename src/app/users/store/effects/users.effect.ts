@@ -67,7 +67,7 @@ export const userDeleteEffect = createEffect(
       ofType(deleteUserConfirm),
       mergeMap(() =>
         usersService.deleteUser(userDeleting()).pipe(
-          map((data: null) => deleteUserSuccess()),
+          map(() => deleteUserSuccess()),
           catchError((error: HttpErrorResponse) =>
             from([deleteUserFailure({ error }), messageShow({ message: error.error.message })]),
           ),
@@ -107,7 +107,7 @@ export const userEditEffect = createEffect(
       ofType(editUser),
       mergeMap((data: { userDetail: IUserDetail; oldEmail: string }) =>
         usersService.editUser(data.oldEmail, data.userDetail).pipe(
-          map((data: null) => editUserSuccess()),
+          map(() => editUserSuccess()),
           catchError((error: HttpErrorResponse) =>
             from([editUserFailure({ error }), messageShow({ message: error.error.message })]),
           ),
@@ -127,7 +127,7 @@ export const userCreateEffect = createEffect(
       ofType(createUser),
       mergeMap((data: { userDetail: IUserDetail }) =>
         usersService.createUser(data.userDetail).pipe(
-          map((data: null) => createUserSuccess()),
+          map(() => createUserSuccess()),
           catchError((error: HttpErrorResponse) =>
             from([createUserFailure({ error }), messageShow({ message: error.error.message })]),
           ),

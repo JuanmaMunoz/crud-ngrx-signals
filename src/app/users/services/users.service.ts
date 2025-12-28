@@ -93,7 +93,7 @@ export class UsersService {
     }
   }
 
-  public deleteUser(user: IUser): Observable<null> {
+  public deleteUser(user: IUser): Observable<void> {
     try {
       //throw new Error('Force unknown error');
 
@@ -105,7 +105,7 @@ export class UsersService {
       this.usersStatistics = this.usersStatistics.filter(
         (s: IUserStatistics) => s.email !== user.email,
       );
-      return of(null).pipe(delay(this.delay));
+      return of(undefined).pipe(delay(this.delay));
     } catch (error) {
       return unknownError$;
     }
@@ -133,7 +133,7 @@ export class UsersService {
     }
   }
 
-  public editUser(oldEmail: string, userDetail: IUserDetail): Observable<null> {
+  public editUser(oldEmail: string, userDetail: IUserDetail): Observable<void> {
     try {
       //throw new Error('Force unknown error');
 
@@ -144,20 +144,20 @@ export class UsersService {
       if (oldEmail !== userDetail.info.email) {
         if (!this.checkExistEmail(userDetail.info.email)) {
           this.editArrayUser(oldEmail, userDetail);
-          return of(null).pipe(delay(this.delay));
+          return of(undefined).pipe(delay(this.delay));
         } else {
           return emailInUseError$;
         }
       } else {
         this.editArrayUser(oldEmail, userDetail);
-        return of(null).pipe(delay(this.delay));
+        return of(undefined).pipe(delay(this.delay));
       }
     } catch (error) {
       return unknownError$;
     }
   }
 
-  public createUser(userDetail: IUserDetail): Observable<null> {
+  public createUser(userDetail: IUserDetail): Observable<void> {
     try {
       //throw new Error('Force unknown error');
 
@@ -167,7 +167,7 @@ export class UsersService {
       }
       if (!this.checkExistEmail(userDetail.info.email)) {
         this.insertArrayUser(userDetail);
-        return of(null).pipe(delay(this.delay));
+        return of(undefined).pipe(delay(this.delay));
       } else {
         return emailInUseError$;
       }

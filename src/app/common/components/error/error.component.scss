@@ -2,14 +2,14 @@
   background-color: var(--bs-dark);
   left: 20%;
   position: fixed;
-  top: 35%;
+  top: 7rem;
   width: 60%;
   z-index: 999999999;
 }
-.error-card {
-  border: 1px solid var(--bs-secondary);
-  border-radius: 1rem;
-  box-shadow: 0 0 10px var(--bs-dark2);
-  padding: 1rem;
-  width: 300px;
+
+@media (max-width: 576px) {
+  .error {
+    left: 10%;
+    width: 80%;
+  }
 }

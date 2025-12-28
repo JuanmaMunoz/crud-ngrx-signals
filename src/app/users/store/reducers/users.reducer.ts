@@ -109,6 +109,7 @@ export const userGetDetailReducer = createReducer(
   })),
   on(getUserDetailFailure, (state, { error }) => ({
     ...state,
+    userDetail: null,
     loading: false,
     error,
   })),

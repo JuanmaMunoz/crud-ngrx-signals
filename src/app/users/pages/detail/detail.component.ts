@@ -40,6 +40,7 @@ import { setInitialStateDelete, setInitialStateEdit } from './../../store/action
 export class DetailComponent {
   public userDetail!: Signal<IUserDetail | null>;
   public userDetailLoading!: Signal<boolean>;
+  public userDetailError!: Signal<HttpErrorResponse | null>;
   public deleteLoading!: Signal<boolean>;
   public deleteSuccess!: Signal<boolean>;
   public deleteError!: Signal<HttpErrorResponse | null>;
@@ -68,6 +69,11 @@ export class DetailComponent {
     this.userDetailLoading = toSignal(
       this.store.select((state) => state.userDetail.loading),
       { initialValue: false },
+    );
+
+    this.userDetailError = toSignal(
+      this.store.select((state) => state.userDetail.error),
+      { initialValue: null },
     );
 
     this.deleteUser = toSignal(

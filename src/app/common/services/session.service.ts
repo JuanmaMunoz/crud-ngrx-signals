@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loginSuccess } from '../../login/store/actions/auth.action';
 import { IJWT, IToken } from '../models/interfaces';
+import { loginSuccess } from '../store/actions/auth.action';
 import { tokenCreate, tokenError } from '../store/actions/token.action';
 import { sessionExpiredError } from '../utils/errors';
 
@@ -11,7 +11,6 @@ import { sessionExpiredError } from '../utils/errors';
 export class SessionService {
   constructor(private store: Store) {}
   private tokenDuration: number = 3600000; //1 hour
-  //private tokenDuration: number = 2000; //2 seconds for testing
   private jwt: IJWT | null = null;
 
   public checkSessionFromStorage(): void {

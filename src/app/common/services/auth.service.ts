@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
-import { IToken } from '../../common/models/interfaces';
-import { SessionService } from '../../common/services/session.service';
-import { loginError$, unknownError$ } from '../../common/utils/errors';
+import { IToken } from '../models/interfaces';
+import { loginError$, unknownError$ } from '../utils/errors';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService {
+export class AuthService {
   private delay: number = 200;
   private sessionService = inject(SessionService);
 

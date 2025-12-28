@@ -1,4 +1,4 @@
-<div class="login-form mb-4">
+<div [@fadeIn] class="login-form mb-4">
   <form [formGroup]="loginForm" (submit)="login()">
     <app-input-text [input]="emailInput" />
     <app-input-pass [input]="passInput" />
@@ -13,4 +13,8 @@
       }
     </button>
   </form>
+  <p class="login-form__info-api text-light mt-3 text-center">
+    <i class="bi bi-info-circle"></i> The application uses a static API for the demo, but it also
+    includes the full implementation and tests of a real API.
+  </p>
 </div>

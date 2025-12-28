@@ -1,0 +1,8 @@
+.login-form {
+  &__info-api {
+    background-color: rgb(62, 62, 66);
+    border-radius: var(--bs-border-radius);
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+}

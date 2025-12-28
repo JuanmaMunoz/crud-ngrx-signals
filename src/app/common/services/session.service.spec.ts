@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
-import { loginSuccess } from '../../login/store/actions/auth.action';
 import { IJWT } from '../models/interfaces';
+import { loginSuccess } from '../store/actions/auth.action';
 import { tokenCreate, tokenError } from '../store/actions/token.action';
 import { sessionExpiredError } from '../utils/errors';
 import { SessionService } from './session.service';

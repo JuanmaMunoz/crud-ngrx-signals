@@ -1,20 +1,20 @@
 import { TestBed } from '@angular/core/testing';
-import { IJWT, IToken } from '../../common/models/interfaces';
-import { SessionService } from '../../common/services/session.service';
-import { LoginService } from './login.service';
+import { IJWT, IToken } from '../models/interfaces';
+import { AuthService } from './auth.service';
+import { SessionService } from './session.service';
 
-describe('LoginService', () => {
-  let service: LoginService;
+describe('AuthService', () => {
+  let service: AuthService;
   let sessionServiceSpy: jasmine.SpyObj<SessionService>;
 
   beforeEach(() => {
     const mockSession = jasmine.createSpyObj('SessionService', ['createFakeToken']);
 
     TestBed.configureTestingModule({
-      providers: [LoginService, { provide: SessionService, useValue: mockSession }],
+      providers: [AuthService, { provide: SessionService, useValue: mockSession }],
     });
 
-    service = TestBed.inject(LoginService);
+    service = TestBed.inject(AuthService);
     sessionServiceSpy = TestBed.inject(SessionService) as jasmine.SpyObj<SessionService>;
   });
 

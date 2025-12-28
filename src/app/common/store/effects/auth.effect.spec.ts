@@ -5,9 +5,8 @@ import { Action } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { Observable, of, throwError, toArray } from 'rxjs';
 
-import { IJWT, IToken } from '../../../common/models/interfaces';
-import { tokenCreate } from '../../../common/store/actions/token.action';
-import { LoginService } from '../../services/login.service';
+import { IJWT, IToken } from '../../models/interfaces';
+import { AuthService } from '../../services/auth.service';
 import {
   login,
   loginFailure,
@@ -16,11 +15,13 @@ import {
   logoutFailure,
   logoutSuccess,
 } from '../actions/auth.action';
+import { messageShow } from '../actions/message.action';
+import { tokenCreate } from '../actions/token.action';
 import { loginEffect, logoutEffect } from './auth.effect';
 
 describe('AuthEffects', () => {
   let actions$: Observable<Action>;
-  let loginService: jasmine.SpyObj<LoginService>;
+  let authService: jasmine.SpyObj<AuthService>;
   const jwt: IJWT = { expiration: 9999999999, email: 'test@test' };
   const mockToken: IToken = {
     token: 'mock_access_token',
@@ -28,18 +29,20 @@ describe('AuthEffects', () => {
   };
 
   const mockError: HttpErrorResponse = new HttpErrorResponse({
-    status: 401,
-    statusText: 'Unauthorized',
+    error: {
+      status: 401,
+      statusText: 'Unauthorized',
+    },
   });
 
   beforeEach(() => {
-    loginService = jasmine.createSpyObj('LoginService', ['login', 'logout']);
+    authService = jasmine.createSpyObj('AuthService', ['login', 'logout']);
 
     TestBed.configureTestingModule({
       providers: [
         provideMockActions(() => actions$),
         provideMockStore(),
-        { provide: LoginService, useValue: loginService },
+        { provide: AuthService, useValue: authService },
       ],
     });
   });
@@ -47,7 +50,7 @@ describe('AuthEffects', () => {
   describe('loginEffect', () => {
     it('should dispatch loginSuccess and tokenCreate actions on successful login', (done) => {
       actions$ = of(login({ email: 'test@example.com', pass: 'password' }));
-      loginService.login.and.returnValue(of(mockToken));
+      authService.login.and.returnValue(of(mockToken));
 
       TestBed.runInInjectionContext(() => {
         loginEffect()
@@ -62,15 +65,18 @@ describe('AuthEffects', () => {
       });
     });
 
-    it('should dispatch loginFailure action on login error', (done) => {
+    it('should dispatch all error actions', (done) => {
       actions$ = of(login({ email: 'test@example.com', pass: 'wrong' }));
-      loginService.login.and.returnValue(throwError(() => mockError));
+      authService.login.and.returnValue(throwError(() => mockError));
 
       TestBed.runInInjectionContext(() => {
-        loginEffect().subscribe((action) => {
-          expect(action).toEqual(loginFailure({ error: mockError }));
-          done();
-        });
+        loginEffect()
+          .pipe(toArray())
+          .subscribe((actions) => {
+            expect(actions[0]).toEqual(loginFailure({ error: mockError }));
+            expect(actions[1]).toEqual(messageShow({ message: mockError.error.message }));
+            done();
+          });
       });
     });
   });
@@ -78,7 +84,7 @@ describe('AuthEffects', () => {
   describe('logoutEffect', () => {
     it('should dispatch logoutSuccess action on successful logout', (done) => {
       actions$ = of(logout());
-      loginService.logout.and.returnValue(of(null));
+      authService.logout.and.returnValue(of(null));
 
       TestBed.runInInjectionContext(() => {
         logoutEffect().subscribe((action) => {
@@ -90,13 +96,16 @@ describe('AuthEffects', () => {
 
     it('should dispatch logoutFailure action on logout error', (done) => {
       actions$ = of(logout());
-      loginService.logout.and.returnValue(throwError(() => mockError));
+      authService.logout.and.returnValue(throwError(() => mockError));
 
       TestBed.runInInjectionContext(() => {
-        logoutEffect().subscribe((action) => {
-          expect(action).toEqual(logoutFailure({ error: mockError }));
-          done();
-        });
+        logoutEffect()
+          .pipe(toArray())
+          .subscribe((actions) => {
+            expect(actions[0]).toEqual(logoutFailure({ error: mockError }));
+            expect(actions[1]).toEqual(messageShow({ message: mockError.error.message }));
+            done();
+          });
       });
     });
   });
