@@ -5,7 +5,7 @@
 @use "bootstrap-icons/font/bootstrap-icons.scss";
 
 body {
-  background-color: var(--bs-dark);
+  background: radial-gradient(circle at center, var(--bs-dark) 0%, #0d0d0d 100%);
 }
 
 .container {
@@ -64,7 +64,6 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 
 .modal {
-  background-color: rgba(30, 30, 30, 0.8);
   margin-top: 5rem;
 }
 

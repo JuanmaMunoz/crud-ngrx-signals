@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, DeferBlockState, TestBed } from '@angular/core/testing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
@@ -65,7 +65,10 @@ describe('LoginComponent', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/users']);
   });
 
-  it('should exist info-crud, login-form and about-me components', () => {
+  it('should exist info-crud, login-form and about-me components', async () => {
+    const deferBlocks = await fixture.getDeferBlocks();
+    await deferBlocks[0].render(DeferBlockState.Complete);
+
     const compiled = fixture.nativeElement as HTMLElement;
     const infoCrud = compiled.querySelector('app-info-crud');
     const loginForm = compiled.querySelector('app-login-form');

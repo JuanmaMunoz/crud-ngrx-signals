@@ -25,7 +25,11 @@
       </div>
     </div>
     <div class="col-xl-6">
-      <app-chart [idChart]="'polar'" [userDetail]="userDetail" />
+      @defer (on viewport) {
+        <app-chart [idChart]="'polar'" [userDetail]="userDetail" />
+      } @placeholder {
+        <app-spinner />
+      }
     </div>
   </div>
 </div>
