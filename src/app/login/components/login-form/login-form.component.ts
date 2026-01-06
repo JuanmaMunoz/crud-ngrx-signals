@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, effect, EventEmitter, Input, Output, Signal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { fadeIn } from '../../../common/animations/animations';
 import { InputPassComponent } from '../../../common/components/input-pass/input-pass.component';
 import { InputTextComponent } from '../../../common/components/input-text/input-text.component';
 import { IInput } from '../../../common/models/interfaces';
@@ -8,6 +9,7 @@ import { IInput } from '../../../common/models/interfaces';
 @Component({
   selector: 'app-login-form',
   imports: [InputTextComponent, InputPassComponent, ReactiveFormsModule],
+  animations: [fadeIn()],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })

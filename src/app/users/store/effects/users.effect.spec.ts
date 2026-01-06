@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, toArray } from 'rxjs';
 
 import {
   userCreateEffect,
@@ -32,6 +32,7 @@ import {
   getUsersSuccess,
 } from '../actions/users.action';
 
+import { messageShow } from '../../../common/store/actions/message.action';
 import { IReqGetUsers, IUserDetail } from '../../models/interfaces';
 
 describe('UsersEffects', () => {
@@ -40,8 +41,10 @@ describe('UsersEffects', () => {
   let store: MockStore;
 
   const mockError = new HttpErrorResponse({
-    status: 500,
-    statusText: 'Server Error',
+    error: {
+      status: 500,
+      statusText: 'Server Error',
+    },
   });
 
   const mockUsersResponse: IReqGetUsers = {
@@ -102,16 +105,19 @@ describe('UsersEffects', () => {
     usersService.getUsers.and.returnValue(throwError(() => mockError));
 
     TestBed.runInInjectionContext(() => {
-      usersEffect().subscribe((action) => {
-        expect(action).toEqual(getUsersFailure({ error: mockError }));
-        done();
-      });
+      usersEffect()
+        .pipe(toArray())
+        .subscribe((actions) => {
+          expect(actions[0]).toEqual(getUsersFailure({ error: mockError }));
+          expect(actions[1]).toEqual(messageShow({ message: mockError.error.message }));
+          done();
+        });
     });
   });
 
   it('should dispatch deleteUserSuccess on success', (done) => {
     actions$ = of(deleteUserConfirm());
-    usersService.deleteUser.and.returnValue(of(null));
+    usersService.deleteUser.and.returnValue(of(undefined));
 
     TestBed.runInInjectionContext(() => {
       userDeleteEffect().subscribe((action) => {
@@ -126,10 +132,13 @@ describe('UsersEffects', () => {
     usersService.deleteUser.and.returnValue(throwError(() => mockError));
 
     TestBed.runInInjectionContext(() => {
-      userDeleteEffect().subscribe((action) => {
-        expect(action).toEqual(deleteUserFailure({ error: mockError }));
-        done();
-      });
+      userDeleteEffect()
+        .pipe(toArray())
+        .subscribe((actions) => {
+          expect(actions[0]).toEqual(deleteUserFailure({ error: mockError }));
+          expect(actions[1]).toEqual(messageShow({ message: mockError.error.message }));
+          done();
+        });
     });
   });
 
@@ -150,16 +159,19 @@ describe('UsersEffects', () => {
     usersService.getUserDetail.and.returnValue(throwError(() => mockError));
 
     TestBed.runInInjectionContext(() => {
-      userGetDetailEffect().subscribe((action) => {
-        expect(action).toEqual(getUserDetailFailure({ error: mockError }));
-        done();
-      });
+      userGetDetailEffect()
+        .pipe(toArray())
+        .subscribe((actions) => {
+          expect(actions[0]).toEqual(getUserDetailFailure({ error: mockError }));
+          expect(actions[1]).toEqual(messageShow({ message: mockError.error.message }));
+          done();
+        });
     });
   });
 
   it('should dispatch editUserSuccess on success', (done) => {
     actions$ = of(editUser({ userDetail: mockUserDetail, oldEmail: 'old@test.com' }));
-    usersService.editUser.and.returnValue(of(null));
+    usersService.editUser.and.returnValue(of(undefined));
 
     TestBed.runInInjectionContext(() => {
       userEditEffect().subscribe((action) => {
@@ -174,16 +186,19 @@ describe('UsersEffects', () => {
     usersService.editUser.and.returnValue(throwError(() => mockError));
 
     TestBed.runInInjectionContext(() => {
-      userEditEffect().subscribe((action) => {
-        expect(action).toEqual(editUserFailure({ error: mockError }));
-        done();
-      });
+      userEditEffect()
+        .pipe(toArray())
+        .subscribe((actions) => {
+          expect(actions[0]).toEqual(editUserFailure({ error: mockError }));
+          expect(actions[1]).toEqual(messageShow({ message: mockError.error.message }));
+          done();
+        });
     });
   });
 
   it('should dispatch createUserSuccess on success', (done) => {
     actions$ = of(createUser({ userDetail: mockUserDetail }));
-    usersService.createUser.and.returnValue(of(null));
+    usersService.createUser.and.returnValue(of(undefined));
 
     TestBed.runInInjectionContext(() => {
       userCreateEffect().subscribe((action) => {
@@ -198,10 +213,13 @@ describe('UsersEffects', () => {
     usersService.createUser.and.returnValue(throwError(() => mockError));
 
     TestBed.runInInjectionContext(() => {
-      userCreateEffect().subscribe((action) => {
-        expect(action).toEqual(createUserFailure({ error: mockError }));
-        done();
-      });
+      userCreateEffect()
+        .pipe(toArray())
+        .forEach((actions) => {
+          expect(actions[0]).toEqual(createUserFailure({ error: mockError }));
+          expect(actions[1]).toEqual(messageShow({ message: mockError.error.message }));
+          done();
+        });
     });
   });
 });

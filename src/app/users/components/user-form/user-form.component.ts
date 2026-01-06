@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fadeIn } from '../../../common/animations/animations';
-import { ErrorComponent } from '../../../common/components/error/error.component';
 import { InputDateComponent } from '../../../common/components/input-date/input-date.component';
 import { InputNumberComponent } from '../../../common/components/input-number/input-number.component';
 import { InputTextComponent } from '../../../common/components/input-text/input-text.component';
@@ -28,7 +27,6 @@ import { AvatarComponent } from '../avatar/avatar.component';
     InputNumberComponent,
     InputDateComponent,
     AvatarComponent,
-    ErrorComponent,
   ],
   animations: [fadeIn()],
   templateUrl: './user-form.component.html',
@@ -38,7 +36,7 @@ export class UserFormComponent {
   @Input() userDetail!: Signal<IUserDetail | null>;
   @Input() loading!: Signal<boolean>;
   @Input() error!: Signal<HttpErrorResponse | null>;
-  @Output() actionCancel: EventEmitter<null> = new EventEmitter();
+  @Output() actionCancel: EventEmitter<void> = new EventEmitter();
   @Output() actionSave: EventEmitter<IUserDetail> = new EventEmitter();
   public formUser!: FormGroup;
   public nameControl!: FormControl;

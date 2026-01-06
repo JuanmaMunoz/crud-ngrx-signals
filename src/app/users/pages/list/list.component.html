@@ -9,10 +9,6 @@
     (actionDeleteUser)="openModalDelete($event)"
   />
 </div>
-@if (errorDelete() || errorUsers()) {
-  <app-error [errorDescription]="errorDelete()?.error.message || errorUsers()?.error.message" />
-}
-
 <app-modal-delete
   [openModal]="openModal"
   [deleteLoading]="deleteLoading"

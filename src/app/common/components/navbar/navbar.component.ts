@@ -12,7 +12,7 @@ import { IJWT, ITokenState } from '../../models/interfaces';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  @Output() actionLogout: EventEmitter<null> = new EventEmitter();
+  @Output() actionLogout: EventEmitter<void> = new EventEmitter();
   public imgAngular: string = 'assets/images/angular.svg';
   public imgNgrx: string = 'assets/images/ngrx.svg';
   public jwt!: Signal<IJWT | null>;

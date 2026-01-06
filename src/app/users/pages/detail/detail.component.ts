@@ -3,7 +3,6 @@ import { Component, effect, signal, Signal, WritableSignal } from '@angular/core
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { ErrorComponent } from '../../../common/components/error/error.component';
 import { SpinnerComponent } from '../../../common/components/spinner/spinner.component';
 import { BackUsersComponent } from '../../components/back-users/back-users.component';
 import { InfoComponent } from '../../components/info/info.component';
@@ -32,7 +31,6 @@ import { setInitialStateDelete, setInitialStateEdit } from './../../store/action
     SpinnerComponent,
     ModalDeleteComponent,
     UserFormComponent,
-    ErrorComponent,
     RouterModule,
     BackUsersComponent,
   ],
@@ -41,8 +39,8 @@ import { setInitialStateDelete, setInitialStateEdit } from './../../store/action
 })
 export class DetailComponent {
   public userDetail!: Signal<IUserDetail | null>;
-  public userDetailError!: Signal<HttpErrorResponse | null>;
   public userDetailLoading!: Signal<boolean>;
+  public userDetailError!: Signal<HttpErrorResponse | null>;
   public deleteLoading!: Signal<boolean>;
   public deleteSuccess!: Signal<boolean>;
   public deleteError!: Signal<HttpErrorResponse | null>;
@@ -149,6 +147,7 @@ export class DetailComponent {
   }
 
   public openModalDelete(): void {
+    this.store.dispatch(setInitialStateDelete());
     this.openModal.set(true);
     const user: IUser = this.userDetail()?.info!;
     this.store.dispatch(deleteUser({ user }));

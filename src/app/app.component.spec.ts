@@ -3,11 +3,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { AppComponent } from './app.component';
-import { ITokenState } from './common/models/interfaces';
+import { IAuthState, IMessageState, ITokenState } from './common/models/interfaces';
 import { SessionService } from './common/services/session.service';
+import { logout } from './common/store/actions/auth.action';
 import { sessionExpiredError, unknownError } from './common/utils/errors';
-import { IAuthState } from './login/models/interfaces';
-import { logout } from './login/store/actions/auth.action';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -29,10 +28,15 @@ describe('AppComponent', () => {
     error: null,
   };
 
+  const initialStateMessage: IMessageState = {
+    message: null,
+  };
+
   const initialState = {
     login: { ...initialLoginState },
     logout: { ...initialLoginState },
     token: { ...initialTokenState },
+    message: { ...initialStateMessage },
   };
 
   beforeEach(async () => {
@@ -79,19 +83,20 @@ describe('AppComponent', () => {
     expect(dispatchSpy).toHaveBeenCalledWith(logout());
   });
 
-  it('should show the error modal when logoutError exists', () => {
+  it('should show the app-error when logoutError exists', () => {
     store.setState({
       ...initialState,
       logout: {
         ...initialLoginState,
         error: { error: unknownError },
       },
+      message: { message: 'errot test' },
     });
 
     fixture.detectChanges();
-
-    expect(component.showErrorModal()).toBeTrue();
-    expect(component.errorMessage()).toBe(unknownError.message);
+    const compiled = fixture.nativeElement as HTMLElement;
+    const appError = compiled.querySelector('app-error');
+    expect(appError).toBeTruthy();
     expect(dispatchSpy).not.toHaveBeenCalledWith(logout());
   });
 

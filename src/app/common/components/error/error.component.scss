@@ -1,0 +1,15 @@
+.error {
+  background-color: var(--bs-dark);
+  left: 20%;
+  position: fixed;
+  top: 7rem;
+  width: 60%;
+  z-index: 999999999;
+}
+
+@media (max-width: 576px) {
+  .error {
+    left: 10%;
+    width: 80%;
+  }
+}

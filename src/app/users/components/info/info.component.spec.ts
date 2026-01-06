@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, DeferBlockState, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CurrencyPipe, DatePipe } from '@angular/common';
@@ -64,11 +64,15 @@ describe('InfoComponent', () => {
     expect(component.actionEdit.emit).toHaveBeenCalled();
   });
 
-  it('should exist avatar, box-info, and chart components', () => {
+  it('should exist avatar, box-info, and chart components', async () => {
+    const deferBlocks = await fixture.getDeferBlocks();
+    await deferBlocks[0].render(DeferBlockState.Complete);
+
     const compiled = fixture.nativeElement as HTMLElement;
     const avatar = compiled.querySelector('app-avatar');
     const boxInfo = compiled.querySelectorAll('app-box-info');
     const chart = compiled.querySelector('app-chart');
+
     expect(avatar).toBeTruthy();
     expect(boxInfo.length).toBe(3);
     expect(chart).toBeTruthy();

@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
-import { IToken } from '../../common/models/interfaces';
-import { SessionService } from '../../common/services/session.service';
-import { loginError$, unknownError$ } from '../../common/utils/errors';
+import { IToken } from '../models/interfaces';
+import { loginError$, unknownError$ } from '../utils/errors';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService {
+export class AuthService {
   private delay: number = 200;
   private sessionService = inject(SessionService);
 
@@ -16,8 +16,8 @@ export class LoginService {
   public login(email: string, pass: string): Observable<ITokenState> {
     return this.http.post<ITokenState>(`${your api url}/login`, { email, pass });
   }
-  public logout(): Observable<null> {
-    return this.http.delete<null>(`${your api url}/logout`, {});
+  public logout(): Observable<void> {
+    return this.http.delete<void>(`${your api url}/logout`, {});
   }
   #####################################################################
   #####################################################################*/
@@ -37,11 +37,11 @@ export class LoginService {
     }
   }
 
-  public logout(): Observable<null> {
+  public logout(): Observable<void> {
     try {
       //throw new Error('Force unknown error');
       localStorage.removeItem('token');
-      return of(null).pipe(delay(this.delay));
+      return of(undefined).pipe(delay(this.delay));
     } catch (error) {
       return unknownError$;
     }

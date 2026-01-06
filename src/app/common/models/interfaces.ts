@@ -1,10 +1,20 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 
+export interface IAuthState {
+  loading: boolean;
+  error: HttpErrorResponse | null;
+  success: boolean;
+}
+
 export interface ITokenState {
   token: string;
   jwt: IJWT | null;
   error: HttpErrorResponse | null;
+}
+
+export interface IMessageState {
+  message: string | null;
 }
 
 export interface IJWT {

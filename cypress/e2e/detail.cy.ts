@@ -86,6 +86,14 @@ describe('Detail User Tests', () => {
     cy.url().should('eq', `http://localhost:4200/#/users/detail/${userDetail.info.email}`);
   });
 
+  it('Should show error message when user does not exist', () => {
+    const fakeEmail = 'fake@example.com';
+    cy.visit(`http://localhost:4200/#/users/detail/${fakeEmail}`);
+    cy.get('app-error').should('be.visible');
+    cy.get('h4').should('contain', 'Error');
+    cy.get('p').should('contain', 'No user found with the provided email.');
+  });
+
   // it('Should fail getUser and show error 500 message (MOCK REAL API)', () => {
   //   cy.intercept('GET', '**/user*', {
   //     statusCode: 500,

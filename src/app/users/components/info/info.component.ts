@@ -14,19 +14,20 @@ import { IAvatar, IUserDetail } from '../../models/interfaces';
 import { AvatarComponent } from '../avatar/avatar.component';
 import { BoxInfoComponent } from '../box-info/box-info.component';
 import { ChartComponent } from '../chart/chart.component';
+import { SpinnerComponent } from './../../../common/components/spinner/spinner.component';
 import { IBoxInfo } from './../../models/interfaces';
 
 @Component({
   selector: 'app-info',
-  imports: [BoxInfoComponent, ChartComponent, AvatarComponent],
+  imports: [BoxInfoComponent, ChartComponent, AvatarComponent, SpinnerComponent],
   providers: [DatePipe, CurrencyPipe],
   templateUrl: './info.component.html',
   styleUrl: './info.component.scss',
 })
 export class InfoComponent {
   @Input() userDetail!: Signal<IUserDetail | null>;
-  @Output() actionOpenModal: EventEmitter<null> = new EventEmitter();
-  @Output() actionEdit: EventEmitter<null> = new EventEmitter();
+  @Output() actionOpenModal: EventEmitter<void> = new EventEmitter();
+  @Output() actionEdit: EventEmitter<void> = new EventEmitter();
   public boxInfoPosition: WritableSignal<IBoxInfo> = signal<IBoxInfo>({
     color: Color.PRIMARY,
     label: 'Position',

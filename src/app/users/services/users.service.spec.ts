@@ -79,7 +79,7 @@ describe('UsersService', () => {
     sessionServiceSpy.checkSession.and.returnValue(true);
     service.deleteUser(userToDelete).subscribe((result) => {
       expect(sessionServiceSpy.checkSession).toHaveBeenCalled();
-      expect(result).toBeNull();
+      expect(result).toBeUndefined();
       expect(service['allUsers'].find((u) => u.email === userToDelete.email)).toBeUndefined();
       done();
     });
@@ -140,7 +140,7 @@ describe('UsersService', () => {
     sessionServiceSpy.checkSession.and.returnValue(true);
     service.editUser(oldEmail, newUserDetail).subscribe((result) => {
       expect(sessionServiceSpy.checkSession).toHaveBeenCalled();
-      expect(result).toBeNull();
+      expect(result).toBeUndefined();
       const updatedUser = service['allUsers'].find((u) => u.email === oldEmail);
       expect(updatedUser?.name).toBe('Updated Name');
       done();
@@ -157,7 +157,7 @@ describe('UsersService', () => {
     sessionServiceSpy.checkSession.and.returnValue(true);
     service.editUser(oldEmail, newUserDetail).subscribe((result) => {
       expect(sessionServiceSpy.checkSession).toHaveBeenCalled();
-      expect(result).toBeNull();
+      expect(result).toBeUndefined();
       const updatedUser = service['allUsers'].find((u) => u.email === newEmail);
       expect(updatedUser?.email).toBe(newEmail);
       done();
@@ -203,7 +203,7 @@ describe('UsersService', () => {
     sessionServiceSpy.checkSession.and.returnValue(true);
     service.createUser(newUserDetail).subscribe((result) => {
       expect(sessionServiceSpy.checkSession).toHaveBeenCalled();
-      expect(result).toBeNull();
+      expect(result).toBeUndefined();
       const insertUser = service['allUsers'].find((u) => u.email === newEmail);
       expect(insertUser?.email).toBe(newEmail);
       done();

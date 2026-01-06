@@ -50,10 +50,6 @@ export class CreateComponent {
     });
   }
 
-  ngOnInit(): void {
-    this.store.dispatch(setInitialStateCreate());
-  }
-
   ngOnDestroy(): void {
     this.store.dispatch(setInitialStateCreate());
   }
@@ -63,6 +59,7 @@ export class CreateComponent {
   }
 
   public saveCreation(userDetail: IUserDetail): void {
+    this.store.dispatch(setInitialStateCreate());
     this.store.dispatch(createUser({ userDetail }));
   }
 }

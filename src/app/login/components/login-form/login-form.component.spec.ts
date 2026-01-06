@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { signal, WritableSignal } from '@angular/core';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
@@ -10,7 +11,7 @@ describe('LoginFormComponent', () => {
   const loading: WritableSignal<boolean> = signal<boolean>(false);
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginFormComponent, NgxMaskDirective],
+      imports: [LoginFormComponent, NgxMaskDirective, BrowserAnimationsModule],
       providers: [provideNgxMask()],
     }).compileComponents();
 

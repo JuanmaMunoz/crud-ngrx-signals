@@ -1,12 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, DeferBlockState, TestBed } from '@angular/core/testing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { loginError } from '../../../common/utils/errors';
-import { IAuthState } from '../../models/interfaces';
-import { login } from '../../store/actions/auth.action';
+import { IAuthState } from '../../../common/models/interfaces';
+import { login } from '../../../common/store/actions/auth.action';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -66,7 +65,10 @@ describe('LoginComponent', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/users']);
   });
 
-  it('should exist info-crud, login-form and about-me components', () => {
+  it('should exist info-crud, login-form and about-me components', async () => {
+    const deferBlocks = await fixture.getDeferBlocks();
+    await deferBlocks[0].render(DeferBlockState.Complete);
+
     const compiled = fixture.nativeElement as HTMLElement;
     const infoCrud = compiled.querySelector('app-info-crud');
     const loginForm = compiled.querySelector('app-login-form');
@@ -74,20 +76,5 @@ describe('LoginComponent', () => {
     expect(infoCrud).toBeTruthy();
     expect(loginForm).toBeTruthy();
     expect(aboutMe).toBeTruthy();
-  });
-
-  it('should show error when login has error', () => {
-    store.setState({
-      login: {
-        loading: false,
-        error: { error: loginError },
-        success: false,
-      },
-      logout: { ...initialLoginState },
-    });
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    const appError = compiled.querySelector('app-error');
-    expect(appError).toBeTruthy();
   });
 });

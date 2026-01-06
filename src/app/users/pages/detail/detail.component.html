@@ -20,11 +20,6 @@
         />
       }
     }
-    @if (userDetailError() || deleteError()) {
-      <app-error
-        [errorDescription]="userDetailError()?.error.message || deleteError()?.error.message"
-      />
-    }
   }
 </div>
 <app-modal-delete

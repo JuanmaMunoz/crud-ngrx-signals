@@ -1,5 +1,5 @@
 import { ActionReducer, MetaReducer } from '@ngrx/store';
-import { logoutSuccess } from '../../../login/store/actions/auth.action';
+import { logoutSuccess } from '../actions/auth.action';
 
 export function clearStateMetaReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return (state, action) => {
