@@ -5,6 +5,7 @@ import { statistics } from '../../../../assets/data/statistics';
 import { users } from '../../../../assets/data/users';
 import { IUserDetail } from '../../models/interfaces';
 import { ChartComponent } from './chart.component';
+import { Chart } from 'chart.js';
 
 describe('ChartComponent', () => {
   let component: ChartComponent;
@@ -14,8 +15,8 @@ describe('ChartComponent', () => {
     statistics: statistics[0],
   };
   const mockChart = {
-    destroy: jasmine.createSpy('destroy'),
-  };
+    destroy: jasmine.createSpy('destroy')
+  } as unknown as Chart;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ChartComponent],
@@ -24,8 +25,8 @@ describe('ChartComponent', () => {
     fixture = TestBed.createComponent(ChartComponent);
     component = fixture.componentInstance;
     component.idChart = 'x';
-    component.chart = mockChart as any;
-    component.chartLine = mockChart as any;
+    component.chart = mockChart;
+    component.chartLine = mockChart;
     component.userDetail = signal(userDetail);
     fixture.detectChanges();
   });

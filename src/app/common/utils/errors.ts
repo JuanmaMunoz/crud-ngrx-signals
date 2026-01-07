@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { HttpErrorResponse } from '@angular/common/http';
 import { mergeMap, throwError, timer } from 'rxjs';
-const delay: number = 200;
+const delay = 200;
 
 export const unknownError = new HttpErrorResponse({
   status: 500,

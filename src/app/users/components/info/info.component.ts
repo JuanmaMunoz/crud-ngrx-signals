@@ -3,6 +3,7 @@ import {
   Component,
   effect,
   EventEmitter,
+  inject,
   Input,
   Output,
   signal,
@@ -26,8 +27,8 @@ import { IBoxInfo } from './../../models/interfaces';
 })
 export class InfoComponent {
   @Input() userDetail!: Signal<IUserDetail | null>;
-  @Output() actionOpenModal: EventEmitter<void> = new EventEmitter();
-  @Output() actionEdit: EventEmitter<void> = new EventEmitter();
+  @Output() actionOpenModal = new EventEmitter<void>();
+  @Output() actionEdit = new EventEmitter<void>();
   public boxInfoPosition: WritableSignal<IBoxInfo> = signal<IBoxInfo>({
     color: Color.PRIMARY,
     label: 'Position',
@@ -44,21 +45,19 @@ export class InfoComponent {
     value: 0,
   });
   public infoAvatar!: IAvatar;
-  constructor(
-    private datePipe: DatePipe,
-    private currencyPipe: CurrencyPipe,
-  ) {
-    effect(() => {
-      if (this.userDetail()) {
-        this.setBoxesInfo({
-          position: this.userDetail()?.info.position!,
-          incorporation: this.userDetail()?.info.date!,
-          salary: this.userDetail()?.info.salary!,
-        });
-        this.setInfoAvatar(this.userDetail()!);
-      }
-    });
-  }
+  private datePipe = inject(DatePipe);
+  private currencyPipe = inject(CurrencyPipe);
+
+  private effect = effect(() => {
+    if (this.userDetail()) {
+      this.setBoxesInfo({
+        position: this.userDetail()!.info.position!,
+        incorporation: this.userDetail()!.info.date!,
+        salary: this.userDetail()!.info.salary!,
+      });
+      this.setInfoAvatar(this.userDetail()!);
+    }
+  });
 
   private setBoxesInfo(info: {
     position: string;

@@ -2,16 +2,17 @@ import {
   Component,
   effect,
   EventEmitter,
+  inject,
   Input,
   Output,
   Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { debounceTime, skip, Subscription } from 'rxjs';
+import { debounceTime, skip } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -21,29 +22,21 @@ import { debounceTime, skip, Subscription } from 'rxjs';
 })
 export class SearchComponent {
   @Input() search!: Signal<string>;
-  @Output() actionSearch: EventEmitter<string> = new EventEmitter();
+  @Output() actionSearch = new EventEmitter<string>();
 
   public searchText: WritableSignal<string> = signal<string>('');
-  private delaySearch: number = 400;
-  private subscription = new Subscription();
+  private delaySearch = 400;
+  private router = inject(Router);
 
-  constructor(private router: Router) {
-    this.subscription.add(
-      toObservable(this.searchText)
-        .pipe(debounceTime(this.delaySearch), skip(1))
-        .subscribe((search) => {
-          this.actionSearch.emit(search);
-        }),
-    );
-
-    effect(() => {
-      this.searchText.set(this.search());
+  private subscription = toObservable(this.searchText)
+    .pipe(debounceTime(this.delaySearch), skip(1), takeUntilDestroyed())
+    .subscribe((search) => {
+      this.actionSearch.emit(search);
     });
-  }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+  private effect = effect(() => {
+    this.searchText.set(this.search());
+  });
 
   public deleteSearch(): void {
     this.searchText.set('');

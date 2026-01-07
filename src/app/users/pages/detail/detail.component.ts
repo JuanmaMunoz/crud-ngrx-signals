@@ -1,5 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, effect, signal, Signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -37,101 +46,91 @@ import { setInitialStateDelete, setInitialStateEdit } from './../../store/action
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss',
 })
-export class DetailComponent {
-  public userDetail!: Signal<IUserDetail | null>;
-  public userDetailLoading!: Signal<boolean>;
-  public userDetailError!: Signal<HttpErrorResponse | null>;
-  public deleteLoading!: Signal<boolean>;
-  public deleteSuccess!: Signal<boolean>;
-  public deleteError!: Signal<HttpErrorResponse | null>;
-  public deleteUser!: Signal<IUser | null>;
+export class DetailComponent implements OnInit, OnDestroy {
   public openModal: WritableSignal<boolean> = signal<boolean>(false);
   public modeEdit: WritableSignal<boolean> = signal<boolean>(false);
-  public editLoading!: Signal<boolean>;
-  public editSuccess!: Signal<boolean>;
-  public editError!: Signal<HttpErrorResponse | null>;
-  public newEmail: string = '';
+  public newEmail = '';
 
-  constructor(
-    private store: Store<{
+  private store = inject(
+    Store<{
       userDetail: IUserGetDetailState;
       userDelete: IUserDeleteState;
       userEdit: IUserEditState;
     }>,
-    private route: ActivatedRoute,
-    private router: Router,
-  ) {
-    this.userDetail = toSignal(
-      this.store.select((state) => state.userDetail.userDetail),
-      { initialValue: null },
-    );
+  );
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
-    this.userDetailLoading = toSignal(
-      this.store.select((state) => state.userDetail.loading),
-      { initialValue: false },
-    );
+  public userDetail: Signal<IUserDetail | null> = toSignal(
+    this.store.select((state) => state.userDetail.userDetail),
+    { initialValue: null },
+  );
 
-    this.userDetailError = toSignal(
-      this.store.select((state) => state.userDetail.error),
-      { initialValue: null },
-    );
+  public userDetailLoading: Signal<boolean> = toSignal(
+    this.store.select((state) => state.userDetail.loading),
+    { initialValue: false },
+  );
 
-    this.deleteUser = toSignal(
-      this.store.select((state) => state.userDelete.user),
-      { initialValue: null },
-    );
+  public userDetailError: Signal<HttpErrorResponse | null> = toSignal(
+    this.store.select((state) => state.userDetail.error),
+    { initialValue: null },
+  );
 
-    this.deleteSuccess = toSignal(
-      this.store.select((state) => state.userDelete.success),
-      { initialValue: false },
-    );
+  public deleteUser: Signal<IUser | null> = toSignal(
+    this.store.select((state) => state.userDelete.user),
+    { initialValue: null },
+  );
 
-    this.deleteError = toSignal(
-      this.store.select((state) => state.userDelete.error),
-      { initialValue: null },
-    );
+  public deleteSuccess: Signal<boolean> = toSignal(
+    this.store.select((state) => state.userDelete.success),
+    { initialValue: false },
+  );
 
-    this.deleteLoading = toSignal(
-      this.store.select((state) => state.userDelete.loading),
-      { initialValue: false },
-    );
+  public deleteError: Signal<HttpErrorResponse | null> = toSignal(
+    this.store.select((state) => state.userDelete.error),
+    { initialValue: null },
+  );
 
-    this.editSuccess = toSignal(
-      this.store.select((state) => state.userEdit.success),
-      { initialValue: false },
-    );
+  public deleteLoading: Signal<boolean> = toSignal(
+    this.store.select((state) => state.userDelete.loading),
+    { initialValue: false },
+  );
 
-    this.editLoading = toSignal(
-      this.store.select((state) => state.userEdit.loading),
-      { initialValue: false },
-    );
+  public editSuccess: Signal<boolean> = toSignal(
+    this.store.select((state) => state.userEdit.success),
+    { initialValue: false },
+  );
 
-    this.editError = toSignal(
-      this.store.select((state) => state.userEdit.error),
-      { initialValue: null },
-    );
+  public editLoading: Signal<boolean> = toSignal(
+    this.store.select((state) => state.userEdit.loading),
+    { initialValue: false },
+  );
 
-    effect(() => {
-      if (this.deleteSuccess()) {
-        this.router.navigate(['/users']);
-        this.store.dispatch(setInitialStateDelete());
-      }
-    });
+  public editError: Signal<HttpErrorResponse | null> = toSignal(
+    this.store.select((state) => state.userEdit.error),
+    { initialValue: null },
+  );
 
-    effect(() => {
-      if (this.deleteError()) {
-        this.openModal.set(false);
-      }
-    });
+  private deleteSuccessEffect = effect(() => {
+    if (this.deleteSuccess()) {
+      this.router.navigate(['/users']);
+      this.store.dispatch(setInitialStateDelete());
+    }
+  });
 
-    effect(() => {
-      if (this.editSuccess()) {
-        this.store.dispatch(setInitialStateEdit());
-        this.modeEdit.set(false);
-        this.store.dispatch(getUserDetail({ email: this.newEmail }));
-      }
-    });
-  }
+  private deleteErrorEffect = effect(() => {
+    if (this.deleteError()) {
+      this.openModal.set(false);
+    }
+  });
+
+  private editSuccessEffect = effect(() => {
+    if (this.editSuccess()) {
+      this.store.dispatch(setInitialStateEdit());
+      this.modeEdit.set(false);
+      this.store.dispatch(getUserDetail({ email: this.newEmail }));
+    }
+  });
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -149,7 +148,7 @@ export class DetailComponent {
   public openModalDelete(): void {
     this.store.dispatch(setInitialStateDelete());
     this.openModal.set(true);
-    const user: IUser = this.userDetail()?.info!;
+    const user: IUser = this.userDetail()!.info!;
     this.store.dispatch(deleteUser({ user }));
   }
 
@@ -169,6 +168,6 @@ export class DetailComponent {
   public saveEdition(userDetail: IUserDetail): void {
     this.store.dispatch(setInitialStateEdit());
     this.newEmail = userDetail.info.email;
-    this.store.dispatch(editUser({ oldEmail: this.userDetail()?.info.email!, userDetail }));
+    this.store.dispatch(editUser({ oldEmail: this.userDetail()!.info.email!, userDetail }));
   }
 }

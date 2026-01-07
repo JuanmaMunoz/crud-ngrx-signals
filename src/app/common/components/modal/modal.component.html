@@ -15,4 +15,6 @@
 </div>
 
 <!-- BACKDROP -->
-<div *ngIf="visible()" class="modal-backdrop fade show"></div>
+@if (visible()) {
+  <div class="modal-backdrop fade show"></div>
+}

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { provideRouter, Router } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { users } from '../../../../assets/data/users';
@@ -20,7 +20,7 @@ describe('ListComponent', () => {
   let fixture: ComponentFixture<ListComponent>;
   let store: MockStore;
   let dispatchSpy: jasmine.Spy;
-  let router: Router;
+
   const usersState: IUsersState = {
     users: users.slice(0, 10),
     loading: false,
@@ -47,7 +47,6 @@ describe('ListComponent', () => {
       providers: [provideMockStore({ initialState }), provideRouter([]), provideNgxMask()],
     }).compileComponents();
     store = TestBed.inject(MockStore);
-    router = TestBed.inject(Router);
     fixture = TestBed.createComponent(ListComponent);
     dispatchSpy = spyOn(store, 'dispatch');
     component = fixture.componentInstance;

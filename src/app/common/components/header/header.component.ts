@@ -1,4 +1,4 @@
-import { Component, effect, Signal } from '@angular/core';
+import { Component, effect, inject, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -14,29 +14,24 @@ import { NavbarComponent } from '../navbar/navbar.component';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  public loginSuccess!: Signal<boolean>;
-  public logoutSuccess!: Signal<boolean>;
+  private router = inject(Router);
+  private store = inject(Store<{ login: IAuthState; logout: IAuthState }>);
 
-  constructor(
-    private router: Router,
-    private store: Store<{ login: IAuthState; logout: IAuthState }>,
-  ) {
-    this.loginSuccess = toSignal(
-      this.store.select((state) => state.login.success),
-      { initialValue: false },
-    );
+  public loginSuccess: Signal<boolean> = toSignal(
+    this.store.select((state) => state.login.success),
+    { initialValue: false },
+  );
 
-    this.logoutSuccess = toSignal(
-      this.store.select((state) => state.logout.success),
-      { initialValue: false },
-    );
+  public logoutSuccess: Signal<boolean> = toSignal(
+    this.store.select((state) => state.logout.success),
+    { initialValue: false },
+  );
 
-    effect(() => {
-      if (this.logoutSuccess()) {
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+  private effect = effect(() => {
+    if (this.logoutSuccess()) {
+      this.router.navigate(['/login']);
+    }
+  });
 
   public logout(): void {
     this.store.dispatch(logout());

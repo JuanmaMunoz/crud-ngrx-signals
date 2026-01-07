@@ -1,4 +1,4 @@
-import { Component, effect, Signal } from '@angular/core';
+import { Component, effect, inject, OnInit, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -15,29 +15,25 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
-  public loading!: Signal<boolean>;
-  public loginSuccess!: Signal<boolean>;
-  constructor(
-    private store: Store<{ login: IAuthState }>,
-    private router: Router,
-  ) {
-    this.loading = toSignal(
-      this.store.select((state) => state.login.loading),
-      { initialValue: false },
-    );
+export class LoginComponent implements OnInit {
+  private store = inject(Store<{ login: IAuthState }>);
+  private router = inject(Router);
 
-    this.loginSuccess = toSignal(
-      this.store.select((state) => state.login.success),
-      { initialValue: false },
-    );
+  public loading: Signal<boolean> = toSignal(
+    this.store.select((state) => state.login.loading),
+    { initialValue: false },
+  );
 
-    effect(() => {
-      if (this.loginSuccess()) {
-        this.router.navigate(['/users']);
-      }
-    });
-  }
+  public loginSuccess: Signal<boolean> = toSignal(
+    this.store.select((state) => state.login.success),
+    { initialValue: false },
+  );
+
+  private effect = effect(() => {
+    if (this.loginSuccess()) {
+      this.router.navigate(['/users']);
+    }
+  });
 
   ngOnInit(): void {
     this.store.dispatch(setInitialStateLogout());

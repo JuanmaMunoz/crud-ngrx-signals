@@ -13,7 +13,7 @@ describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let store: MockStore;
-  let success: WritableSignal<boolean> = signal(false);
+  const success: WritableSignal<boolean> = signal(false);
   const initialLoginState: IAuthState = {
     loading: false,
     error: null,

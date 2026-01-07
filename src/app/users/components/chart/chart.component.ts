@@ -1,4 +1,4 @@
-import { Component, effect, Input, Signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, Input, Signal, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { ICharData, IUserDetail } from '../../models/interfaces';
 
@@ -9,8 +9,8 @@ import { ICharData, IUserDetail } from '../../models/interfaces';
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.scss',
 })
-export class ChartComponent {
-  @Input() idChart: string = '';
+export class ChartComponent implements AfterViewInit {
+  @Input() idChart = '';
   @Input() userDetail!: Signal<IUserDetail | null>;
   @ViewChild('canvas') canvas!: HTMLCanvasElement;
   @ViewChild('canvasLine') canvasLine!: HTMLCanvasElement;
@@ -27,11 +27,11 @@ export class ChartComponent {
             {
               label: 'User´s Statistics',
               data: [
-                this.userDetail()?.statistics.coworker!,
-                this.userDetail()?.statistics.hardworking!,
-                this.userDetail()?.statistics.knowledge!,
-                this.userDetail()?.statistics.proactivity!,
-                this.userDetail()?.statistics.productivity!,
+                this.userDetail()!.statistics.coworker!,
+                this.userDetail()!.statistics.hardworking!,
+                this.userDetail()!.statistics.knowledge!,
+                this.userDetail()!.statistics.proactivity!,
+                this.userDetail()!.statistics.productivity!,
               ],
               backgroundColor: [
                 'rgb(153, 230, 255)',
@@ -56,7 +56,7 @@ export class ChartComponent {
     if (this.chart) this.chart.destroy();
     const ctx = document.getElementById(this.idChart);
 
-    this.chart = new Chart(ctx as any, {
+    this.chart = new Chart(ctx as HTMLCanvasElement, {
       type: 'polarArea',
       data: this.chartData,
       options: {
@@ -93,7 +93,7 @@ export class ChartComponent {
   private createChartLine(): void {
     if (this.chartLine) this.chart?.destroy();
     const ctx = document.getElementById(this.idChart + 'line');
-    this.chartLine = new Chart(ctx as any, {
+    this.chartLine = new Chart(ctx as HTMLCanvasElement, {
       type: 'line',
       data: this.chartData,
       options: {

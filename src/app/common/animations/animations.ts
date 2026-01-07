@@ -8,7 +8,7 @@ import {
   trigger,
 } from '@angular/animations';
 
-export const fadeIn = (delay: number = 1500): AnimationTriggerMetadata => {
+export const fadeIn = (delay = 1500): AnimationTriggerMetadata => {
   const definitions: AnimationMetadata[] = [
     transition(':enter', [
       style({ opacity: 0 }),
@@ -18,7 +18,7 @@ export const fadeIn = (delay: number = 1500): AnimationTriggerMetadata => {
   return trigger('fadeIn', definitions);
 };
 
-export const fadeInModal = (delay: number = 500): AnimationTriggerMetadata => {
+export const fadeInModal = (delay = 500): AnimationTriggerMetadata => {
   const definitions: AnimationMetadata[] = [
     transition('false => true', [
       style({ opacity: 0 }),
@@ -32,7 +32,7 @@ export const fadeInModal = (delay: number = 500): AnimationTriggerMetadata => {
   return trigger('fadeInModal', definitions);
 };
 
-export const fadeAndOut = (duration: number = 3000): AnimationTriggerMetadata => {
+export const fadeAndOut = (duration = 3000): AnimationTriggerMetadata => {
   const definitions: AnimationMetadata[] = [
     transition(':enter', [
       style({ opacity: 0 }),

@@ -4,6 +4,7 @@ import {
   effect,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   signal,
   Signal,
@@ -32,12 +33,12 @@ import { AvatarComponent } from '../avatar/avatar.component';
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss',
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnInit {
   @Input() userDetail!: Signal<IUserDetail | null>;
   @Input() loading!: Signal<boolean>;
   @Input() error!: Signal<HttpErrorResponse | null>;
-  @Output() actionCancel: EventEmitter<void> = new EventEmitter();
-  @Output() actionSave: EventEmitter<IUserDetail> = new EventEmitter();
+  @Output() actionCancel = new EventEmitter<void>();
+  @Output() actionSave = new EventEmitter<IUserDetail>();
   public formUser!: FormGroup;
   public nameControl!: FormControl;
   public lastNameControl!: FormControl;
@@ -199,7 +200,7 @@ export class UserFormComponent {
       ]),
       date: new FormControl(
         this.userDetail()?.info.date
-          ? new Date(this.userDetail()?.info.date!).toISOString().split('T')[0]
+          ? new Date(this.userDetail()!.info.date!).toISOString().split('T')[0]
           : '',
         [Validators.required],
       ),

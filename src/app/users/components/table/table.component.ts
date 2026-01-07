@@ -3,17 +3,18 @@ import {
   Component,
   effect,
   EventEmitter,
+  inject,
   Input,
   Output,
   signal,
   Signal,
   WritableSignal,
 } from '@angular/core';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
-import { debounceTime, filter, skip, Subscription } from 'rxjs';
+import { debounceTime, filter, skip } from 'rxjs';
 import { fadeIn } from '../../../common/animations/animations';
 import { SpinnerComponent } from '../../../common/components/spinner/spinner.component';
 import { IUser } from './../../models/interfaces';
@@ -30,30 +31,24 @@ export class TableComponent {
   @Input() loading!: Signal<boolean>;
   @Input() currentPage!: Signal<number>;
   @Input() totalPages!: Signal<number>;
-  @Output() actionDeleteUser: EventEmitter<IUser> = new EventEmitter();
-  @Output() actionChangePage: EventEmitter<number> = new EventEmitter();
+  @Output() actionDeleteUser = new EventEmitter<IUser>();
+  @Output() actionChangePage = new EventEmitter<number>();
   public page: WritableSignal<number> = signal<number>(1);
-  private subscription = new Subscription();
-  private delayPagination: number = 200;
-  constructor(private router: Router) {
-    this.subscription.add(
-      toObservable(this.page)
-        .pipe(
-          debounceTime(this.delayPagination),
-          skip(1),
-          filter(() => this.page() > 0),
-        )
-        .subscribe((page) => this.actionChangePage.emit(page)),
-    );
+  private delayPagination = 200;
+  private router = inject(Router);
 
-    effect(() => {
-      this.page.set(this.currentPage());
-    });
-  }
+  private effect = effect(() => {
+    this.page.set(this.currentPage());
+  });
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+  private subscription = toObservable(this.page)
+    .pipe(
+      debounceTime(this.delayPagination),
+      skip(1),
+      filter(() => this.page() > 0),
+      takeUntilDestroyed(),
+    )
+    .subscribe((page) => this.actionChangePage.emit(page));
 
   public userDetail(email: string): void {
     this.router.navigate([`users/detail/`, email]);

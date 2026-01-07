@@ -15,7 +15,7 @@ import { IInput } from '../../../common/models/interfaces';
 })
 export class LoginFormComponent {
   @Input() loading!: Signal<boolean>;
-  @Output() actionLogin: EventEmitter<{ email: string; pass: string }> = new EventEmitter();
+  @Output() actionLogin = new EventEmitter<{ email: string; pass: string }>();
   public loginForm = new FormGroup({
     email: new FormControl('user@test', [Validators.required, Validators.email]),
     pass: new FormControl('ajk38jkÑ', [

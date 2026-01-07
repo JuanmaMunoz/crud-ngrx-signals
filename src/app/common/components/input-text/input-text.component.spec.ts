@@ -12,14 +12,14 @@ describe('InputTextComponent', () => {
   const validationErrors: Record<string, string> = {
     required: 'The field is required',
   };
-  let input: IInput = {
+  const input: IInput = {
     control: new FormControl('Juan Manuel', [Validators.required]),
     placeholder: 'Insert Name',
     label: 'Name',
     validationErrors,
     focus: true,
   };
-  let inputSignal: WritableSignal<IInput> = signal(input);
+  const inputSignal: WritableSignal<IInput> = signal(input);
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [InputTextComponent, NgxMaskDirective],
@@ -51,22 +51,4 @@ describe('InputTextComponent', () => {
     const validation = compiled.querySelector('.invalid-feedback');
     expect(validation?.textContent).toContain(validationErrors['required']);
   });
-
-  /*it('should put focus on the input', async () => {
-    inputSignal.set({ ...inputSignal(), focus: true });
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    const inputText = compiled.querySelector('input');
-    expect(document.activeElement).toEqual(inputText);
-  });
-
-  it('should not put focus on the input', () => {
-    (document.activeElement as HTMLElement)?.blur();
-    inputSignal.set({ ...inputSignal(), focus: false });
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    const inputText = compiled.querySelector('input');
-    expect(document.activeElement).not.toEqual(inputText);
-  });*/
 });

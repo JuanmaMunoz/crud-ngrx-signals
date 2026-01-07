@@ -36,7 +36,7 @@ describe('InputNumberComponent', () => {
     const label = compiled.querySelector('label');
     expect(label?.textContent).toContain(input.label);
     const inputText = compiled.querySelector('input');
-    expect(parseInt(inputText?.value!)).toBe(input.control.getRawValue());
+    expect(parseInt(inputText!.value!)).toBe(input.control.getRawValue());
   });
 
   it('should increase the input´s value when increase is called', () => {

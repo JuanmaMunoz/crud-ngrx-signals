@@ -8,7 +8,7 @@ import { SessionService } from './session.service';
   providedIn: 'root',
 })
 export class AuthService {
-  private delay: number = 200;
+  private delay = 200;
   private sessionService = inject(SessionService);
 
   /*############ REAL API CALLS - TO BE USED IN PRODUCTION ############
@@ -33,7 +33,7 @@ export class AuthService {
         return loginError$;
       }
     } catch (error) {
-      return unknownError$;
+      return unknownError$ || error;
     }
   }
 
@@ -43,7 +43,7 @@ export class AuthService {
       localStorage.removeItem('token');
       return of(undefined).pipe(delay(this.delay));
     } catch (error) {
-      return unknownError$;
+      return unknownError$ || error;
     }
   }
   //###################################################################

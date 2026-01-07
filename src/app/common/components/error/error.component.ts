@@ -1,4 +1,4 @@
-import { Component, effect, Signal } from '@angular/core';
+import { Component, effect, inject, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { fadeAndOut } from '../../animations/animations';
@@ -13,18 +13,18 @@ const timeDuration = 3000;
   styleUrl: './error.component.scss',
 })
 export class ErrorComponent {
-  public messageError!: Signal<string | null>;
-  constructor(private store: Store<{ message: IMessageState }>) {
-    this.messageError = toSignal(
-      this.store.select((state) => state.message.message),
-      { initialValue: null },
-    );
-    effect(() => {
-      if (this.messageError()) {
-        setTimeout(() => {
-          this.store.dispatch(setInitialStateMessage());
-        }, timeDuration + 1000);
-      }
-    });
-  }
+  private store = inject(Store<{ message: IMessageState }>);
+
+  public messageError: Signal<string | null> = toSignal(
+    this.store.select((state) => state.message.message),
+    { initialValue: null },
+  );
+
+  private effect = effect(() => {
+    if (this.messageError()) {
+      setTimeout(() => {
+        this.store.dispatch(setInitialStateMessage());
+      }, timeDuration + 1000);
+    }
+  });
 }

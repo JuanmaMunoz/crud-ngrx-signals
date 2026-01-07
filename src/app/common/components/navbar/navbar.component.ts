@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Signal } from '@angular/core';
+import { Component, EventEmitter, inject, Output, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { fadeIn } from '../../animations/animations';
@@ -12,17 +12,15 @@ import { IJWT, ITokenState } from '../../models/interfaces';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  @Output() actionLogout: EventEmitter<void> = new EventEmitter();
-  public imgAngular: string = 'assets/images/angular.svg';
-  public imgNgrx: string = 'assets/images/ngrx.svg';
-  public jwt!: Signal<IJWT | null>;
+  @Output() actionLogout = new EventEmitter<void>();
+  public imgAngular = 'assets/images/angular.svg';
+  public imgNgrx = 'assets/images/ngrx.svg';
+  private store = inject(Store<{ token: ITokenState }>);
 
-  constructor(private store: Store<{ token: ITokenState }>) {
-    this.jwt = toSignal(
-      this.store.select((state) => state.token.jwt),
-      { initialValue: null },
-    );
-  }
+  public jwt: Signal<IJWT | null> = toSignal(
+    this.store.select((state) => state.token.jwt),
+    { initialValue: null },
+  );
 
   public logout(): void {
     this.actionLogout.emit();

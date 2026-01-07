@@ -1,7 +1,7 @@
 import { ActionReducer, MetaReducer } from '@ngrx/store';
 import { logoutSuccess } from '../actions/auth.action';
 
-export function clearStateMetaReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+export function clearStateMetaReducer(reducer: ActionReducer<unknown>): ActionReducer<unknown> {
   return (state, action) => {
     if (action.type === logoutSuccess.type) {
       state = undefined; // 🔥 clear all store
