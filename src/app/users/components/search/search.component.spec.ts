@@ -8,7 +8,7 @@ describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
   let routerSpy: jasmine.SpyObj<Router>;
-  let search: WritableSignal<string> = signal('');
+  const search: WritableSignal<string> = signal('');
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     await TestBed.configureTestingModule({

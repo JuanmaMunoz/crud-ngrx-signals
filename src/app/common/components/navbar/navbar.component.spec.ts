@@ -1,14 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { ITokenState } from '../../models/interfaces';
 import { NavbarComponent } from './navbar.component';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
-  let store: MockStore;
   const tokenInitialState: ITokenState = {
     token: 'fake token xxxxxxxx....',
     jwt: { email: 'test@test', expiration: new Date().getTime() + 5000 },
@@ -24,7 +23,6 @@ describe('NavbarComponent', () => {
       imports: [NavbarComponent, BrowserAnimationsModule],
       providers: [provideMockStore({ initialState })],
     }).compileComponents();
-    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

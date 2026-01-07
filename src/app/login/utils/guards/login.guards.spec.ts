@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { lastValueFrom, Observable } from 'rxjs';
 import { IJWT, ITokenState } from '../../../common/models/interfaces';
@@ -38,12 +38,14 @@ describe('loginGuard', () => {
     const futureTime = new Date().getTime() - 3600000;
     const validState: ITokenState = {
       ...initialTokenState,
-      jwt: { expiration: futureTime } as any,
+      jwt: { expiration: futureTime } as IJWT,
     };
 
     mockStore.setState({ token: validState });
 
-    const result$ = TestBed.runInInjectionContext(() => loginGuard({} as any, {} as any));
+    const result$ = TestBed.runInInjectionContext(() =>
+      loginGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot),
+    );
     const isLoggedIn = await lastValueFrom(result$ as Observable<boolean>);
 
     expect(isLoggedIn).toBe(true);
@@ -54,12 +56,14 @@ describe('loginGuard', () => {
     const pastTime = new Date().getTime() + 3600000;
     const expiredState: ITokenState = {
       ...initialTokenState,
-      jwt: { expiration: pastTime } as any,
+      jwt: { expiration: pastTime } as IJWT,
     };
 
     mockStore.setState({ token: expiredState });
 
-    const result$ = TestBed.runInInjectionContext(() => loginGuard({} as any, {} as any));
+    const result$ = TestBed.runInInjectionContext(() =>
+      loginGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot),
+    );
     const isLoggedIn = await lastValueFrom(result$ as Observable<boolean>);
 
     expect(isLoggedIn).toBe(false);

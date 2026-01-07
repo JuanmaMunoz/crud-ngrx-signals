@@ -16,7 +16,7 @@ import {
 })
 export class UsersService {
   private sessionService = inject(SessionService);
-  private delay: number = 200;
+  private delay = 200;
   private allUsers: IUser[] = users;
   private usersStatistics: IUserStatistics[] = statistics;
 
@@ -89,7 +89,7 @@ export class UsersService {
         delay(200),
       );
     } catch (error) {
-      return unknownError$;
+      return unknownError$ || error;
     }
   }
 
@@ -107,7 +107,7 @@ export class UsersService {
       );
       return of(undefined).pipe(delay(this.delay));
     } catch (error) {
-      return unknownError$;
+      return unknownError$ || error;
     }
   }
 
@@ -129,7 +129,7 @@ export class UsersService {
         return userNotFoundError$;
       }
     } catch (error) {
-      return unknownError$;
+      return unknownError$ || error;
     }
   }
 
@@ -153,7 +153,7 @@ export class UsersService {
         return of(undefined).pipe(delay(this.delay));
       }
     } catch (error) {
-      return unknownError$;
+      return unknownError$ || error;
     }
   }
 
@@ -172,7 +172,7 @@ export class UsersService {
         return emailInUseError$;
       }
     } catch (error) {
-      return unknownError$;
+      return unknownError$ || error;
     }
   }
 

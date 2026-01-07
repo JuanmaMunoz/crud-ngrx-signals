@@ -34,28 +34,26 @@ describe('LoginFormComponent', () => {
     });
   });
 
-  it('should disable buttons and inputs when loading is true', async () => {
+  it('should disable buttons and inputs when loading is true', () => {
     loading.set(true);
     fixture.detectChanges();
-    await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    const buttonLogin = compiled.querySelector('button');
+    const loginButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
     const spinner = compiled.querySelector('.spinner-border');
     expect(spinner).toBeTruthy();
-    expect(buttonLogin?.disabled).toBeTruthy;
+    expect(loginButton?.disabled).toBeTrue();
     expect(component.emailControl.disabled).toBeTrue();
     expect(component.passControl.disabled).toBeTrue();
   });
 
-  it('should enable buttons and inputs when loading is false', async () => {
+  it('should enable buttons and inputs when loading is false', () => {
     loading.set(false);
     fixture.detectChanges();
-    await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    const buttonLogin = compiled.querySelector('button');
+    const loginButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
     const spinner = compiled.querySelector('.spinner-border');
     expect(spinner).toBeFalsy();
-    expect(buttonLogin?.disabled).toBeFalse;
+    expect(loginButton?.hasAttribute('disabled')).toBeFalse();
     expect(component.emailControl.disabled).toBeFalse();
     expect(component.passControl.disabled).toBeFalse();
   });

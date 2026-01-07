@@ -66,7 +66,7 @@ describe('SessionService', () => {
       email: 'user@example.com',
       expiration: new Date().getTime() + 10000,
     };
-    (service as any).jwt = jwt;
+    service['jwt'] = jwt;
 
     const result = service.checkSession();
     expect(result).toBeTrue();
@@ -78,7 +78,7 @@ describe('SessionService', () => {
       email: 'expired@example.com',
       expiration: new Date().getTime() - 10000,
     };
-    (service as any).jwt = jwt;
+    service['jwt'] = jwt;
 
     const result = service.checkSession();
     expect(result).toBeFalse();

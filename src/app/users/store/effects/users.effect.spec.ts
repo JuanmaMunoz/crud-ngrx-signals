@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { Observable, of, throwError, toArray } from 'rxjs';
 
 import {
@@ -32,13 +32,14 @@ import {
   getUsersSuccess,
 } from '../actions/users.action';
 
+import { statistics } from '../../../../assets/data/statistics';
+import { users } from '../../../../assets/data/users';
 import { messageShow } from '../../../common/store/actions/message.action';
-import { IReqGetUsers, IUserDetail } from '../../models/interfaces';
+import { IGetUsersParams, IReqGetUsers, IUserDetail } from '../../models/interfaces';
 
 describe('UsersEffects', () => {
   let actions$: Observable<Action>;
   let usersService: jasmine.SpyObj<UsersService>;
-  let store: MockStore;
 
   const mockError = new HttpErrorResponse({
     error: {
@@ -48,13 +49,13 @@ describe('UsersEffects', () => {
   });
 
   const mockUsersResponse: IReqGetUsers = {
-    users: [{ email: 'test@test.com' } as any],
+    users: users,
     totalPages: 2,
   };
 
   const mockUserDetail: IUserDetail = {
-    info: { email: 'test@test.com' } as any,
-    statistics: { email: 'test@test.com' } as any,
+    info: users[0],
+    statistics: statistics[0],
   };
 
   beforeEach(() => {
@@ -79,12 +80,10 @@ describe('UsersEffects', () => {
         { provide: UsersService, useValue: usersService },
       ],
     });
-
-    store = TestBed.inject(MockStore);
   });
 
   it('should dispatch getUsersSuccess on success', (done) => {
-    actions$ = of(getUsers({ page: 1 } as any));
+    actions$ = of(getUsers({ page: 1 } as IGetUsersParams));
     usersService.getUsers.and.returnValue(of(mockUsersResponse));
 
     TestBed.runInInjectionContext(() => {
@@ -101,7 +100,7 @@ describe('UsersEffects', () => {
   });
 
   it('should dispatch getUsersFailure on error', (done) => {
-    actions$ = of(getUsers({ page: 1 } as any));
+    actions$ = of(getUsers({ page: 1 } as IGetUsersParams));
     usersService.getUsers.and.returnValue(throwError(() => mockError));
 
     TestBed.runInInjectionContext(() => {

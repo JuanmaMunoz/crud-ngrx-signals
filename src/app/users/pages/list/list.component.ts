@@ -1,5 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, effect, signal, Signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
@@ -19,92 +28,82 @@ import {
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
-export class ListComponent {
-  public usersFromStore!: Signal<IUser[]>;
+export class ListComponent implements OnInit, OnDestroy {
   public users: WritableSignal<IUser[]> = signal<IUser[]>([]);
-  public totalPages!: Signal<number>;
   public params: WritableSignal<IGetUsersParams | null> = signal<IGetUsersParams | null>(null);
-  public currentPage!: Signal<number>;
-  public search!: Signal<string>;
-  public loadingUsers!: Signal<boolean>;
-  public deleteLoading!: Signal<boolean>;
   public startDelete!: Signal<boolean>;
-  public deleteUser!: Signal<IUser | null>;
-  public successDelete!: Signal<boolean>;
-  public errorDelete!: Signal<HttpErrorResponse | null>;
   public openModal: WritableSignal<boolean> = signal<boolean>(false);
-  private numberRows: number = 10;
+  private numberRows = 10;
+  private store = inject(Store<{ users: IUsersState; userDelete: IUserDeleteState }>);
 
-  constructor(private store: Store<{ users: IUsersState; userDelete: IUserDeleteState }>) {
-    this.usersFromStore = toSignal(
-      this.store.select((state) => state.users.users),
-      { initialValue: [] },
-    );
+  public usersFromStore: Signal<IUser[]> = toSignal(
+    this.store.select((state) => state.users.users),
+    { initialValue: [] },
+  );
 
-    this.totalPages = toSignal(
-      this.store.select((state) => state.users.totalPages),
-      { initialValue: 0 },
-    );
+  public totalPages: Signal<number> = toSignal(
+    this.store.select((state) => state.users.totalPages),
+    { initialValue: 0 },
+  );
 
-    this.search = toSignal(
-      this.store.select((state) => state.users.search),
-      { initialValue: '' },
-    );
+  public search: Signal<string> = toSignal(
+    this.store.select((state) => state.users.search),
+    { initialValue: '' },
+  );
 
-    this.currentPage = toSignal(
-      this.store.select((state) => state.users.page),
-      { initialValue: 1 },
-    );
+  public currentPage: Signal<number> = toSignal(
+    this.store.select((state) => state.users.page),
+    { initialValue: 1 },
+  );
 
-    this.loadingUsers = toSignal(
-      this.store.select((state) => state.users.loading),
-      { initialValue: false },
-    );
+  public loadingUsers: Signal<boolean> = toSignal(
+    this.store.select((state) => state.users.loading),
+    { initialValue: false },
+  );
 
-    this.deleteUser = toSignal(
-      this.store.select((state) => state.userDelete.user),
-      { initialValue: null },
-    );
+  public deleteUser: Signal<IUser | null> = toSignal(
+    this.store.select((state) => state.userDelete.user),
+    { initialValue: null },
+  );
 
-    this.deleteLoading = toSignal(
-      this.store.select((state) => state.userDelete.loading),
-      { initialValue: false },
-    );
+  public deleteLoading: Signal<boolean> = toSignal(
+    this.store.select((state) => state.userDelete.loading),
+    { initialValue: false },
+  );
 
-    this.successDelete = toSignal(
-      this.store.select((state) => state.userDelete.success),
-      { initialValue: false },
-    );
+  public successDelete: Signal<boolean> = toSignal(
+    this.store.select((state) => state.userDelete.success),
+    { initialValue: false },
+  );
 
-    this.errorDelete = toSignal(
-      this.store.select((state) => state.userDelete.error),
-      { initialValue: null },
-    );
+  public errorDelete: Signal<HttpErrorResponse | null> = toSignal(
+    this.store.select((state) => state.userDelete.error),
+    { initialValue: null },
+  );
 
-    effect(() => {
-      this.users.set(this.usersFromStore());
-    });
+  private usersEffect = effect(() => {
+    this.users.set(this.usersFromStore());
+  });
 
-    effect(() => {
-      if (this.successDelete()) {
-        this.openModal.set(false);
-        this.store.dispatch(setInitialStateDelete());
-        this.store.dispatch(getUsers(this.params()!));
-      }
-    });
+  private successDeleteEffect = effect(() => {
+    if (this.successDelete()) {
+      this.openModal.set(false);
+      this.store.dispatch(setInitialStateDelete());
+      this.store.dispatch(getUsers(this.params()!));
+    }
+  });
 
-    effect(() => {
-      if (this.errorDelete()) {
-        this.openModal.set(false);
-      }
-    });
+  private errorDeleteEffect = effect(() => {
+    if (this.errorDelete()) {
+      this.openModal.set(false);
+    }
+  });
 
-    effect(() => {
-      if (this.params()) {
-        this.store.dispatch(getUsers(this.params()!));
-      }
-    });
-  }
+  private paramsEffect = effect(() => {
+    if (this.params()) {
+      this.store.dispatch(getUsers(this.params()!));
+    }
+  });
 
   ngOnInit(): void {
     this.params.set({

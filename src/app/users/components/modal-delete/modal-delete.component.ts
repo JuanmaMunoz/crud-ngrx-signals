@@ -20,7 +20,7 @@ export class ModalDeleteComponent {
   @Input() deleteUser!: Signal<IUser | null>;
   @Input() openModal: WritableSignal<boolean> = signal<boolean>(false);
   @Input() deleteLoading!: Signal<boolean>;
-  @Output() actionDelete: EventEmitter<boolean> = new EventEmitter();
+  @Output() actionDelete = new EventEmitter<boolean>();
 
   public cancelDeleting(): void {
     this.actionDelete.emit(false);

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IJWT, IToken } from '../models/interfaces';
 import { loginSuccess } from '../store/actions/auth.action';
@@ -9,8 +9,8 @@ import { sessionExpiredError } from '../utils/errors';
   providedIn: 'root',
 })
 export class SessionService {
-  constructor(private store: Store) {}
-  private tokenDuration: number = 3600000; //1 hour
+  private store = inject(Store);
+  private tokenDuration = 3600000; //1 hour
   private jwt: IJWT | null = null;
 
   public checkSessionFromStorage(): void {

@@ -33,14 +33,14 @@ describe('ValidationErrors Pipe', () => {
     expect(result).toBe('The field is too short');
   });
 
-  it('should return undefined if there are no errors', () => {
-    const errors = null as any;
+  it('should return null if there are no errors', () => {
+    const errors = null;
     const errorsForm = {
       required: 'The field is required',
     };
 
     const result = pipe.transform(errors, errorsForm);
-    expect(result).toBeUndefined();
+    expect(result).toBeNull();
   });
 
   it('should return undefined if error key does not exist in errorsForm', () => {

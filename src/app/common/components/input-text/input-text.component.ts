@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, Signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, Signal, ViewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 import { IInput } from '../../models/interfaces';
@@ -11,7 +11,7 @@ import { ValidationErrors } from '../../utils/pipes/validation-errors.pipe';
   templateUrl: './input-text.component.html',
   styleUrl: './input-text.component.scss',
 })
-export class InputTextComponent {
+export class InputTextComponent implements AfterViewInit {
   @Input() input!: Signal<IInput>;
   @ViewChild('element') element: ElementRef = {} as ElementRef;
 

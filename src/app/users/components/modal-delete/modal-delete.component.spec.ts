@@ -9,7 +9,7 @@ import { ModalDeleteComponent } from './modal-delete.component';
 describe('ModalDeleteComponent', () => {
   let component: ModalDeleteComponent;
   let fixture: ComponentFixture<ModalDeleteComponent>;
-  let deleteLoading: WritableSignal<boolean> = signal(false);
+  const deleteLoading: WritableSignal<boolean> = signal(false);
   const deleteUser: IUser = users[0];
   beforeEach(async () => {
     await TestBed.configureTestingModule({
