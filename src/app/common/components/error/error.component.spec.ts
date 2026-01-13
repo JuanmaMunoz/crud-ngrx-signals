@@ -17,7 +17,7 @@ describe('ErrorComponent', () => {
   };
 
   const initialState = {
-    message: { ...initialStateMessage },
+    message: initialStateMessage,
   };
 
   beforeEach(async () => {

@@ -23,7 +23,7 @@ describe('CreateComponent', () => {
     userDetail: null,
   };
   const initialState = {
-    userCreate: { ...initialStateUserCreate },
+    userCreate: initialStateUserCreate,
   };
 
   beforeEach(async () => {

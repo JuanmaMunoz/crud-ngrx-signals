@@ -36,12 +36,12 @@ describe('loginGuard', () => {
 
   it('should return true and navigate if the token is expired', async () => {
     const futureTime = new Date().getTime() - 3600000;
-    const validState: ITokenState = {
+    const token: ITokenState = {
       ...initialTokenState,
       jwt: { expiration: futureTime } as IJWT,
     };
 
-    mockStore.setState({ token: validState });
+    mockStore.setState({ token });
 
     const result$ = TestBed.runInInjectionContext(() =>
       loginGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot),
@@ -54,12 +54,12 @@ describe('loginGuard', () => {
 
   it('should return false and navigate to /users if the token is not expired', async () => {
     const pastTime = new Date().getTime() + 3600000;
-    const expiredState: ITokenState = {
+    const token: ITokenState = {
       ...initialTokenState,
       jwt: { expiration: pastTime } as IJWT,
     };
 
-    mockStore.setState({ token: expiredState });
+    mockStore.setState({ token });
 
     const result$ = TestBed.runInInjectionContext(() =>
       loginGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot),

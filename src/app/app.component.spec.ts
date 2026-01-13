@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, DeferBlockState, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -33,10 +33,10 @@ describe('AppComponent', () => {
   };
 
   const initialState = {
-    login: { ...initialLoginState },
-    logout: { ...initialLoginState },
-    token: { ...initialTokenState },
-    message: { ...initialStateMessage },
+    login: initialLoginState,
+    logout: initialLoginState,
+    token: initialTokenState,
+    message: initialStateMessage,
   };
 
   beforeEach(async () => {
@@ -83,14 +83,16 @@ describe('AppComponent', () => {
     expect(dispatchSpy).toHaveBeenCalledWith(logout());
   });
 
-  it('should show the app-error when logoutError exists', () => {
+  it('should show the app-error when logoutError exists', async () => {
+    const deferBlocks = await fixture.getDeferBlocks();
+    await deferBlocks[0].render(DeferBlockState.Complete);
     store.setState({
       ...initialState,
       logout: {
         ...initialLoginState,
         error: { error: unknownError },
       },
-      message: { message: 'errot test' },
+      message: { message: 'error test' },
     });
 
     fixture.detectChanges();
@@ -100,7 +102,9 @@ describe('AppComponent', () => {
     expect(dispatchSpy).not.toHaveBeenCalledWith(logout());
   });
 
-  it('should navigate to /login when logoutSuccess is true', () => {
+  it('should navigate to /login when logoutSuccess is true', async () => {
+    const deferBlocks = await fixture.getDeferBlocks();
+    await deferBlocks[0].render(DeferBlockState.Complete);
     store.setState({
       ...initialState,
       logout: {

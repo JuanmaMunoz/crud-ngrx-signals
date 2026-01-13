@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { signal, WritableSignal } from '@angular/core';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { IAuthState, ITokenState } from '../../models/interfaces';
 import { logout } from '../../store/actions/auth.action';
@@ -13,7 +12,6 @@ describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let store: MockStore;
-  const success: WritableSignal<boolean> = signal(false);
   const initialLoginState: IAuthState = {
     loading: false,
     error: null,
@@ -47,7 +45,6 @@ describe('HeaderComponent', () => {
     store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
-    component.loginSuccess = success;
     fixture.detectChanges();
   });
 
@@ -62,7 +59,14 @@ describe('HeaderComponent', () => {
   });
 
   it('should render NavbarComponent when loginSuccess is true', () => {
-    success.set(true);
+    store.setState({
+      ...initialState,
+      login: {
+        loading: false,
+        error: null,
+        success: true,
+      },
+    });
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const navbar = compiled.querySelector('app-navbar');
@@ -72,7 +76,14 @@ describe('HeaderComponent', () => {
   });
 
   it('should render LogoComponent when loginSuccess is false', () => {
-    success.set(false);
+    store.setState({
+      ...initialState,
+      login: {
+        loading: false,
+        error: null,
+        success: false,
+      },
+    });
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const navbar = compiled.querySelector('app-navbar');

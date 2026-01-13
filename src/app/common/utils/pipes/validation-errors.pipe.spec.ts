@@ -11,7 +11,7 @@ describe('ValidationErrors Pipe', () => {
     expect(pipe).toBeTruthy();
   });
 
-  it('should return the correct validation message for the first error key', () => {
+  it('should return "The field is required"', () => {
     const errors = { required: true };
     const errorsForm = {
       required: 'The field is required',
@@ -22,7 +22,7 @@ describe('ValidationErrors Pipe', () => {
     expect(result).toBe('The field is required');
   });
 
-  it('should return the message for another error key', () => {
+  it('should return "The field is too short"', () => {
     const errors = { minlength: true };
     const errorsForm = {
       required: 'The field is required',
@@ -33,7 +33,7 @@ describe('ValidationErrors Pipe', () => {
     expect(result).toBe('The field is too short');
   });
 
-  it('should return null if there are no errors', () => {
+  it('should return null', () => {
     const errors = null;
     const errorsForm = {
       required: 'The field is required',

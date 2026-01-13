@@ -54,12 +54,12 @@ describe('LoginComponent', () => {
 
   it('should call router.navigate when login is success', () => {
     store.setState({
+      ...initialState,
       login: {
         loading: false,
         error: null,
         success: true,
       },
-      logout: { ...initialLoginState },
     });
     fixture.detectChanges();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/users']);

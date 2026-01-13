@@ -1,17 +1,21 @@
-<div class="login">
-  <div class="row">
-    <div class="col-lg-4 border-lg border-sm-0">
-      <app-info-crud />
+@defer (on viewport) {
+  @if (!loginSuccess()) {
+    <div class="login">
+      <div class="row">
+        <div class="col-lg-4 border-lg border-sm-0">
+          <app-info-crud />
+        </div>
+        <div class="col-lg-4 col-lg-4 border-lg border-sm-top border-sm-0 px-lg-4">
+          <app-login-form [loading]="loading" (actionLogin)="login($event)" />
+        </div>
+        <div class="col-lg-4 border-sm-top">
+          <app-about-me />
+        </div>
+      </div>
     </div>
-    <div class="col-lg-4 col-lg-4 border-lg border-sm-top border-sm-0 px-lg-4">
-      <app-login-form [loading]="loading" (actionLogin)="login($event)" />
-    </div>
-    <div class="col-lg-4 border-sm-top">
-      @defer (on viewport) {
-        <app-about-me />
-      } @placeholder {
-        <app-spinner />
-      }
-    </div>
-  </div>
-</div>
+  } @else {
+    <div class="my-5"><app-spinner /></div>
+  }
+} @placeholder {
+  <div class="my-5"><app-spinner /></div>
+}

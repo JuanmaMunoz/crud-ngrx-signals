@@ -9,7 +9,7 @@ import { IInput } from '../../../common/models/interfaces';
 @Component({
   selector: 'app-login-form',
   imports: [InputTextComponent, InputPassComponent, ReactiveFormsModule],
-  animations: [fadeIn()],
+  animations: [fadeIn(1000)],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })
