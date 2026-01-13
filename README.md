@@ -6,11 +6,11 @@ CRUD example using Angular and NgRx with Signals, ideal for developers who want 
 
 - Angular 20
 - NgRx 20
-- Rxjs 20
+- RxJS 7.8
 - Bootstrap 5.3
-- ngx-mask
-- Cypress
-- Jasmine
+- ngx-mask 15.2
+- Cypress 15.7
+- Jasmine 5.6
 
 ## Install dependecies
 

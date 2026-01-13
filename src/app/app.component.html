@@ -1,16 +1,20 @@
-<div class="app px-2">
-  <app-header />
-  <div
-    class="container"
-    [ngStyle]="{
-      minHeight: loginSuccess() ? '60dvh' : '0',
-      maxHeight: loginSuccess() ? '90dvh' : 'none'
-    }"
-  >
-    <router-outlet />
+@defer (on viewport) {
+  <div [@scaleFadeIn] class="app px-2">
+    <app-header />
+    <div
+      class="container"
+      [ngStyle]="{
+        minHeight: loginSuccess() ? '60dvh' : '0',
+        maxHeight: loginSuccess() ? '90dvh' : 'none'
+      }"
+    >
+      <router-outlet />
+    </div>
   </div>
-</div>
-<app-modal-error [openModal]="showErrorModal" [errorMessage]="errorMessage" />
-@if (messageError()) {
-  <app-error />
+  <app-modal-error [openModal]="showErrorModal" [errorMessage]="errorMessage" />
+  @if (messageError()) {
+    <app-error />
+  }
+} @placeholder {
+  <div class="mt-5 p-5"><app-spinner /></div>
 }

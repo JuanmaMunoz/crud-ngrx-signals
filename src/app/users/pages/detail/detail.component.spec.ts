@@ -51,9 +51,9 @@ describe('DetailComponent', () => {
   };
 
   const initialState = {
-    userDetail: { ...userDetailState },
-    userDelete: { ...userDeleteState },
-    userEdit: { ...userEditState },
+    userDetail: userDetailState,
+    userDelete: userDeleteState,
+    userEdit: userEditState,
   };
 
   beforeEach(async () => {
@@ -75,12 +75,11 @@ describe('DetailComponent', () => {
 
   it('should call dispatch setInitialStateDelete and router.navigate when deleteSuccess is true', () => {
     store.setState({
-      userDetail: { ...userDetailState },
+      ...initialState,
       userDelete: {
         ...userDeleteState,
         success: true,
       },
-      userEdit: { ...userEditState },
     });
     const routerSpy = spyOn(router, 'navigate');
     fixture.detectChanges();
@@ -90,12 +89,11 @@ describe('DetailComponent', () => {
 
   it('should openModal to be false when deleteError is true', () => {
     store.setState({
-      userDetail: { ...userDetailState },
+      ...initialState,
       userDelete: {
         ...userDeleteState,
         error: unknownError,
       },
-      userEdit: { ...userEditState },
     });
     fixture.detectChanges();
     expect(component.openModal()).toBeFalse();
@@ -103,8 +101,7 @@ describe('DetailComponent', () => {
 
   it('should call dispatch setInitalStateEdit, modeEdit to be false and dispatch getUserDatail when editSuccess is true', () => {
     store.setState({
-      userDetail: { ...userDetailState },
-      userDelete: { ...userDeleteState },
+      ...initialState,
       userEdit: {
         ...userEditState,
         success: true,
@@ -148,11 +145,7 @@ describe('DetailComponent', () => {
   });
 
   it('should exist app-spinner', () => {
-    store.setState({
-      userDetail: { ...userDetailState, loading: true },
-      userDelete: { ...userDeleteState },
-      userEdit: { ...userEditState },
-    });
+    store.setState({ ...initialState, userDetail: { ...userDetailState, loading: true } });
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const appSpinner = compiled.querySelector('app-spinner');
@@ -160,11 +153,6 @@ describe('DetailComponent', () => {
   });
 
   it('should exist app-back-users, app-modal-delete and app-info components', () => {
-    store.setState({
-      userDetail: { ...userDetailState },
-      userDelete: { ...userDeleteState },
-      userEdit: { ...userEditState },
-    });
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const appBackUsers = compiled.querySelector('app-back-users');
@@ -176,11 +164,6 @@ describe('DetailComponent', () => {
   });
 
   it('should exist app-edit-user-form component when modeEdit is true', () => {
-    store.setState({
-      userDetail: { ...userDetailState },
-      userDelete: { ...userDeleteState },
-      userEdit: { ...userEditState },
-    });
     component.modeEdit.set(true);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;

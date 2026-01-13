@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { fadeIn } from '../../animations/animations';
+import { scaleFadeIn } from '../../animations/animations';
 
 @Component({
   selector: 'app-logo',
   imports: [],
-  animations: [fadeIn(1000)],
+  animations: [scaleFadeIn(1000)],
   templateUrl: './logo.component.html',
   styleUrl: './logo.component.scss',
 })

@@ -65,13 +65,13 @@ describe('authInterceptor', () => {
   });
 
   it('should NOT add Authorization header if token is NULL in state', (done) => {
-    const tokenState: ITokenState = {
+    const token: ITokenState = {
       ...initialTokenState,
       jwt: null,
       token: '',
     };
 
-    mockStore.setState({ token: tokenState });
+    mockStore.setState({ token });
 
     httpClient.get(apiUrl).subscribe(() => {
       done();
@@ -84,12 +84,12 @@ describe('authInterceptor', () => {
   });
 
   it('should handle API success without changing request', (done) => {
-    const tokenState: ITokenState = {
+    const token: ITokenState = {
       ...initialTokenState,
       jwt: mockToken,
     };
 
-    mockStore.setState({ token: tokenState });
+    mockStore.setState({ token });
     const mockResponse = { data: 'ok' };
 
     httpClient.get(apiUrl).subscribe({
@@ -104,12 +104,12 @@ describe('authInterceptor', () => {
   });
 
   it('should re-throw error for non-401 HTTP errors', (done) => {
-    const tokenState: ITokenState = {
+    const token: ITokenState = {
       ...initialTokenState,
       jwt: mockToken,
     };
 
-    mockStore.setState({ token: tokenState });
+    mockStore.setState({ token });
 
     httpClient.get(apiUrl).subscribe({
       next: () => fail('should have failed with the error'),
@@ -125,12 +125,12 @@ describe('authInterceptor', () => {
   });
 
   it('should re-throw error for 401 Unauthorized errors', (done) => {
-    const tokenState: ITokenState = {
+    const token: ITokenState = {
       ...initialTokenState,
       jwt: mockToken,
     };
 
-    mockStore.setState({ token: tokenState });
+    mockStore.setState({ token });
 
     httpClient.get(apiUrl).subscribe({
       next: () => fail('should have failed with the error'),

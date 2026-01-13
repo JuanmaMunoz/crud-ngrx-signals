@@ -4,16 +4,26 @@ import { Component, effect, inject, OnInit, signal, Signal } from '@angular/core
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { scaleFadeIn } from './common/animations/animations';
 import { ErrorComponent } from './common/components/error/error.component';
 import { HeaderComponent } from './common/components/header/header.component';
 import { ModalErrorComponent } from './common/components/modal-error/modal-error.component';
+import { SpinnerComponent } from './common/components/spinner/spinner.component';
 import { IAuthState, IMessageState, ITokenState } from './common/models/interfaces';
 import { SessionService } from './common/services/session.service';
 import { logout } from './common/store/actions/auth.action';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, HeaderComponent, ModalErrorComponent, ErrorComponent],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    HeaderComponent,
+    ModalErrorComponent,
+    ErrorComponent,
+    SpinnerComponent,
+  ],
+  animations: [scaleFadeIn(500)],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

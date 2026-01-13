@@ -32,7 +32,7 @@ export const fadeInModal = (delay = 500): AnimationTriggerMetadata => {
   return trigger('fadeInModal', definitions);
 };
 
-export const fadeAndOut = (duration = 3000): AnimationTriggerMetadata => {
+export const inAndOut = (duration = 3000): AnimationTriggerMetadata => {
   const definitions: AnimationMetadata[] = [
     transition(':enter', [
       style({ opacity: 0 }),
@@ -41,5 +41,25 @@ export const fadeAndOut = (duration = 3000): AnimationTriggerMetadata => {
       animate('500ms ease-out', style({ opacity: 0 })),
     ]),
   ];
-  return trigger('fadeAndOut', definitions);
+  return trigger('inAndOut', definitions);
+};
+
+export const scaleFadeIn = (duration = 500): AnimationTriggerMetadata => {
+  const definitions: AnimationMetadata[] = [
+    transition(':enter', [
+      style({
+        transform: 'scale(0.5)',
+        opacity: 0,
+      }),
+      animate(
+        `${duration}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+        style({
+          transform: 'scale(1)',
+          opacity: 1,
+        }),
+      ),
+    ]),
+  ];
+
+  return trigger('scaleFadeIn', definitions);
 };

@@ -37,8 +37,8 @@ describe('ListComponent', () => {
     user: null,
   };
   const initialState = {
-    users: { ...usersState },
-    userDelete: { ...userDeleteState },
+    users: usersState,
+    userDelete: userDeleteState,
   };
 
   beforeEach(async () => {
@@ -59,7 +59,7 @@ describe('ListComponent', () => {
 
   it('should openModal to be false, call dispatch setInitialStateDelete and dispatch getUsers when successDelete to be true ', () => {
     store.setState({
-      users: { ...usersState },
+      ...initialState,
       userDelete: { ...userDeleteState, success: true },
     });
     fixture.detectChanges();
@@ -70,7 +70,7 @@ describe('ListComponent', () => {
 
   it('should openModal to be true when errorDelete to be false', () => {
     store.setState({
-      users: { ...usersState },
+      ...initialState,
       userDelete: { ...userDeleteState, error: unknownError },
     });
     fixture.detectChanges();
