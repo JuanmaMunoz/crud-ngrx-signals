@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { signal } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Color } from '../../models/enums';
 import { IBoxInfo } from '../../models/interfaces';
@@ -23,7 +22,7 @@ describe('BoxInfoComponent', () => {
 
     fixture = TestBed.createComponent(BoxInfoComponent);
     component = fixture.componentInstance;
-    component.boxInfo = signal(boxInfo);
+    fixture.componentRef.setInput('boxInfo', boxInfo);
     fixture.detectChanges();
   });
 

@@ -1,4 +1,4 @@
-import { Component, Input, Signal } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { fadeIn } from '../../../common/animations/animations';
 import { IBoxInfo } from '../../models/interfaces';
 
@@ -10,5 +10,5 @@ import { IBoxInfo } from '../../models/interfaces';
   styleUrl: './box-info.component.scss',
 })
 export class BoxInfoComponent {
-  @Input() boxInfo!: Signal<IBoxInfo>;
+  boxInfo = input.required<IBoxInfo>();
 }

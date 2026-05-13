@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, effect, Input, Signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, Input, input, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { ICharData, IUserDetail } from '../../models/interfaces';
 
@@ -11,7 +11,7 @@ import { ICharData, IUserDetail } from '../../models/interfaces';
 })
 export class ChartComponent implements AfterViewInit {
   @Input() idChart = '';
-  @Input() userDetail!: Signal<IUserDetail | null>;
+  userDetail = input.required<IUserDetail | null>();
   @ViewChild('canvas') canvas!: HTMLCanvasElement;
   @ViewChild('canvasLine') canvasLine!: HTMLCanvasElement;
   public chart: Chart | null = null;

@@ -4,10 +4,9 @@ import {
   effect,
   EventEmitter,
   inject,
-  Input,
+  input,
   Output,
   signal,
-  Signal,
   WritableSignal,
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
@@ -27,10 +26,10 @@ import { IUser } from './../../models/interfaces';
   styleUrl: './table.component.scss',
 })
 export class TableComponent {
-  @Input() users!: Signal<IUser[]>;
-  @Input() loading!: Signal<boolean>;
-  @Input() currentPage!: Signal<number>;
-  @Input() totalPages!: Signal<number>;
+  users = input.required<IUser[]>();
+  loading = input.required<boolean>();
+  currentPage = input.required<number>();
+  totalPages = input.required<number>();
   @Output() actionDeleteUser = new EventEmitter<IUser>();
   @Output() actionChangePage = new EventEmitter<number>();
   public page: WritableSignal<number> = signal<number>(1);

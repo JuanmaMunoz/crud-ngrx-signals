@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, Signal } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IInput } from '../../models/interfaces';
 import { ValidationErrors } from '../../utils/pipes/validation-errors.pipe';
@@ -11,7 +11,7 @@ import { ValidationErrors } from '../../utils/pipes/validation-errors.pipe';
   styleUrl: './input-date.component.scss',
 })
 export class InputDateComponent implements OnInit {
-  @Input() input!: Signal<IInput>;
+  input = input.required<IInput>();
   public userAgent: string = window.navigator.userAgent;
   public control!: FormControl;
   ngOnInit(): void {

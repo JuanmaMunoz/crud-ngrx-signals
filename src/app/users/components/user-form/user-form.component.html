@@ -7,31 +7,31 @@
   <form [@fadeIn] [formGroup]="formUser" (submit)="saveUser()">
     <div class="row">
       <div class="col-lg-6">
-        <app-input-text [input]="inputName" />
-        <app-input-text [input]="inputLastName" />
-        <app-input-text [input]="inputEmail" />
+        <app-input-text [input]="inputName()" />
+        <app-input-text [input]="inputLastName()" />
+        <app-input-text [input]="inputEmail()" />
       </div>
       <div class="col-lg-6">
-        <app-input-text [input]="inputPosition" />
-        <app-input-date [input]="inputDate" />
-        <app-input-text [input]="inputSalary" />
+        <app-input-text [input]="inputPosition()" />
+        <app-input-date [input]="inputDate()" />
+        <app-input-text [input]="inputSalary()" />
       </div>
     </div>
     <div class="row">
       <div class="col-lg-2 offset-lg-1">
-        <app-input-number [input]="inputCoworker" />
+        <app-input-number [input]="inputCoworker()" />
       </div>
       <div class="col-lg-2">
-        <app-input-number [input]="inputHardworking" />
+        <app-input-number [input]="inputHardworking()" />
       </div>
       <div class="col-lg-2">
-        <app-input-number [input]="inputKnowledge" />
+        <app-input-number [input]="inputKnowledge()" />
       </div>
       <div class="col-lg-2">
-        <app-input-number [input]="inputProactivity" />
+        <app-input-number [input]="inputProactivity()" />
       </div>
       <div class="col-lg-2">
-        <app-input-number [input]="inputProductivity" />
+        <app-input-number [input]="inputProductivity()" />
       </div>
     </div>
     <div class="row mt-4">

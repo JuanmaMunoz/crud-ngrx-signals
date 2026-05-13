@@ -8,23 +8,23 @@
         <app-user-form
           (actionCancel)="cancelEdition()"
           (actionSave)="saveEdition($event)"
-          [userDetail]="userDetail"
-          [loading]="editLoading"
-          [error]="editError"
+          [userDetail]="userDetail()"
+          [loading]="editLoading()"
+          [error]="editError()"
         />
       } @else {
         <app-info
           (actionOpenModal)="openModalDelete()"
           (actionEdit)="modeEdit.set(true)"
-          [userDetail]="userDetail"
+          [userDetail]="userDetail()"
         />
       }
     }
   }
 </div>
 <app-modal-delete
-  [openModal]="openModal"
-  [deleteLoading]="deleteLoading"
-  [deleteUser]="deleteUser"
+  [openModal]="openModal()"
+  [deleteLoading]="deleteLoading()"
+  [deleteUser]="deleteUser()"
   (actionDelete)="actionModalDelete($event)"
 />

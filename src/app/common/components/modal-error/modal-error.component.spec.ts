@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { signal } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalErrorComponent } from './modal-error.component';
@@ -16,7 +15,7 @@ describe('ModalErrorComponent', () => {
 
     fixture = TestBed.createComponent(ModalErrorComponent);
     component = fixture.componentInstance;
-    component.errorMessage = signal('Unknown error');
+    fixture.componentRef.setInput('errorMessage', 'Unknown error');
     fixture.detectChanges();
   });
 

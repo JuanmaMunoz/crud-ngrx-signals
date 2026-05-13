@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, effect, EventEmitter, Input, Output, Signal, signal } from '@angular/core';
+import { Component, effect, EventEmitter, input, Output, Signal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fadeIn } from '../../../common/animations/animations';
 import { InputPassComponent } from '../../../common/components/input-pass/input-pass.component';
@@ -14,7 +14,7 @@ import { IInput } from '../../../common/models/interfaces';
   styleUrl: './login-form.component.scss',
 })
 export class LoginFormComponent {
-  @Input() loading!: Signal<boolean>;
+  loading = input.required<boolean>();
   @Output() actionLogin = new EventEmitter<{ email: string; pass: string }>();
   public loginForm = new FormGroup({
     email: new FormControl('user@test', [Validators.required, Validators.email]),

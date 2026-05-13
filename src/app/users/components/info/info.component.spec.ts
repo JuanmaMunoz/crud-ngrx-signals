@@ -2,7 +2,6 @@ import { ComponentFixture, DeferBlockState, TestBed } from '@angular/core/testin
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { signal } from '@angular/core';
 import { statistics } from '../../../../assets/data/statistics';
 import { users } from '../../../../assets/data/users';
 import { IUserDetail } from '../../models/interfaces';
@@ -31,7 +30,7 @@ describe('InfoComponent', () => {
 
     fixture = TestBed.createComponent(InfoComponent);
     component = fixture.componentInstance;
-    component.userDetail = signal<IUserDetail | null>(userDetail);
+    fixture.componentRef.setInput('userDetail', userDetail);
     fixture.detectChanges();
   });
 

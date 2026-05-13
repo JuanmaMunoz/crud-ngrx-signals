@@ -1,4 +1,4 @@
-import { Component, Input, signal, WritableSignal } from '@angular/core';
+import { Component, input, model } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 
 @Component({
@@ -8,8 +8,8 @@ import { ModalComponent } from '../modal/modal.component';
   styleUrl: './modal-error.component.scss',
 })
 export class ModalErrorComponent {
-  @Input() openModal: WritableSignal<boolean> = signal<boolean>(false);
-  @Input() errorMessage!: WritableSignal<string>;
+  openModal = model<boolean>(false);
+  errorMessage = input.required<string>();
 
   public closeModal(): void {
     this.openModal.set(false);

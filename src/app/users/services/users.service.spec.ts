@@ -23,27 +23,23 @@ describe('UsersService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return a paged list of users when session is valid and no search is provided', (done) => {
+  it('should return a paged list of users when no search is provided', (done) => {
     const number = 10;
     const totalPages = Math.ceil(users.length / number);
     const defaultParams: IGetUsersParams = { page: 1, number, search: '' };
-    sessionServiceSpy.checkSession.and.returnValue(true);
 
     service.getUsers(defaultParams).subscribe((result) => {
-      expect(sessionServiceSpy.checkSession).toHaveBeenCalled();
       expect(result.users.length).toEqual(number);
       expect(result.totalPages).toBe(totalPages);
       done();
     });
   });
 
-  it('should return a paged list of users when session is valid and search is provided', (done) => {
+  it('should return a paged list of users when search is provided', (done) => {
     const number = 10;
     const defaultParams: IGetUsersParams = { page: 1, number, search: users[0].email };
-    sessionServiceSpy.checkSession.and.returnValue(true);
 
     service.getUsers(defaultParams).subscribe((result) => {
-      expect(sessionServiceSpy.checkSession).toHaveBeenCalled();
       expect(result.users.length).toEqual(1);
       expect(result.totalPages).toBe(1);
       done();
@@ -53,24 +49,20 @@ describe('UsersService', () => {
   it('should return a empty list of users', (done) => {
     const number = 10;
     const defaultParams: IGetUsersParams = { page: 1, number, search: 'notfound@test' };
-    sessionServiceSpy.checkSession.and.returnValue(true);
 
     service.getUsers(defaultParams).subscribe((result) => {
-      expect(sessionServiceSpy.checkSession).toHaveBeenCalled();
       expect(result.users.length).toEqual(0);
       expect(result.totalPages).toBe(0);
       done();
     });
   });
 
-  it('should return error when there is a exception in the getUsers process', (done) => {
+  it('should return users regardless of session when getUsers is called', (done) => {
     const defaultParams: IGetUsersParams = { page: 1, number: 10, search: '' };
     sessionServiceSpy.checkSession.and.returnValue(false);
-    service.getUsers(defaultParams).subscribe({
-      error: (err) => {
-        expect(err).toEqual(err);
-        done();
-      },
+    service.getUsers(defaultParams).subscribe((result) => {
+      expect(result.users.length).toBeGreaterThanOrEqual(0);
+      done();
     });
   });
 

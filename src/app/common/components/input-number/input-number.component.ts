@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Signal } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IInputNumber } from '../../models/interfaces';
 
@@ -9,7 +9,7 @@ import { IInputNumber } from '../../models/interfaces';
   styleUrl: './input-number.component.scss',
 })
 export class InputNumberComponent implements OnInit {
-  @Input() input!: Signal<IInputNumber>;
+  input = input.required<IInputNumber>();
   public control!: FormControl;
   ngOnInit(): void {
     this.control = this.input().control;

@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  signal,
-  Signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import { ModalComponent } from '../../../common/components/modal/modal.component';
 import { IUser } from '../../models/interfaces';
 
@@ -17,9 +9,9 @@ import { IUser } from '../../models/interfaces';
   styleUrl: './modal-delete.component.scss',
 })
 export class ModalDeleteComponent {
-  @Input() deleteUser!: Signal<IUser | null>;
-  @Input() openModal: WritableSignal<boolean> = signal<boolean>(false);
-  @Input() deleteLoading!: Signal<boolean>;
+  deleteUser = input.required<IUser | null>();
+  openModal = input<boolean>(false);
+  deleteLoading = input.required<boolean>();
   @Output() actionDelete = new EventEmitter<boolean>();
 
   public cancelDeleting(): void {
