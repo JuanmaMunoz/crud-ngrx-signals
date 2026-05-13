@@ -3,9 +3,8 @@ import {
   effect,
   EventEmitter,
   inject,
-  Input,
+  input,
   Output,
-  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -21,7 +20,7 @@ import { debounceTime, skip } from 'rxjs';
   styleUrl: './search.component.scss',
 })
 export class SearchComponent {
-  @Input() search!: Signal<string>;
+  search = input.required<string>();
   @Output() actionSearch = new EventEmitter<string>();
 
   public searchText: WritableSignal<string> = signal<string>('');

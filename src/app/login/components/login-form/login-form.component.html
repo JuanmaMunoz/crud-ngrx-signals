@@ -1,7 +1,7 @@
 <div [@fadeIn] class="login-form mb-4">
   <form [formGroup]="loginForm" (submit)="login()">
-    <app-input-text [input]="emailInput" />
-    <app-input-pass [input]="passInput" />
+    <app-input-text [input]="emailInput()" />
+    <app-input-pass [input]="passInput()" />
     <button
       [disabled]="loading() || !loginForm.valid"
       type="submit"

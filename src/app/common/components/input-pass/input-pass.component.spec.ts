@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { signal } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { IInput } from '../../models/interfaces';
 import { InputPassComponent } from './input-pass.component';
@@ -24,7 +23,7 @@ describe('InputPassComponent', () => {
 
     fixture = TestBed.createComponent(InputPassComponent);
     component = fixture.componentInstance;
-    component.input = signal(input);
+    fixture.componentRef.setInput('input', input);
     fixture.detectChanges();
   });
 

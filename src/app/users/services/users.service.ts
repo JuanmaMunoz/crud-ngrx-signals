@@ -50,9 +50,9 @@ export class UsersService {
       //throw new Error('Force unknown error');
 
       //FAKE interceptor
-      if (!this.sessionService.checkSession()) {
+      /* if (!this.sessionService.checkSession()) {
         throw new Error('Session expired');
-      }
+      }*/
 
       const search = this.normalizeText(params.search);
       return of(this.allUsers).pipe(

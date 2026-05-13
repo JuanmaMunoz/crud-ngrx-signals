@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { HttpErrorResponse } from '@angular/common/http';
-import { signal, WritableSignal } from '@angular/core';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { statistics } from '../../../../assets/data/statistics';
 import { users } from '../../../../assets/data/users';
@@ -13,12 +11,6 @@ import { UserFormComponent } from './user-form.component';
 describe('UserFormComponent', () => {
   let component: UserFormComponent;
   let fixture: ComponentFixture<UserFormComponent>;
-  const userDetail: WritableSignal<IUserDetail | null> = signal({
-    info: users[0],
-    statistics: statistics[0],
-  });
-
-  const error: WritableSignal<HttpErrorResponse | null> = signal(null);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -28,9 +20,9 @@ describe('UserFormComponent', () => {
 
     fixture = TestBed.createComponent(UserFormComponent);
     component = fixture.componentInstance;
-    component.userDetail = userDetail;
-    component.loading = signal(false);
-    component.error = error;
+    fixture.componentRef.setInput('userDetail', { info: users[0], statistics: statistics[0] });
+    fixture.componentRef.setInput('loading', false);
+    fixture.componentRef.setInput('error', null);
     fixture.detectChanges();
   });
 
@@ -69,10 +61,7 @@ describe('UserFormComponent', () => {
   });
 
   it('should enable save button when form is valid', () => {
-    userDetail.set({
-      info: users[0],
-      statistics: statistics[0],
-    });
+    fixture.componentRef.setInput('userDetail', { info: users[0], statistics: statistics[0] });
     fixture.detectChanges();
     component.loadForm();
     fixture.detectChanges();
@@ -84,7 +73,7 @@ describe('UserFormComponent', () => {
   it('should show error when user exists', () => {
     component.loadForm();
     fixture.detectChanges();
-    error.set(emailInUseError);
+    fixture.componentRef.setInput('error', emailInUseError);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const saveButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
@@ -92,7 +81,7 @@ describe('UserFormComponent', () => {
   });
 
   it('should disable save button when form is invalid', () => {
-    userDetail.set(null);
+    fixture.componentRef.setInput('userDetail', null);
     fixture.detectChanges();
     component.loadForm();
     fixture.detectChanges();

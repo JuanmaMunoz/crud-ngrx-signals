@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Signal } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { fadeInModal } from '../../animations/animations';
 
 @Component({
@@ -10,5 +10,5 @@ import { fadeInModal } from '../../animations/animations';
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent {
-  @Input() visible!: Signal<boolean>;
+  visible = input.required<boolean>();
 }

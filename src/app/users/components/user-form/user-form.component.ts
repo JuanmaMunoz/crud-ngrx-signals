@@ -3,11 +3,10 @@ import {
   Component,
   effect,
   EventEmitter,
-  Input,
+  input,
   OnInit,
   Output,
   signal,
-  Signal,
   WritableSignal,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -34,9 +33,9 @@ import { AvatarComponent } from '../avatar/avatar.component';
   styleUrl: './user-form.component.scss',
 })
 export class UserFormComponent implements OnInit {
-  @Input() userDetail!: Signal<IUserDetail | null>;
-  @Input() loading!: Signal<boolean>;
-  @Input() error!: Signal<HttpErrorResponse | null>;
+  userDetail = input.required<IUserDetail | null>();
+  loading = input.required<boolean>();
+  error = input.required<HttpErrorResponse | null>();
   @Output() actionCancel = new EventEmitter<void>();
   @Output() actionSave = new EventEmitter<IUserDetail>();
   public formUser!: FormGroup;

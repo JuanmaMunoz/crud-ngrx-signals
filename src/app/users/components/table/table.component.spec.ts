@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { users } from '../../../../assets/data/users';
@@ -12,7 +11,6 @@ describe('TableComponent', () => {
   let component: TableComponent;
   let fixture: ComponentFixture<TableComponent>;
   let routerSpy: jasmine.SpyObj<Router>;
-  const usersList: WritableSignal<IUser[]> = signal(users);
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     await TestBed.configureTestingModule({
@@ -22,10 +20,10 @@ describe('TableComponent', () => {
 
     fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
-    component.users = usersList;
-    component.loading = signal<boolean>(false);
-    component.currentPage = signal<number>(1);
-    component.totalPages = signal<number>(3);
+    fixture.componentRef.setInput('users', users);
+    fixture.componentRef.setInput('loading', false);
+    fixture.componentRef.setInput('currentPage', 1);
+    fixture.componentRef.setInput('totalPages', 3);
     fixture.detectChanges();
   });
 
@@ -48,7 +46,7 @@ describe('TableComponent', () => {
 
   it('should call actionDeleteUser.emit when openModalDelete is called', () => {
     spyOn(component.actionDeleteUser, 'emit');
-    const userToDelete: IUser = usersList()[0];
+    const userToDelete: IUser = users[0];
     const mouseEvent = new MouseEvent('click');
     component.openModalDelete(userToDelete, mouseEvent);
     expect(component.actionDeleteUser.emit).toHaveBeenCalledWith(userToDelete);
@@ -78,7 +76,7 @@ describe('TableComponent', () => {
   });
 
   it('should show No users found message when users list is empty', () => {
-    usersList.set([]);
+    fixture.componentRef.setInput('users', []);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const noUsersMessage = compiled.querySelector('tbody tr td');

@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { signal } from '@angular/core';
 import { statistics } from '../../../../assets/data/statistics';
 import { users } from '../../../../assets/data/users';
 import { IUserDetail } from '../../models/interfaces';
@@ -27,7 +26,7 @@ describe('ChartComponent', () => {
     component.idChart = 'x';
     component.chart = mockChart;
     component.chartLine = mockChart;
-    component.userDetail = signal(userDetail);
+    fixture.componentRef.setInput('userDetail', userDetail);
     fixture.detectChanges();
   });
 

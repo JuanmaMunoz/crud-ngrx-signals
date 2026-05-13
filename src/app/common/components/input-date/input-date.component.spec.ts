@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { signal } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { IInput } from '../../models/interfaces';
 import { InputDateComponent } from './input-date.component';
@@ -25,7 +24,7 @@ describe('InputDateComponent', () => {
 
     fixture = TestBed.createComponent(InputDateComponent);
     component = fixture.componentInstance;
-    component.input = signal(input);
+    fixture.componentRef.setInput('input', input);
     fixture.detectChanges();
   });
 

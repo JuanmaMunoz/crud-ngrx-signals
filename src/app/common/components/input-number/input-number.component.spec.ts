@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IInputNumber } from '../../models/interfaces';
 import { InputNumberComponent } from './input-number.component';
@@ -23,7 +22,7 @@ describe('InputNumberComponent', () => {
     };
     fixture = TestBed.createComponent(InputNumberComponent);
     component = fixture.componentInstance;
-    component.input = signal(input);
+    fixture.componentRef.setInput('input', input);
     fixture.detectChanges();
   });
 

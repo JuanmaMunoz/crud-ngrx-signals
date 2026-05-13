@@ -1,14 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { signal, WritableSignal } from '@angular/core';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { LoginFormComponent } from './login-form.component';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
   let fixture: ComponentFixture<LoginFormComponent>;
-  const loading: WritableSignal<boolean> = signal<boolean>(false);
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LoginFormComponent, NgxMaskDirective, BrowserAnimationsModule],
@@ -17,7 +15,7 @@ describe('LoginFormComponent', () => {
 
     fixture = TestBed.createComponent(LoginFormComponent);
     component = fixture.componentInstance;
-    component.loading = loading;
+    fixture.componentRef.setInput('loading', false);
     fixture.detectChanges();
   });
 
@@ -35,7 +33,7 @@ describe('LoginFormComponent', () => {
   });
 
   it('should disable buttons and inputs when loading is true', () => {
-    loading.set(true);
+    fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const loginButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;
@@ -47,7 +45,7 @@ describe('LoginFormComponent', () => {
   });
 
   it('should enable buttons and inputs when loading is false', () => {
-    loading.set(false);
+    fixture.componentRef.setInput('loading', false);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const loginButton = compiled.querySelector('button[type="submit"]') as HTMLButtonElement;

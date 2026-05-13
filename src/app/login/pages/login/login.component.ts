@@ -7,6 +7,7 @@ import { InfoCrudComponent } from '../../../common/components/info-crud/info-cru
 import { SpinnerComponent } from '../../../common/components/spinner/spinner.component';
 import { IAuthState } from '../../../common/models/interfaces';
 import { login, setInitialStateLogout } from '../../../common/store/actions/auth.action';
+import { UsersService } from '../../../users/services/users.service';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 
 @Component({
@@ -16,6 +17,11 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
+  private usersService = inject(UsersService);
+  private users = toSignal(this.usersService.getUsers({ page: 1, number: 10, search: '' }), {
+    initialValue: null,
+  });
+
   private store = inject(Store<{ login: IAuthState }>);
   private router = inject(Router);
 

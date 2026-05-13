@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { signal, WritableSignal } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { IInput } from '../../models/interfaces';
@@ -19,7 +18,6 @@ describe('InputTextComponent', () => {
     validationErrors,
     focus: true,
   };
-  const inputSignal: WritableSignal<IInput> = signal(input);
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [InputTextComponent, NgxMaskDirective],
@@ -28,7 +26,7 @@ describe('InputTextComponent', () => {
 
     fixture = TestBed.createComponent(InputTextComponent);
     component = fixture.componentInstance;
-    component.input = inputSignal;
+    fixture.componentRef.setInput('input', input);
     fixture.detectChanges();
   });
 

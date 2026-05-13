@@ -4,10 +4,9 @@ import {
   effect,
   EventEmitter,
   inject,
-  Input,
+  input,
   Output,
   signal,
-  Signal,
   WritableSignal,
 } from '@angular/core';
 import { Color } from '../../models/enums';
@@ -26,7 +25,7 @@ import { IBoxInfo } from './../../models/interfaces';
   styleUrl: './info.component.scss',
 })
 export class InfoComponent {
-  @Input() userDetail!: Signal<IUserDetail | null>;
+  userDetail = input.required<IUserDetail | null>();
   @Output() actionOpenModal = new EventEmitter<void>();
   @Output() actionEdit = new EventEmitter<void>();
   public boxInfoPosition: WritableSignal<IBoxInfo> = signal<IBoxInfo>({

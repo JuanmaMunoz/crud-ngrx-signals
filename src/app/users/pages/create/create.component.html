@@ -3,8 +3,8 @@
   <app-user-form
     (actionCancel)="cancelCreation()"
     (actionSave)="saveCreation($event)"
-    [userDetail]="userCreate"
-    [loading]="userCreateLoading"
-    [error]="userCreateError"
+    [userDetail]="userCreate()"
+    [loading]="userCreateLoading()"
+    [error]="userCreateError()"
   />
 </div>
