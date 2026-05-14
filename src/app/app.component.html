@@ -1,13 +1,7 @@
 @defer (on viewport) {
   <div [@scaleFadeIn] class="app px-2">
     <app-header />
-    <div
-      class="container"
-      [ngStyle]="{
-        minHeight: loginSuccess() ? '60dvh' : '0',
-        maxHeight: loginSuccess() ? '90dvh' : 'none'
-      }"
-    >
+    <div class="container" [class.container--active]="loginSuccess()">
       <router-outlet />
     </div>
   </div>
