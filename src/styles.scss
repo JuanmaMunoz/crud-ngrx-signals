@@ -16,6 +16,11 @@ body {
   padding: 1.5rem;
 }
 
+.container--active {
+  max-height: 90dvh;
+  min-height: 60dvh;
+}
+
 .form-control {
   background-color: transparent;
   border-color: var(--bs-secondary);
@@ -107,6 +112,12 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(100, 105, 110, 0.3);
+}
+
+@media (min-width: 1600px) {
+  .container--active {
+    margin-top: 2.5rem;
+  }
 }
 
 @media (max-width: 576px) {
