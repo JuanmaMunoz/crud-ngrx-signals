@@ -1,59 +1,107 @@
-# CrudNgrxSignals
+# CRUD Angular + NgRx with Signals
 
-CRUD example using Angular and NgRx with Signals, ideal for developers who want to explore these technologies and see how they work with the latest features.
+A full-featured CRUD application built with **Angular 20** and **NgRx 20**, showcasing real-world usage of Signals, reactive state management, authentication, and testing — designed as practical documentation for both junior and senior developers.
 
-## 🛠️ Tech Stack
+**[Live Demo](https://juanmamunoz.github.io/crud-ngrx-signals/)**
 
-- Angular 20
-- NgRx 20
-- RxJS 7.8
-- Bootstrap 5.3
-- ngx-mask 15.2
-- Cypress 15.7
-- Jasmine 5.6
+---
 
-## Install dependecies
+## Features
+
+- **CRUD operations** — list, create, edit and delete users with paginated results and real-time search
+- **Angular 20** — latest features including `@defer`, `@if`, `@for` control flow and Signals
+- **NgRx 20** — Store, Effects and DevTools with full Actions/Reducers/Effects architecture
+- **State with Signals** — NgRx state consumed via `toSignal` throughout all components
+- **Authentication** — JWT mock tokens, `localStorage` persistence, HTTP interceptor and route guards (`authGuard` / `loginGuard`)
+- **User statistics** — per-user performance chart (productivity, hard working, coworker, knowledge, proactivity) rendered with Chart.js
+- **Unit testing** — Jasmine + Karma, **99.5% code coverage**, runs headless in CI
+- **E2E testing** — Cypress test suite
+- **Lazy loading** — `login` and `users` feature modules loaded on demand
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Angular 20 |
+| State management | NgRx 20 (Store · Effects · DevTools) |
+| Styling | Bootstrap 5.3.3 · Bootstrap Icons 1.11 |
+| Charts | Chart.js 4 |
+| Input masks | ngx-mask |
+| Reactive | RxJS 7.8 |
+| Language | TypeScript 5.9 |
+| Unit tests | Jasmine · Karma · karma-coverage |
+| E2E tests | Cypress 15 |
+| Linting | ESLint · angular-eslint · Prettier |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm 9+
+
+### Install & run
 
 ```bash
 npm install
+npm start
 ```
 
-## Development server
+Open `http://localhost:4200`.
 
-To start a local development server, run:
+### Login credentials
 
-```bash
-ng serve
+```
+Email:    user@test
+Password: ajk38jkÑ
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Building
+## Application Structure
 
-To build the project run:
-
-```bash
-ng build
+```
+/login              Login page — info panel, login form, about section
+/users              Paginated user list with search and delete
+/users/create       Create new user
+/users/detail/:id   User detail — view, edit and statistics chart
 ```
 
-This will compile your project and store the build artifacts in the `docs/` directory. By default, the production build optimizes your application for performance and speed.
+### State slices (NgRx)
 
-## Running unit tests
+| Slice | Responsibility |
+|---|---|
+| `auth` | Login / logout flow and session state |
+| `token` | JWT storage and decoding |
+| `message` | Global error messaging |
+| `users` | User list, pagination and search |
+| `userDetail` | Single user fetch, edit and create |
+| `userDelete` | Delete confirmation and execution |
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test:dev
-```
+## Scripts
 
-## Running end-to-end tests
+| Command | Description |
+|---|---|
+| `npm start` | Development server at `http://localhost:4200` |
+| `npm test` | Unit tests with coverage (ChromeHeadless) |
+| `npm run test:dev` | Unit tests in watch mode |
+| `npm run e2e:ci` | E2E tests with Cypress |
+| `npm run lint` | ESLint |
+| `npm run build` | Production build + deploy to GitHub Pages |
 
-For end-to-end (e2e) testing, run:
+> `npm run build` runs lint → unit tests → E2E before building.
 
-```bash
-npx cypress open
-```
+---
 
 ## Author
 
-Juan Manuel Muñoz González
+**Juan Manuel Muñoz González** — Front-End Architect
+
+- [Portfolio / Resume](https://juanmamunoz.github.io/resume)
+- [GitHub](https://github.com/JuanmaMunoz/crud-ngrx-signals)
