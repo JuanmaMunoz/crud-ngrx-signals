@@ -1,14 +1,5 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import {
-  Component,
-  effect,
-  EventEmitter,
-  inject,
-  input,
-  Output,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { Color } from '../../models/enums';
 import { IAvatar, IUserDetail } from '../../models/interfaces';
 import { AvatarComponent } from '../avatar/avatar.component';
@@ -26,19 +17,19 @@ import { IBoxInfo } from './../../models/interfaces';
 })
 export class InfoComponent {
   userDetail = input.required<IUserDetail | null>();
-  @Output() actionOpenModal = new EventEmitter<void>();
-  @Output() actionEdit = new EventEmitter<void>();
-  public boxInfoPosition: WritableSignal<IBoxInfo> = signal<IBoxInfo>({
+  actionOpenModal = output<void>();
+  actionEdit = output<void>();
+  public boxInfoPosition = signal<IBoxInfo>({
     color: Color.PRIMARY,
     label: 'Position',
     value: '',
   });
-  public boxInfoIncorporation: WritableSignal<IBoxInfo> = signal<IBoxInfo>({
+  public boxInfoIncorporation = signal<IBoxInfo>({
     color: Color.SECONDARY,
     label: 'Incorporation',
     value: '',
   });
-  public boxInfoSalary: WritableSignal<IBoxInfo> = signal<IBoxInfo>({
+  public boxInfoSalary = signal<IBoxInfo>({
     color: Color.SUCCESS,
     label: 'Salary',
     value: 0,
@@ -47,7 +38,7 @@ export class InfoComponent {
   private datePipe = inject(DatePipe);
   private currencyPipe = inject(CurrencyPipe);
 
-  private effect = effect(() => {
+  private readonly userDetaileffect = effect(() => {
     if (this.userDetail()) {
       this.setBoxesInfo({
         position: this.userDetail()!.info.position!,

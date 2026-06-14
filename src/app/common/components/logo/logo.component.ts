@@ -9,6 +9,6 @@ import { scaleFadeIn } from '../../animations/animations';
   styleUrl: './logo.component.scss',
 })
 export class LogoComponent {
-  public imgAngular = 'assets/images/angular.svg';
-  public imgNgrx = 'assets/images/ngrx.svg';
+  protected imgAngular = 'assets/images/angular.svg';
+  protected imgNgrx = 'assets/images/ngrx.svg';
 }

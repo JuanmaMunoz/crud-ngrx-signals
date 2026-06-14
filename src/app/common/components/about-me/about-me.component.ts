@@ -9,5 +9,5 @@ import { fadeIn } from '../../animations/animations';
   styleUrl: './about-me.component.scss',
 })
 export class AboutMeComponent {
-  public img = 'assets/images/photo.png';
+  protected img = 'assets/images/photo.png';
 }

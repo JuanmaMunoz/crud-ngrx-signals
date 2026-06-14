@@ -3,8 +3,8 @@
     <app-input-text [input]="emailInput()" />
     <app-input-pass [input]="passInput()" />
     <button
-      [disabled]="loading() || !loginForm.valid"
       type="submit"
+      [disabled]="loading() || !loginForm.valid"
       class="btn btn-primary form-control mt-3"
     >
       Login

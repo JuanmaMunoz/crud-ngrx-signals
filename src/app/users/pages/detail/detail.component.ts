@@ -1,14 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Component,
-  effect,
-  inject,
-  OnDestroy,
-  OnInit,
-  signal,
-  Signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, effect, inject, OnDestroy, OnInit, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -47,8 +38,8 @@ import { setInitialStateDelete, setInitialStateEdit } from './../../store/action
   styleUrl: './detail.component.scss',
 })
 export class DetailComponent implements OnInit, OnDestroy {
-  public openModal: WritableSignal<boolean> = signal<boolean>(false);
-  public modeEdit: WritableSignal<boolean> = signal<boolean>(false);
+  public openModal = signal<boolean>(false);
+  public modeEdit = signal<boolean>(false);
   public newEmail = '';
 
   private store = inject(

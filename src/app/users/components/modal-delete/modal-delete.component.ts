@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ModalComponent } from '../../../common/components/modal/modal.component';
 import { IUser } from '../../models/interfaces';
 
@@ -12,7 +12,7 @@ export class ModalDeleteComponent {
   deleteUser = input.required<IUser | null>();
   openModal = input<boolean>(false);
   deleteLoading = input.required<boolean>();
-  @Output() actionDelete = new EventEmitter<boolean>();
+  actionDelete = output<boolean>();
 
   public cancelDeleting(): void {
     this.actionDelete.emit(false);

@@ -17,17 +17,17 @@ export class HeaderComponent {
   private router = inject(Router);
   private store = inject(Store<{ login: IAuthState; logout: IAuthState }>);
 
-  public loginSuccess: Signal<boolean> = toSignal(
+  protected loginSuccess: Signal<boolean> = toSignal(
     this.store.select((state) => state.login.success),
     { initialValue: false },
   );
 
-  public logoutSuccess: Signal<boolean> = toSignal(
+  protected logoutSuccess: Signal<boolean> = toSignal(
     this.store.select((state) => state.logout.success),
     { initialValue: false },
   );
 
-  private effect = effect(() => {
+  private readonly logoutEffect = effect(() => {
     if (this.logoutSuccess()) {
       this.router.navigate(['/login']);
     }

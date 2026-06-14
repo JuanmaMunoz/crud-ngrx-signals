@@ -133,6 +133,7 @@ export const userEditReducer = createReducer(
     userDetail,
     loading: true,
     oldEmail,
+    success: false,
   })),
   on(editUserSuccess, (state) => ({
     ...state,

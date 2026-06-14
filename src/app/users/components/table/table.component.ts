@@ -1,14 +1,5 @@
 import { DatePipe } from '@angular/common';
-import {
-  Component,
-  effect,
-  EventEmitter,
-  inject,
-  input,
-  Output,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -30,13 +21,13 @@ export class TableComponent {
   loading = input.required<boolean>();
   currentPage = input.required<number>();
   totalPages = input.required<number>();
-  @Output() actionDeleteUser = new EventEmitter<IUser>();
-  @Output() actionChangePage = new EventEmitter<number>();
-  public page: WritableSignal<number> = signal<number>(1);
+  actionDeleteUser = output<IUser>();
+  actionChangePage = output<number>();
+  public page = signal<number>(1);
   private delayPagination = 200;
   private router = inject(Router);
 
-  private effect = effect(() => {
+  private readonly currentPageEffect = effect(() => {
     this.page.set(this.currentPage());
   });
 

@@ -49,8 +49,7 @@ describe('AvatarComponent', () => {
   });
 
   it('should not exist these classes in row mode', () => {
-    infoAvatar = { ...infoAvatar, modeRow: false };
-    component.avatar = infoAvatar;
+    fixture.componentRef.setInput('avatar', { ...infoAvatar, modeRow: false });
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const flex = compiled.querySelector('.d-lg-flex');

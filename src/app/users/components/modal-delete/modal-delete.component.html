@@ -16,17 +16,17 @@
   </div>
   <div footer>
     <button
+      type="button"
       (click)="cancelDeleting()"
       [disabled]="deleteLoading()"
-      type="button"
       class="btn btn-outline-light me-4"
     >
       <i class="bi bi-box-arrow-left"></i> Cancel
     </button>
     <button
+      type="button"
       (click)="confirmDeleting()"
       [disabled]="deleteLoading()"
-      type="button"
       class="btn btn-outline-danger"
     >
       <i class="bi bi-x-circle"></i> Delete

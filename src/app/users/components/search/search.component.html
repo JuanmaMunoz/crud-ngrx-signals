@@ -9,14 +9,14 @@
       placeholder="Search users"
     />
     <button
+      type="button"
       (click)="deleteSearch()"
       [disabled]="!this.searchText()"
-      type="button"
       class="btn btn-outline-secondary"
     >
       <i class="bi bi-x-circle"></i>
     </button>
-    <button class="btn btn-outline-primary" (click)="createUser()">
+    <button type="button" class="btn btn-outline-primary" (click)="createUser()">
       <i class="bi bi-person-plus"></i>
     </button>
   </div>

@@ -1,21 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Component,
-  effect,
-  EventEmitter,
-  input,
-  OnInit,
-  Output,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, effect, input, OnInit, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fadeIn } from '../../../common/animations/animations';
 import { InputDateComponent } from '../../../common/components/input-date/input-date.component';
 import { InputNumberComponent } from '../../../common/components/input-number/input-number.component';
 import { InputTextComponent } from '../../../common/components/input-text/input-text.component';
 import { TypeInput } from '../../../common/models/enum';
-import { IInput, IInputNumber } from '../../../common/models/interfaces';
 import { IAvatar, IUserDetail } from '../../models/interfaces';
 import { AvatarComponent } from '../avatar/avatar.component';
 
@@ -36,8 +26,8 @@ export class UserFormComponent implements OnInit {
   userDetail = input.required<IUserDetail | null>();
   loading = input.required<boolean>();
   error = input.required<HttpErrorResponse | null>();
-  @Output() actionCancel = new EventEmitter<void>();
-  @Output() actionSave = new EventEmitter<IUserDetail>();
+  actionCancel = output<void>();
+  actionSave = output<IUserDetail>();
   public formUser!: FormGroup;
   public nameControl!: FormControl;
   public lastNameControl!: FormControl;
@@ -66,7 +56,7 @@ export class UserFormComponent implements OnInit {
     modeRow: true,
   };
 
-  public inputName: WritableSignal<IInput> = signal({
+  public inputName = signal({
     type: TypeInput.TEXT,
     control: {} as FormControl,
     placeholder: 'Insert name',
@@ -75,7 +65,7 @@ export class UserFormComponent implements OnInit {
     focus: true,
   });
 
-  public inputLastName: WritableSignal<IInput> = signal({
+  public inputLastName = signal({
     type: TypeInput.TEXT,
     control: {} as FormControl,
     placeholder: 'Insert lastname',
@@ -83,7 +73,7 @@ export class UserFormComponent implements OnInit {
     validationErrors: this.validationErrors,
   });
 
-  public inputEmail: WritableSignal<IInput> = signal({
+  public inputEmail = signal({
     type: TypeInput.TEXT,
     control: {} as FormControl,
     placeholder: 'Insert email',
@@ -91,7 +81,7 @@ export class UserFormComponent implements OnInit {
     validationErrors: this.validationErrors,
   });
 
-  public inputDate: WritableSignal<IInput> = signal({
+  public inputDate = signal({
     type: TypeInput.TEXT,
     control: {} as FormControl,
     placeholder: 'Insert date',
@@ -99,7 +89,7 @@ export class UserFormComponent implements OnInit {
     validationErrors: this.validationErrors,
   });
 
-  public inputPosition: WritableSignal<IInput> = signal({
+  public inputPosition = signal({
     type: TypeInput.TEXT,
     control: {} as FormControl,
     placeholder: 'Insert position',
@@ -107,7 +97,7 @@ export class UserFormComponent implements OnInit {
     validationErrors: this.validationErrors,
   });
 
-  public inputSalary: WritableSignal<IInput> = signal({
+  public inputSalary = signal({
     type: TypeInput.TEXT,
     control: {} as FormControl,
     placeholder: 'Insert salary',
@@ -116,7 +106,7 @@ export class UserFormComponent implements OnInit {
     mask: 'separator.2',
   });
 
-  public inputCoworker: WritableSignal<IInputNumber> = signal({
+  public inputCoworker = signal({
     type: TypeInput.NUMBER,
     control: {} as FormControl,
     placeholder: 'Insert coworker',
@@ -126,7 +116,7 @@ export class UserFormComponent implements OnInit {
     max: 10,
   });
 
-  public inputHardworking: WritableSignal<IInputNumber> = signal({
+  public inputHardworking = signal({
     type: TypeInput.NUMBER,
     control: {} as FormControl,
     placeholder: 'Insert hardworking',
@@ -136,7 +126,7 @@ export class UserFormComponent implements OnInit {
     max: 10,
   });
 
-  public inputKnowledge: WritableSignal<IInputNumber> = signal({
+  public inputKnowledge = signal({
     type: TypeInput.NUMBER,
     control: {} as FormControl,
     placeholder: 'Insert knowledge',
@@ -146,7 +136,7 @@ export class UserFormComponent implements OnInit {
     max: 10,
   });
 
-  public inputProactivity: WritableSignal<IInputNumber> = signal({
+  public inputProactivity = signal({
     type: TypeInput.NUMBER,
     control: {} as FormControl,
     placeholder: 'Insert proactivity',
@@ -156,7 +146,7 @@ export class UserFormComponent implements OnInit {
     max: 10,
   });
 
-  public inputProductivity: WritableSignal<IInputNumber> = signal({
+  public inputProductivity = signal({
     type: TypeInput.NUMBER,
     control: {} as FormControl,
     placeholder: 'Insert productivity',
@@ -166,15 +156,13 @@ export class UserFormComponent implements OnInit {
     max: 10,
   });
 
-  constructor() {
-    effect(() => {
-      if (this.error()) {
-        if (this.error()?.error.code === 'USER_EMAIL_ALREADY_EXISTS') {
-          this.emailControl.setErrors({ emailExist: 'error' });
-        }
+  private readonly errorEffect = effect(() => {
+    if (this.error()) {
+      if (this.error()?.error.code === 'USER_EMAIL_ALREADY_EXISTS') {
+        this.emailControl.setErrors({ emailExist: 'error' });
       }
-    });
-  }
+    }
+  });
 
   ngOnInit(): void {
     this.loadForm();

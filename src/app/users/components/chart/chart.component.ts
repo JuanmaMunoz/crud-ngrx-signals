@@ -16,36 +16,34 @@ export class ChartComponent implements AfterViewInit {
   @ViewChild('canvasLine') canvasLine!: HTMLCanvasElement;
   public chart: Chart | null = null;
   public chartLine: Chart | null = null;
-  public chartData!: ICharData;
+  protected chartData!: ICharData;
 
-  constructor() {
-    effect(() => {
-      if (this.userDetail()) {
-        this.chartData = {
-          labels: ['Coworker', 'Hard Working', 'Knowledge', 'Proactivity', 'Productivity'],
-          datasets: [
-            {
-              label: 'User´s Statistics',
-              data: [
-                this.userDetail()!.statistics.coworker!,
-                this.userDetail()!.statistics.hardworking!,
-                this.userDetail()!.statistics.knowledge!,
-                this.userDetail()!.statistics.proactivity!,
-                this.userDetail()!.statistics.productivity!,
-              ],
-              backgroundColor: [
-                'rgb(153, 230, 255)',
-                'rgb(0, 122, 204)',
-                'rgb(8, 135, 93)',
-                'rgb(255, 192, 8)',
-                'rgb(255, 76, 76)',
-              ],
-            },
-          ],
-        };
-      }
-    });
-  }
+  private readonly userDetailEffect = effect(() => {
+    if (this.userDetail()) {
+      this.chartData = {
+        labels: ['Coworker', 'Hard Working', 'Knowledge', 'Proactivity', 'Productivity'],
+        datasets: [
+          {
+            label: 'User´s Statistics',
+            data: [
+              this.userDetail()!.statistics.coworker!,
+              this.userDetail()!.statistics.hardworking!,
+              this.userDetail()!.statistics.knowledge!,
+              this.userDetail()!.statistics.proactivity!,
+              this.userDetail()!.statistics.productivity!,
+            ],
+            backgroundColor: [
+              'rgb(153, 230, 255)',
+              'rgb(0, 122, 204)',
+              'rgb(8, 135, 93)',
+              'rgb(255, 192, 8)',
+              'rgb(255, 76, 76)',
+            ],
+          },
+        ],
+      };
+    }
+  });
 
   ngAfterViewInit(): void {
     this.createChart();

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TypeInput } from '../../models/enum';
 import { IInput } from '../../models/interfaces';
@@ -13,9 +13,9 @@ import { ValidationErrors } from '../../utils/pipes/validation-errors.pipe';
 })
 export class InputPassComponent {
   input = input<IInput>({} as IInput);
-  public enumTypeInput = TypeInput;
-  public type = TypeInput.PASS;
+  protected enumTypeInput = TypeInput;
+  protected type = signal(TypeInput.PASS);
   public showPass(): void {
-    this.type = this.type === TypeInput.TEXT ? TypeInput.PASS : TypeInput.TEXT;
+    this.type.set(this.type() === TypeInput.TEXT ? TypeInput.PASS : TypeInput.TEXT);
   }
 }

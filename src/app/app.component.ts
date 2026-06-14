@@ -28,8 +28,8 @@ import { logout } from './common/store/actions/auth.action';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  public errorMessage = signal<string>('');
-  public showErrorModal = signal<boolean>(false);
+  errorMessage = signal<string>('');
+  showErrorModal = signal<boolean>(false);
 
   private sessionService = inject(SessionService);
   private store = inject(Store<{ login: IAuthState; token: ITokenState; message: IMessageState }>);
@@ -38,22 +38,22 @@ export class AppComponent implements OnInit {
     this.sessionService.checkSessionFromStorage();
   }
 
-  public loginSuccess: Signal<boolean> = toSignal(
+  protected loginSuccess: Signal<boolean> = toSignal(
     this.store.select((state) => state.login.success),
     { initialValue: false },
   );
 
-  public tokenError: Signal<HttpErrorResponse | null> = toSignal(
+  protected tokenError: Signal<HttpErrorResponse | null> = toSignal(
     this.store.select((state) => state.token.error),
     { initialValue: null },
   );
 
-  public messageError: Signal<string | null> = toSignal(
+  protected messageError: Signal<string | null> = toSignal(
     this.store.select((state) => state.message.message),
     { initialValue: null },
   );
 
-  private effect = effect(() => {
+  private readonly errorEffect = effect(() => {
     if (this.tokenError()) {
       this.showErrorModal.set(true);
       this.store.dispatch(logout());

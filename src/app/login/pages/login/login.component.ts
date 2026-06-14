@@ -25,17 +25,17 @@ export class LoginComponent implements OnInit {
   private store = inject(Store<{ login: IAuthState }>);
   private router = inject(Router);
 
-  public loading: Signal<boolean> = toSignal(
+  protected loading: Signal<boolean> = toSignal(
     this.store.select((state) => state.login.loading),
     { initialValue: false },
   );
 
-  public loginSuccess: Signal<boolean> = toSignal(
+  protected loginSuccess: Signal<boolean> = toSignal(
     this.store.select((state) => state.login.success),
     { initialValue: false },
   );
 
-  private effect = effect(() => {
+  private readonly successEffect = effect(() => {
     if (this.loginSuccess()) {
       this.router.navigate(['/users']);
     }

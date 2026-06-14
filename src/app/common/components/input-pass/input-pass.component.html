@@ -3,7 +3,7 @@
   <div class="input-group has-validation">
     <input
       #element
-      [type]="type"
+      [type]="type()"
       [id]="input().label"
       [formControl]="input().control"
       [ngClass]="{
@@ -14,11 +14,11 @@
       [placeholder]="input().placeholder"
       autocomplete="off"
     />
-    <button (click)="showPass()" class="btn btn-outline-secondary" type="button">
-      @if (type === enumTypeInput.PASS) {
+    <button type="button" (click)="showPass()" class="btn btn-outline-secondary">
+      @if (type() === enumTypeInput.PASS) {
         <i class="bi bi-eye"></i>
       }
-      @if (type === enumTypeInput.TEXT) {
+      @if (type() === enumTypeInput.TEXT) {
         <i class="bi bi-eye-slash"></i>
       }
     </button>

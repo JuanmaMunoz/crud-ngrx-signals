@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -50,14 +50,13 @@ describe('ErrorComponent', () => {
     expect(p?.textContent).toContain(message);
   });
 
-  it('should dispatch setInitialStateMessage when setTimeout runs', fakeAsync(() => {
+  it('should dispatch setInitialStateMessage when setTimeout runs', () => {
+    jasmine.clock().install();
     const message = 'Test error message';
-    const timeDuration = 3000;
-    store.setState({
-      message: { message },
-    });
+    store.setState({ message: { message } });
     fixture.detectChanges();
-    tick(timeDuration + 2000);
+    jasmine.clock().tick(5000);
     expect(dispatchSpy).toHaveBeenCalledWith(setInitialStateMessage());
-  }));
+    jasmine.clock().uninstall();
+  });
 });

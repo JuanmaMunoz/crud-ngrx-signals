@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, effect, EventEmitter, input, Output, Signal, signal } from '@angular/core';
+import { Component, effect, input, output, Signal, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fadeIn } from '../../../common/animations/animations';
 import { InputPassComponent } from '../../../common/components/input-pass/input-pass.component';
@@ -15,8 +15,8 @@ import { IInput } from '../../../common/models/interfaces';
 })
 export class LoginFormComponent {
   loading = input.required<boolean>();
-  @Output() actionLogin = new EventEmitter<{ email: string; pass: string }>();
-  public loginForm = new FormGroup({
+  actionLogin = output<{ email: string; pass: string }>();
+  protected loginForm = new FormGroup({
     email: new FormControl('user@test', [Validators.required, Validators.email]),
     pass: new FormControl('ajk38jkÑ', [
       Validators.required,
@@ -27,14 +27,14 @@ export class LoginFormComponent {
   public emailControl: FormControl = this.loginForm.get('email') as FormControl;
   public passControl: FormControl = this.loginForm.get('pass') as FormControl;
 
-  public validationErrors: Record<string, string> = {
+  protected validationErrors: Record<string, string> = {
     email: 'The email format is invalid',
     minlength: 'The minimum password length is 4',
     maxlength: 'The maximum password length is 8',
     required: 'The field is required',
   };
 
-  public emailInput = signal<IInput>({
+  protected emailInput = signal<IInput>({
     control: this.emailControl,
     placeholder: 'Insert email',
     label: 'Email',
@@ -42,27 +42,25 @@ export class LoginFormComponent {
     validationErrors: this.validationErrors,
   });
 
-  public passInput = signal<IInput>({
+  protected passInput = signal<IInput>({
     control: this.passControl,
     placeholder: 'Insert password',
     label: 'Password',
     focus: true,
     validationErrors: this.validationErrors,
   });
-  public loginSuccess!: Signal<boolean>;
-  public loginError!: Signal<HttpErrorResponse | null>;
+  protected loginSuccess!: Signal<boolean>;
+  protected loginError!: Signal<HttpErrorResponse | null>;
 
-  constructor() {
-    effect(() => {
-      if (this.loading()) {
-        this.emailControl.disable();
-        this.passControl.disable();
-      } else {
-        this.emailControl.enable();
-        this.passControl.enable();
-      }
-    });
-  }
+  private readonly loadingEffect = effect(() => {
+    if (this.loading()) {
+      this.emailControl.disable();
+      this.passControl.disable();
+    } else {
+      this.emailControl.enable();
+      this.passControl.enable();
+    }
+  });
 
   public login(): void {
     this.actionLogin.emit({

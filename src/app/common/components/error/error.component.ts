@@ -15,12 +15,12 @@ const timeDuration = 3000;
 export class ErrorComponent {
   private store = inject(Store<{ message: IMessageState }>);
 
-  public messageError: Signal<string | null> = toSignal(
+  protected messageError: Signal<string | null> = toSignal(
     this.store.select((state) => state.message.message),
     { initialValue: null },
   );
 
-  private effect = effect(() => {
+  private readonly effect = effect(() => {
     if (this.messageError()) {
       setTimeout(() => {
         this.store.dispatch(setInitialStateMessage());

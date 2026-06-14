@@ -1,14 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Component,
-  effect,
-  inject,
-  OnDestroy,
-  OnInit,
-  signal,
-  Signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, effect, inject, OnDestroy, OnInit, signal, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { ModalDeleteComponent } from '../../components/modal-delete/modal-delete.component';
@@ -29,10 +20,10 @@ import {
   styleUrl: './list.component.scss',
 })
 export class ListComponent implements OnInit, OnDestroy {
-  public users: WritableSignal<IUser[]> = signal<IUser[]>([]);
-  public params: WritableSignal<IGetUsersParams | null> = signal<IGetUsersParams | null>(null);
+  public users = signal<IUser[]>([]);
+  public params = signal<IGetUsersParams | null>(null);
   public startDelete!: Signal<boolean>;
-  public openModal: WritableSignal<boolean> = signal<boolean>(false);
+  public openModal = signal<boolean>(false);
   private numberRows = 10;
   private store = inject(Store<{ users: IUsersState; userDelete: IUserDeleteState }>);
 

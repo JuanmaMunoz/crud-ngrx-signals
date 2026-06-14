@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -66,7 +66,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor])),
     provideStore(store, { metaReducers }),
     provideEffects(effects),
-
     provideStoreDevtools({ maxAge: 25, logOnly: false }),
+    provideZonelessChangeDetection(),
   ],
 };

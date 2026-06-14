@@ -1,13 +1,4 @@
-import {
-  Component,
-  effect,
-  EventEmitter,
-  inject,
-  input,
-  Output,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,9 +12,9 @@ import { debounceTime, skip } from 'rxjs';
 })
 export class SearchComponent {
   search = input.required<string>();
-  @Output() actionSearch = new EventEmitter<string>();
+  actionSearch = output<string>();
 
-  public searchText: WritableSignal<string> = signal<string>('');
+  public searchText = signal<string>('');
   private delaySearch = 400;
   private router = inject(Router);
 
@@ -33,7 +24,7 @@ export class SearchComponent {
       this.actionSearch.emit(search);
     });
 
-  private effect = effect(() => {
+  private readonly searchEffect = effect(() => {
     this.searchText.set(this.search());
   });
 
