@@ -33,5 +33,6 @@ describe('InfoCrudComponent', () => {
     expect(paragraphs[4].textContent).toContain('Login, Tokens, Guards, and Interceptors');
     expect(paragraphs[5].textContent).toContain('Unit Testing with Jasmine, 99.5% coverage');
     expect(paragraphs[6].textContent).toContain('E2E Testing with Cypress');
+    expect(paragraphs[7].textContent).toContain('ZoneLess');
   });
 });
