@@ -2,6 +2,7 @@
   user-select: none;
   &__img {
     height: 55px;
+    width: auto;
   }
   &__span {
     line-height: 0.9;
@@ -20,6 +21,7 @@
   .nav-bar {
     &__img {
       height: 40px;
+      width: auto;
     }
   }
 }

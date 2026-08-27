@@ -14,12 +14,17 @@
       [placeholder]="input().placeholder"
       autocomplete="off"
     />
-    <button type="button" (click)="showPass()" class="btn btn-outline-secondary">
+    <button
+      type="button"
+      (click)="showPass()"
+      class="btn btn-outline-secondary"
+      [attr.aria-label]="type() === enumTypeInput.PASS ? 'Show password' : 'Hide password'"
+    >
       @if (type() === enumTypeInput.PASS) {
-        <i class="bi bi-eye"></i>
+        <i class="bi bi-eye" aria-hidden="true"></i>
       }
       @if (type() === enumTypeInput.TEXT) {
-        <i class="bi bi-eye-slash"></i>
+        <i class="bi bi-eye-slash" aria-hidden="true"></i>
       }
     </button>
     <div class="invalid-feedback">

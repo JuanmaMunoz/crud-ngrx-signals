@@ -13,11 +13,17 @@
       (click)="deleteSearch()"
       [disabled]="!this.searchText()"
       class="btn btn-outline-secondary"
+      aria-label="Clear search"
     >
-      <i class="bi bi-x-circle"></i>
+      <i class="bi bi-x-circle" aria-hidden="true"></i>
     </button>
-    <button type="button" class="btn btn-outline-primary" (click)="createUser()">
-      <i class="bi bi-person-plus"></i>
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="createUser()"
+      aria-label="Create user"
+    >
+      <i class="bi bi-person-plus" aria-hidden="true"></i>
     </button>
   </div>
 </div>

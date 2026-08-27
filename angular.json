@@ -25,7 +25,10 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/assets"],
             "stylePreprocessorOptions": {
-              "includePaths": ["node_modules"]
+              "includePaths": ["node_modules"],
+              "sass": {
+                "silenceDeprecations": ["import", "global-builtin", "color-functions"]
+              }
             },
             "styles": ["src/styles.scss"],
             "scripts": []

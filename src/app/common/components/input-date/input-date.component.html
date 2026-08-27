@@ -14,8 +14,8 @@
       autocomplete="off"
     />
     @if (input().control.value) {
-      <button type="button" (click)="reset()" class="btn btn-outline-secondary">
-        <i class="bi bi-x-circle"></i>
+      <button type="button" (click)="reset()" class="btn btn-outline-secondary" aria-label="Clear date">
+        <i class="bi bi-x-circle" aria-hidden="true"></i>
       </button>
     }
     @if (!input().control.value && !userAgent.toLocaleLowerCase().includes("firefox")) {

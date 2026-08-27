@@ -23,9 +23,9 @@ describe('InfoCrudComponent', () => {
 
   it('should exist', () => {
     const compiled = fixture.nativeElement as HTMLEmbedElement;
-    const h5 = compiled.querySelector('h5');
+    const h2 = compiled.querySelector('h2');
     const paragraphs = compiled.querySelectorAll('p');
-    expect(h5?.textContent).toContain('Content:');
+    expect(h2?.textContent).toContain('Content:');
     expect(paragraphs[0].textContent).toContain('CRUD Application Example');
     expect(paragraphs[1].textContent).toContain('Angular 20: New Features');
     expect(paragraphs[2].textContent).toContain('NgRx 20: New Features');

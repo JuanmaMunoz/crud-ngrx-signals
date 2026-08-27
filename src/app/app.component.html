@@ -1,9 +1,9 @@
 @defer (on viewport) {
   <div [@scaleFadeIn] class="app px-2">
     <app-header />
-    <div class="container" [class.container--active]="loginSuccess()">
+    <main class="container" [class.container--active]="loginSuccess()">
       <router-outlet />
-    </div>
+    </main>
   </div>
   <app-modal-error [(openModal)]="showErrorModal" [errorMessage]="errorMessage()" />
   @if (messageError()) {

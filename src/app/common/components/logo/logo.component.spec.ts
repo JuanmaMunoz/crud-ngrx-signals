@@ -24,13 +24,12 @@ describe('LogoComponent', () => {
   it('should exist', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const h1 = compiled.querySelector('h1');
-    const h3 = compiled.querySelector('h3');
     const images = compiled.querySelectorAll('img');
     const spans = compiled.querySelectorAll('span');
     expect(h1?.textContent).toContain('CRUD');
-    expect(h3?.textContent).toContain('+');
+    expect(spans[0].textContent).toContain('+');
     expect(images.length).toBe(2);
-    expect(spans[0].textContent).toContain('with');
-    expect(spans[1].textContent).toContain('Signals');
+    expect(spans[1].textContent).toContain('with');
+    expect(spans[2].textContent).toContain('Signals');
   });
 });
