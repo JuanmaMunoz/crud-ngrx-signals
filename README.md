@@ -103,5 +103,5 @@ Password: ajk38jkÑ
 
 **Juan Manuel Muñoz González** — Front-End Architect
 
-- [Portfolio / Resume](https://juanmamunoz.github.io/resume)
+- [Portfolio / Resume](https://jmmg-portfolio.vercel.app/en)
 - [GitHub](https://github.com/JuanmaMunoz/crud-ngrx-signals)
